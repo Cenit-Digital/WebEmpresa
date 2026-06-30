@@ -1,0 +1,31 @@
+{
+  "$schema_comment": "Hooks que automatizan la verificación del harness (RF-CODE-001 / GU-HARNESS-001). Los ejecuta el harness, no el agente, así que no se pueden saltar.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pnpm -s test 2>&1 | tail -6",
+            "description": "Tras editar o escribir, corre la suite de tests y muestra el resumen."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ./init.sh > /tmp/harness_init.log 2>&1 && echo '[harness] init.sh OK' || (echo '[harness] init.sh FALLO — revisa /tmp/harness_init.log' && tail -20 /tmp/harness_init.log)",
+            "description": "Antes de cerrar la sesión, fuerza una verificación completa."
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": ["Bash(./init.sh)", "Bash(bash ./init.sh)", "Bash(pnpm*)", "Bash(npx stryker*)"]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "_comment": "Prueba de mutación (RF-CODE-001 / GU-HARNESS-001). Valida que los tests muerden. Umbral: 100% sobre las líneas tocadas por la feature.",
+  "packageManager": "pnpm",
+  "testRunner": "vitest",
+  "plugins": ["@stryker-mutator/vitest-runner"],
+  "reporters": ["html", "clear-text", "progress"],
+  "coverageAnalysis": "perTest",
+  "vitest": {
+    "configFile": "vitest.config.ts"
+  },
+  "mutate": ["src/lib/seo.ts"],
+  "thresholds": {
+    "high": 100,
+    "low": 90,
+    "break": 100
+  },
+  "tempDirName": ".stryker-tmp",
+  "htmlReporter": {
+    "fileName": "reports/mutation/index.html"
+  }
+}

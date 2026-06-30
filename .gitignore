@@ -1,0 +1,33 @@
+# Dependencias
+node_modules/
+.pnpm-store/
+
+# Build / salida
+dist/
+dist-ssr/
+*.local
+
+# Tests / cobertura / mutación
+coverage/
+reports/
+.stryker-tmp/
+
+# Entorno (NUNCA subir claves — ver RF-STACK-001)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editor / SO
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# vite-react-ssg
+.vite-react-ssg-temp/

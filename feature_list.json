@@ -1,0 +1,54 @@
+{
+  "project": "webempresa",
+  "description": "Web corporativa de Cénit Digital. Repositorio base del stack estándar de empresa (Vite + React + TypeScript + SCSS + pnpm + SSG).",
+  "rules": {
+    "one_feature_at_a_time": true,
+    "require_tests_to_close": true,
+    "require_approved_spec_to_implement": true,
+    "valid_status": ["pending", "spec_ready", "in_progress", "done", "blocked"],
+    "sdd_required_when": "feature has \"sdd\": true"
+  },
+  "features": [
+    {
+      "id": 1,
+      "name": "infra_base",
+      "title": "Repositorio base y proyecto base (WEB-2)",
+      "description": "Scaffolding del stack estándar: Vite + React + TS + SCSS + pnpm + SSG (vite-react-ssg), Radix UI, design tokens de RF-MARCA-001, fuentes Outfit + DM Sans, ESLint + Prettier, Vitest + Testing Library, Stryker y la capa Harness/SDD.",
+      "acceptance": [
+        "pnpm install / typecheck / lint / test / build / mutation en verde, 0 warnings",
+        "Home y Aviso legal prerenderizadas a HTML estático con SEO por página",
+        "Design tokens (claro/oscuro) integrados desde RF-MARCA-001",
+        "README con instrucciones de arranque y arnés SDD presente"
+      ],
+      "sdd": false,
+      "status": "done"
+    },
+    {
+      "id": 2,
+      "name": "home_layout",
+      "title": "Maquetación del layout y la home (WEB-4)",
+      "description": "Layout y secciones principales de la home, fieles a la identidad de RF-MARCA-001.",
+      "acceptance": ["Ver criterio de aceptación en Jira WEB-4"],
+      "sdd": true,
+      "status": "pending"
+    },
+    {
+      "id": 3,
+      "name": "home_sections",
+      "title": "Contenido y secciones de la home (WEB-5)",
+      "description": "Bloques de contenido (servicios, proceso, CTA) con HTML semántico y accesible.",
+      "acceptance": ["Ver criterio de aceptación en Jira WEB-5"],
+      "sdd": true,
+      "status": "pending"
+    },
+    {
+      "id": 4,
+      "name": "contact_form",
+      "title": "Formulario de contacto con Resend (WEB-6)",
+      "description": "Formulario validado que envía email vía Resend, con manejo de errores y estados.",
+      "acceptance": ["Ver criterio de aceptación en Jira WEB-6"],
+      "sdd": true,
+      "status": "pending"
+    }
+  ]
+}

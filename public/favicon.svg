@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cénit Digital">
+  <rect width="64" height="64" rx="14" fill="#0E1530" />
+  <ellipse cx="32" cy="34" rx="20" ry="11" fill="none" stroke="#4FCBA4" stroke-width="2.5"
+    transform="rotate(-24 32 34)" />
+  <line x1="32" y1="12" x2="32" y2="52" stroke="#2547E0" stroke-width="2" stroke-dasharray="2 4"
+    stroke-linecap="round" />
+  <circle cx="32" cy="14" r="5" fill="#2547E0" />
+  <circle cx="48" cy="28" r="3.2" fill="#4FCBA4" />
+</svg>
