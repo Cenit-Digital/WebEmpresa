@@ -1,0 +1,21 @@
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.nav a {
+  font-weight: 500;
+}
+
+.cta {
+  padding: 0.45rem 1rem;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.cta:hover {
+  text-decoration: none;
+}

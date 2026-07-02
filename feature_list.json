@@ -8,7 +8,7 @@
     "valid_status": ["pending", "spec_ready", "in_progress", "done", "blocked"],
     "sdd_required_when": "feature has \"sdd\": true"
   },
-  "features": [
+"features": [
     {
       "id": 1,
       "name": "infra_base",
@@ -25,30 +25,124 @@
     },
     {
       "id": 2,
-      "name": "home_layout",
-      "title": "Maquetación del layout y la home (WEB-4)",
-      "description": "Layout y secciones principales de la home, fieles a la identidad de RF-MARCA-001.",
-      "acceptance": ["Ver criterio de aceptación en Jira WEB-4"],
+      "name": "nav",
+      "title": "Navegación de la cabecera (WEB-4)",
+      "description": "Logotipo enlazado a inicio, navegación de escritorio (Servicios/Sectores/Paquetes/Contacto + botón Hablamos), cabecera sticky y menú móvil (abrir/cerrar/navegar/cerrar en fondo).",
+      "acceptance": [
+        "Todos los escenarios de features/nav.feature pasan (mapa @s → test en progress/tdd_nav.md)",
+        "Ver criterio de aceptación de WEB-4 en Jira (parcial: navegación y responsive)"
+      ],
       "sdd": true,
-      "status": "pending"
+      "status": "done"
     },
     {
       "id": 3,
-      "name": "home_sections",
-      "title": "Contenido y secciones de la home (WEB-5)",
-      "description": "Bloques de contenido (servicios, proceso, CTA) con HTML semántico y accesible.",
-      "acceptance": ["Ver criterio de aceptación en Jira WEB-5"],
+      "name": "theme_selector",
+      "title": "Selector de tema Claro/Oscuro/Sistema (WEB-4)",
+      "description": "Selector de 3 estados con persistencia en localStorage (cenit-theme), reacción en vivo a prefers-color-scheme cuando está en \"Sistema\", y aplicación del tema antes del primer pintado (sin FOUC). Paleta: Bosque & Limón (claro) / Noche & Oro (oscuro), RF-MARCA-001 corregido.",
+      "acceptance": [
+        "Todos los escenarios de features/theme_selector.feature pasan (mapa @s → test en progress/tdd_theme_selector.md)",
+        "Ver criterio de aceptación de WEB-4 en Jira (parcial: selector de tema de 3 estados)"
+      ],
       "sdd": true,
-      "status": "pending"
+      "status": "spec_ready"
     },
     {
       "id": 4,
-      "name": "contact_form",
-      "title": "Formulario de contacto con Resend (WEB-6)",
-      "description": "Formulario validado que envía email vía Resend, con manejo de errores y estados.",
-      "acceptance": ["Ver criterio de aceptación en Jira WEB-6"],
+      "name": "footer",
+      "title": "Pie de página (WEB-4)",
+      "description": "Copyright con año dinámico, enlace a Aviso legal y correo de contacto.",
+      "acceptance": [
+        "Todos los escenarios de features/footer.feature pasan (mapa @s → test en progress/tdd_footer.md)",
+        "Ver criterio de aceptación de WEB-4 en Jira (parcial: pie de página)"
+      ],
       "sdd": true,
-      "status": "pending"
+      "status": "spec_ready"
+    },
+    {
+      "id": 5,
+      "name": "layout_accesibilidad",
+      "title": "Accesibilidad y SEO de base del layout (WEB-4)",
+      "description": "Enlace \"saltar al contenido\" como primer elemento enfocable, y título de página propio por ruta (home y páginas interiores).",
+      "acceptance": [
+        "Todos los escenarios de features/layout_accesibilidad.feature pasan (mapa @s → test en progress/tdd_layout_accesibilidad.md)",
+        "Ver criterio de aceptación de WEB-4 en Jira (parcial: accesibilidad)"
+      ],
+      "sdd": true,
+      "status": "spec_ready"
+    },
+    {
+      "id": 6,
+      "name": "hero",
+      "title": "Hero de la home (WEB-5)",
+      "description": "Propuesta de valor (eyebrow, titular, subtítulo), dos CTA (Ver paquetes / Hablar con nosotros) y las 4 estadísticas.",
+      "acceptance": [
+        "Todos los escenarios de features/hero.feature pasan (mapa @s → test en progress/tdd_hero.md)",
+        "Ver criterio de aceptación de WEB-5 en Jira (parcial: sección hero)"
+      ],
+      "sdd": true,
+      "status": "spec_ready"
+    },
+    {
+      "id": 7,
+      "name": "servicios",
+      "title": "Sección de servicios (WEB-5)",
+      "description": "6 tarjetas de servicio (Desarrollo web, Chatbot WhatsApp, Gestión de RRSS, SEO local, Sistema de citas, Conexión ERP) con etiqueta, título, descripción, dos características y un bloque \"Ejemplo\".",
+      "acceptance": [
+        "Todos los escenarios de features/servicios.feature pasan (mapa @s → test en progress/tdd_servicios.md)",
+        "Ver criterio de aceptación de WEB-5 en Jira (parcial: sección servicios)"
+      ],
+      "sdd": true,
+      "status": "spec_ready"
+    },
+    {
+      "id": 8,
+      "name": "sectores",
+      "title": "Sección de sectores (WEB-5)",
+      "description": "4 tarjetas de sector (Veterinarias, Servicios de estética, Clínicas dentales, Fisioterapeutas) con nombre y descripción, más la nota de selección inicial.",
+      "acceptance": [
+        "Todos los escenarios de features/sectores.feature pasan (mapa @s → test en progress/tdd_sectores.md)",
+        "Ver criterio de aceptación de WEB-5 en Jira (parcial: sección sectores)"
+      ],
+      "sdd": true,
+      "status": "spec_ready"
+    },
+    {
+      "id": 9,
+      "name": "paquetes",
+      "title": "Sección de paquetes (WEB-5)",
+      "description": "3 tarjetas de paquete (Presencia Digital, Presencia Activa, Negocio Conectado) con tagline, características, insignia \"Más elegido\" y botón \"Solicitar presupuesto\". Sin precios fijos: el diseño final no los muestra (discrepancia con el texto de WEB-5 en Jira, señalada, no resuelta por mi cuenta).",
+      "acceptance": [
+        "Todos los escenarios de features/paquetes.feature pasan (mapa @s → test en progress/tdd_paquetes.md)",
+        "Ver criterio de aceptación de WEB-5 en Jira (parcial: sección paquetes)",
+        "Pendiente de decisión de producto: si se muestran precios fijos, hay que ampliar este feature antes de darlo por done"
+      ],
+      "sdd": true,
+      "status": "spec_ready"
+    },
+    {
+      "id": 10,
+      "name": "contacto_seccion",
+      "title": "Contenido de la sección de contacto (WEB-5)",
+      "description": "Intro, teléfono, y los campos visuales del formulario (Nombre*, Correo electrónico*, Teléfono, Sector, ¿Qué necesitas?). El envío funcional es contact_form (WEB-6), no esta feature.",
+      "acceptance": [
+        "Todos los escenarios de features/contacto_seccion.feature pasan (mapa @s → test en progress/tdd_contacto_seccion.md)",
+        "Ver criterio de aceptación de WEB-5 en Jira (parcial: sección contacto, solo estructura)"
+      ],
+      "sdd": true,
+      "status": "spec_ready"
+    },
+    {
+      "id": 11,
+      "name": "contact_form",
+      "title": "Formulario de contacto funcional con Resend (WEB-6)",
+      "description": "Validación de campos, envío real de email vía Resend, protección antispam (honeypot), y mensajes de éxito/error visibles.",
+      "acceptance": [
+        "Todos los escenarios de features/contact_form.feature pasan (mapa @s → test en progress/tdd_contact_form.md)",
+        "Ver criterio de aceptación de WEB-6 en Jira"
+      ],
+      "sdd": true,
+      "status": "spec_ready"
     }
   ]
 }

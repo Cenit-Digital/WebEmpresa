@@ -9,7 +9,13 @@
   "vitest": {
     "configFile": "vitest.config.ts"
   },
-  "mutate": ["src/lib/seo.ts"],
+  "mutate": [
+    "src/lib/seo.ts",
+    "src/lib/nav.ts",
+    "src/lib/useIsMobile.ts",
+    "src/components/HeaderNav.tsx",
+    "src/components/MobileMenu.tsx"
+  ],
   "thresholds": {
     "high": 100,
     "low": 90,

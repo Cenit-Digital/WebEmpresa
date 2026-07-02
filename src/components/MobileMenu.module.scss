@@ -1,0 +1,61 @@
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 33, 31, 0.55);
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(80vw, 320px);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-left: 1px solid var(--color-border);
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.25);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nav a {
+  font-weight: 500;
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: inherit;
+}
