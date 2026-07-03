@@ -1,0 +1,36 @@
+/* Logotipo de Cénit Digital — colores desde tokens de tema. */
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+}
+
+.mark {
+  display: block;
+  flex: none;
+}
+
+.wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.4375rem; /* 23px */
+  letter-spacing: 1.5px;
+  color: var(--color-logo-ink);
+}
+
+.sub {
+  margin-top: 3px;
+  font-family: var(--font-sans);
+  font-size: 0.5rem; /* 8px */
+  letter-spacing: 5px;
+  text-transform: lowercase;
+  color: var(--color-logo-sub);
+}

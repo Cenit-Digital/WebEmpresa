@@ -1,0 +1,331 @@
+<!-- @dsCard group="Web" viewport="1280x760" subtitle="Landing de Cénit Digital (nav · hero · paquetes)" name="Home" -->
+<!-- @startingPoint section="Web" subtitle="Landing corporativa de Cénit Digital" viewport="1280x760" -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cénit Digital — Landing (UI kit)</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  a{text-decoration:none}
+  body{font-family:var(--font-sans);background:var(--color-bg);color:var(--color-text)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+  .btn{display:inline-block;font-weight:600;font-size:15px;padding:14px 28px;border-radius:var(--radius-pill);border:1.5px solid transparent;cursor:pointer}
+  .b-primary{background:var(--color-primary);color:var(--color-on-primary);border-color:var(--color-primary)}
+  .b-secondary{background:transparent;color:var(--color-text);border-color:var(--color-border)}
+  @media(max-width:880px){[data-row]{grid-template-columns:1fr!important}[data-secgrid]{grid-template-columns:1fr!important}[data-plans]{grid-template-columns:1fr!important}[data-formrow]{grid-template-columns:1fr!important}[data-contactgrid]{grid-template-columns:1fr!important}}
+  @media(max-width:820px){.desk{display:none!important}}
+</style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav style="position:sticky;top:0;z-index:50;background:var(--color-band);border-bottom:1px solid var(--color-band-border)">
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;padding:14px var(--gutter)">
+      <a href="#" style="display:inline-flex;align-items:center;gap:11px">
+        <svg width="40" height="40" viewBox="0 0 80 80" fill="none" aria-hidden="true"><defs><linearGradient id="gN" x1="12" y1="40" x2="68" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="var(--color-primary)"/><stop offset="100%" stop-color="var(--color-secondary)"/></linearGradient></defs><circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-ring)" stroke-width="1.8" stroke-opacity=".5"/><path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="url(#gN)" stroke-width="3.2" stroke-linecap="round"/><circle cx="40" cy="20" r="3.8" fill="var(--color-zenith)"/></svg>
+        <span style="display:flex;flex-direction:column;line-height:1"><span style="font-family:var(--font-display);font-weight:600;font-size:23px;letter-spacing:1.5px;color:var(--color-logo-ink)">cénit</span><span style="font-size:8px;letter-spacing:5px;text-transform:lowercase;color:var(--color-logo-sub);margin-top:3px">digital</span></span>
+      </a>
+      <div class="desk" style="display:flex;align-items:center;gap:24px">
+        <a href="#" style="font-size:14.5px;font-weight:500;color:var(--color-text-soft)">Servicios</a>
+        <a href="#" style="font-size:14.5px;font-weight:500;color:var(--color-text-soft)">Sectores</a>
+        <a href="#paquetes" style="font-size:14.5px;font-weight:500;color:var(--color-text-soft)">Paquetes</a>
+        <a href="#" style="font-size:14.5px;font-weight:500;color:var(--color-text-soft)">Contacto</a>
+        <button onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme==='dark'?'light':'dark'" aria-label="Cambiar tema" style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-band-border);background:transparent;border-radius:10px;cursor:pointer;color:var(--color-text)">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/></svg>
+        </button>
+        <a href="#" class="btn b-primary" style="font-size:14px;padding:10px 21px">Hablamos</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header style="position:relative;overflow:hidden">
+    <div style="position:absolute;right:-120px;top:-80px;width:540px;height:540px;opacity:.45;pointer-events:none">
+      <svg viewBox="0 0 80 80" width="100%" height="100%" fill="none"><circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-accent)" stroke-width="1" stroke-opacity=".5"/><path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="var(--color-accent)" stroke-width="1.4" stroke-linecap="round"/><circle cx="40" cy="20" r="3" fill="var(--color-accent)"/></svg>
+    </div>
+    <div class="wrap" style="padding:92px var(--gutter) 80px;position:relative;z-index:2">
+      <div style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--color-accent);font-weight:600;margin-bottom:16px">Soluciones digitales para pymes</div>
+      <h1 style="font-family:var(--font-display);font-size:clamp(34px,5.4vw,62px);line-height:1.04;letter-spacing:-.015em;font-weight:600;max-width:17ch;margin-bottom:22px">Llevamos tu negocio al punto más alto de su presencia digital.</h1>
+      <p style="font-size:19px;color:var(--color-text-soft);max-width:54ch;margin-bottom:32px;line-height:1.7">Web, automatización con IA, marketing y sistemas de citas — todo bajo una cuota mensual, sin entrada.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <a href="#paquetes" class="btn b-primary">Ver paquetes</a>
+        <a href="#" class="btn b-secondary">Hablar con nosotros</a>
+      </div>
+      <div style="display:flex;gap:46px;flex-wrap:wrap;margin-top:54px;padding-top:32px;border-top:1px solid var(--color-border)">
+        <div><div style="font-family:var(--font-display);font-size:38px;font-weight:600;color:var(--color-primary);line-height:1">24h</div><div style="font-size:13.5px;color:var(--color-text-soft);margin-top:6px">tiempo de respuesta</div></div>
+        <div><div style="font-family:var(--font-display);font-size:38px;font-weight:600;color:var(--color-primary);line-height:1">+30</div><div style="font-size:13.5px;color:var(--color-text-soft);margin-top:6px">pymes confían</div></div>
+        <div><div style="font-family:var(--font-display);font-size:38px;font-weight:600;color:var(--color-primary);line-height:1">100%</div><div style="font-size:13.5px;color:var(--color-text-soft);margin-top:6px">diseño a medida</div></div>
+        <div><div style="font-family:var(--font-display);font-size:38px;font-weight:600;color:var(--color-primary);line-height:1">5★</div><div style="font-size:13.5px;color:var(--color-text-soft);margin-top:6px">valoración media</div></div>
+      </div>
+    </div>
+  </header>
+
+<!-- ===== SERVICIOS ===== -->
+  <section id="servicios" style="padding:84px 0; position:relative;">
+    <div style="max-width:1180px; margin:0 auto; padding:0 26px;">
+      <div style="max-width:62ch; margin-bottom:44px;">
+        <div style="font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--color-accent); font-weight:600; margin-bottom:14px;">Lo que hacemos</div>
+        <h2 style="font-family:var(--font-display); font-size:clamp(28px,4vw,44px); line-height:1.08; letter-spacing:-0.01em; font-weight:600; color:var(--color-text);">Servicios que <em style="font-style:normal; color:var(--color-primary);">transforman</em> negocios locales</h2>
+        <p style="color:var(--color-text-soft); font-size:17px; margin-top:14px; line-height:1.7;">No somos solo una agencia de diseño. Cada servicio se ve con su tarjeta, una referencia visual de cómo queda en uso, y una nota con un ejemplo real.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:34px;">
+
+        <!-- R1 Desarrollo web -->
+        <div data-row="" style="display:grid; grid-template-columns:1.05fr 1.15fr; gap:30px; align-items:center;">
+          <div style="background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:20px; padding:36px 32px; box-shadow:var(--shadow);">
+            <span style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--color-tag-ink); background:var(--color-tag-bg); padding:6px 13px; border-radius:999px;">Presencia</span>
+            <h3 style="font-family:var(--font-display); font-size:32px; font-weight:600; color:var(--color-text); margin:15px 0 12px; line-height:1.08;">Desarrollo web</h3>
+            <p style="font-size:15.5px; color:var(--color-text-soft); line-height:1.7; margin-bottom:18px;">Webs rápidas, con SEO nativo y diseño profesional. Desde landing pages hasta tiendas y catálogos B2B, pensadas para convertir visitas en clientes. Con dominio y hosting incluidos.</p>
+            <div style="display:flex; flex-direction:column; gap:9px; border-top:1px solid var(--color-border); padding-top:18px;">
+              <span style="display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--color-text);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>Diseño 100% a medida y responsive</span>
+              <span style="display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--color-text);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>Dominio, hosting y SSL incluidos</span>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="position:relative; aspect-ratio:16/10; border-radius:16px; overflow:hidden; border:1px solid var(--color-border); background:linear-gradient(160deg,var(--color-bg-2),var(--color-surface)); box-shadow:var(--shadow);">
+              <div style="height:36px; display:flex; align-items:center; gap:7px; padding:0 14px; background:var(--color-surface-2); border-bottom:1px solid var(--color-border);"><span style="width:9px;height:9px;border-radius:50%;background:var(--color-zenith);"></span><span style="width:9px;height:9px;border-radius:50%;background:var(--color-secondary);opacity:.7;"></span><span style="width:9px;height:9px;border-radius:50%;background:var(--color-primary);opacity:.6;"></span><span style="margin-left:10px; height:16px; flex:1; max-width:190px; border-radius:8px; background:var(--color-card-bg); border:1px solid var(--color-border);"></span></div>
+              <div style="padding:20px 22px; display:flex; gap:18px; align-items:center;"><div style="flex:1;"><div style="width:72%; height:14px; border-radius:5px; background:var(--color-primary); margin-bottom:10px;"></div><div style="width:100%; height:7px; border-radius:4px; background:var(--color-text-faint); margin-bottom:7px;"></div><div style="width:84%; height:7px; border-radius:4px; background:var(--color-text-faint); margin-bottom:18px;"></div><span style="display:inline-block; padding:9px 17px; border-radius:8px; background:var(--color-primary); color:var(--color-on-primary); font-size:11px; font-weight:600;">Reservar</span></div><div style="width:92px; height:84px; border-radius:11px; background:linear-gradient(135deg,var(--color-primary),var(--color-secondary)); opacity:.85;"></div></div>
+            </div>
+            <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:12px; padding:14px 16px;"><span style="font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-tag-ink);">Ejemplo</span><p style="font-size:13px; color:var(--color-text-soft); line-height:1.55; margin-top:5px;">Tienda online con reservas para una clínica veterinaria, lista en 3 semanas.</p></div>
+          </div>
+        </div>
+
+        <!-- R2 Chatbot WhatsApp (invertido) -->
+        <div data-row="" style="display:grid; grid-template-columns:1.15fr 1.05fr; gap:30px; align-items:center;">
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="position:relative; aspect-ratio:16/10; border-radius:16px; overflow:hidden; border:1px solid var(--color-border); background:linear-gradient(160deg,var(--color-bg-2),var(--color-surface)); box-shadow:var(--shadow); display:flex; flex-direction:column;">
+              <div style="display:flex; align-items:center; gap:10px; padding:11px 15px; background:var(--color-surface-2); border-bottom:1px solid var(--color-border);"><span style="width:28px;height:28px;border-radius:50%;background:var(--color-primary); display:flex;align-items:center;justify-content:center; color:var(--color-on-primary); font-family:var(--font-display); font-size:15px; font-weight:600;">c</span><div><div style="font-size:11.5px;font-weight:600;color:var(--color-text);">Cénit Bot</div><div style="font-size:9px;color:var(--color-accent);">● en línea</div></div></div>
+              <div style="flex:1; padding:15px; display:flex; flex-direction:column; gap:9px; justify-content:center;"><div style="align-self:flex-start; max-width:74%; background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:13px 13px 13px 3px; padding:9px 12px; font-size:11px; color:var(--color-text-soft);">¿Tenéis cita libre el jueves?</div><div style="align-self:flex-end; max-width:78%; background:var(--color-primary); color:var(--color-on-primary); border-radius:13px 13px 3px 13px; padding:9px 12px; font-size:11px;">¡Sí! Te he reservado a las 17:30 ✓</div><div style="align-self:flex-start; display:flex; gap:4px; padding:10px 13px; background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:13px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--color-text-faint);animation:sdtype 1.2s infinite;"></span><span style="width:5px;height:5px;border-radius:50%;background:var(--color-text-faint);animation:sdtype 1.2s infinite .2s;"></span><span style="width:5px;height:5px;border-radius:50%;background:var(--color-text-faint);animation:sdtype 1.2s infinite .4s;"></span></div></div>
+            </div>
+            <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:12px; padding:14px 16px;"><span style="font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-tag-ink);">Ejemplo</span><p style="font-size:13px; color:var(--color-text-soft); line-height:1.55; margin-top:5px;">El bot responde y agenda solo; deriva a una persona cuando hace falta.</p></div>
+          </div>
+          <div style="background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:20px; padding:36px 32px; box-shadow:var(--shadow);">
+            <span style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--color-tag-ink); background:var(--color-tag-bg); padding:6px 13px; border-radius:999px;">IA</span>
+            <h3 style="font-family:var(--font-display); font-size:32px; font-weight:600; color:var(--color-text); margin:15px 0 12px; line-height:1.08;">Chatbot WhatsApp</h3>
+            <p style="font-size:15.5px; color:var(--color-text-soft); line-height:1.7; margin-bottom:18px;">Asistente con IA que atiende a tus clientes 24/7, resuelve dudas, gestiona citas y captura leads mientras tú trabajas. Conectado a WhatsApp Business API.</p>
+            <div style="display:flex; flex-direction:column; gap:9px; border-top:1px solid var(--color-border); padding-top:18px;">
+              <span style="display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--color-text);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>Atiende y agenda 24/7</span>
+              <span style="display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--color-text);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>Deriva a una persona cuando hace falta</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- R3 Gestión de RRSS -->
+        <div data-row="" style="display:grid; grid-template-columns:1.05fr 1.15fr; gap:30px; align-items:center;">
+          <div style="background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:20px; padding:36px 32px; box-shadow:var(--shadow);">
+            <span style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--color-tag-ink); background:var(--color-tag-bg); padding:6px 13px; border-radius:999px;">Marketing</span>
+            <h3 style="font-family:var(--font-display); font-size:32px; font-weight:600; color:var(--color-text); margin:15px 0 12px; line-height:1.08;">Gestión de RRSS</h3>
+            <p style="font-size:15.5px; color:var(--color-text-soft); line-height:1.7; margin-bottom:18px;">Contenido semanal, publicación y gestión de comentarios en 2 o 4 redes sociales. Creamos una línea visual coherente con tu marca y campañas de publicidad en el plan avanzado.</p>
+            <div style="display:flex; flex-direction:column; gap:9px; border-top:1px solid var(--color-border); padding-top:18px;">
+              <span style="display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--color-text);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>Calendario de contenidos mensual</span>
+              <span style="display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--color-text);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>Informe de alcance e interacción</span>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="position:relative; aspect-ratio:16/10; border-radius:16px; overflow:hidden; border:1px solid var(--color-border); background:var(--color-card-bg); box-shadow:var(--shadow); display:flex; flex-direction:column;">
+              <div style="display:flex; align-items:center; gap:9px; padding:11px 14px;"><span style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--color-primary),var(--color-secondary));"></span><div style="flex:1;"><div style="font-size:11px;font-weight:600;color:var(--color-text);">cenitdigital</div><div style="font-size:8.5px;color:var(--color-text-faint);">Las Rozas · hace 2 h</div></div><span style="font-size:15px;color:var(--color-text-faint);">···</span></div>
+              <div style="flex:1; background:linear-gradient(135deg,var(--color-primary),var(--color-secondary)); position:relative; display:flex; align-items:center; justify-content:center;"><span style="color:var(--color-on-primary); font-family:var(--font-display); font-size:24px; letter-spacing:3px; opacity:.9;">cénit</span></div>
+              <div style="display:flex; align-items:center; gap:14px; padding:10px 14px;"><span style="display:flex;align-items:center;gap:5px; font-size:10px;color:var(--color-text-soft);"><svg width="15" height="15" viewBox="0 0 24 24" fill="var(--color-zenith)"><path d="M12 21s-7-4.6-9.3-8.2C1 10 2 6.5 5.2 6.5c2 0 3 1.3 3.8 2.5.8-1.2 1.8-2.5 3.8-2.5 3.2 0 4.2 3.5 2.5 6.3C19 16.4 12 21 12 21z"></path></svg>248</span><span style="display:flex;align-items:center;gap:5px; font-size:10px;color:var(--color-text-soft);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-soft)" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-11.6 7.8L3 21l1.7-6.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>32</span></div>
+            </div>
+            <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:12px; padding:14px 16px;"><span style="font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-tag-ink);">Ejemplo</span><p style="font-size:13px; color:var(--color-text-soft); line-height:1.55; margin-top:5px;">Calendario de contenidos + informe mensual de alcance e interacción.</p></div>
+          </div>
+        </div>
+
+        <!-- R4 SEO local (invertido) -->
+        <div data-row="" style="display:grid; grid-template-columns:1.15fr 1.05fr; gap:30px; align-items:center;">
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="position:relative; aspect-ratio:16/10; border-radius:16px; overflow:hidden; border:1px solid var(--color-border); background:var(--color-bg-2); box-shadow:var(--shadow);">
+              <svg style="position:absolute; inset:0; width:100%; height:100%;" preserveAspectRatio="none" viewBox="0 0 200 125"><g stroke="var(--color-border)" stroke-width="2.5" fill="none"><line x1="0" y1="44" x2="200" y2="34"></line><line x1="0" y1="88" x2="200" y2="95"></line><line x1="56" y1="0" x2="62" y2="125"></line><line x1="132" y1="0" x2="140" y2="125"></line></g></svg>
+              <div style="position:absolute; top:13px; left:13px; right:13px; height:26px; border-radius:8px; background:var(--color-card-bg); border:1px solid var(--color-border); display:flex; align-items:center; gap:7px; padding:0 11px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.6"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg><span style="font-size:9.5px; color:var(--color-text-faint);">fisioterapeuta cerca de mí</span></div>
+              <div style="position:absolute; left:50%; top:56%; transform:translate(-50%,-50%);"><span style="position:absolute; left:50%; top:50%; width:46px;height:46px;border-radius:50%; background:var(--color-primary); animation:sdpulse 2s ease-out infinite;"></span><svg width="32" height="32" viewBox="0 0 24 24" fill="var(--color-primary)" style="position:relative; display:block;"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"></path><circle cx="12" cy="9" r="2.6" fill="var(--color-on-primary)"></circle></svg></div>
+              <div style="position:absolute; right:13px; bottom:13px; background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:9px; padding:7px 11px; display:flex; align-items:center; gap:8px;"><span style="width:19px;height:19px;border-radius:6px; background:var(--color-primary); color:var(--color-on-primary); font-size:11px; font-weight:700; display:flex;align-items:center;justify-content:center;">1</span><span style="font-size:9.5px; color:var(--color-text); font-weight:600;">en tu zona</span></div>
+            </div>
+            <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:12px; padding:14px 16px;"><span style="font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-tag-ink);">Ejemplo</span><p style="font-size:13px; color:var(--color-text-soft); line-height:1.55; margin-top:5px;">Apareces en el top del mapa cuando buscan tu servicio cerca.</p></div>
+          </div>
+          <div style="background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:20px; padding:36px 32px; box-shadow:var(--shadow);">
+            <span style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--color-tag-ink); background:var(--color-tag-bg); padding:6px 13px; border-radius:999px;">Visibilidad</span>
+            <h3 style="font-family:var(--font-display); font-size:32px; font-weight:600; color:var(--color-text); margin:15px 0 12px; line-height:1.08;">SEO local</h3>
+            <p style="font-size:15.5px; color:var(--color-text-soft); line-height:1.7; margin-bottom:18px;">Posicionamiento en Google Maps y búsquedas locales para que te encuentren justo cuando buscan tu servicio cerca. Ficha de Google Business optimizada e informe mensual de métricas.</p>
+            <div style="display:flex; flex-direction:column; gap:9px; border-top:1px solid var(--color-border); padding-top:18px;">
+              <span style="display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--color-text);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>Ficha de Google Business optimizada</span>
+              <span style="display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--color-text);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>Informe mensual de posiciones</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- R5 Sistema de citas -->
+        <div data-row="" style="display:grid; grid-template-columns:1.05fr 1.15fr; gap:30px; align-items:center;">
+          <div style="background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:20px; padding:36px 32px; box-shadow:var(--shadow);">
+            <span style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--color-tag-ink); background:var(--color-tag-bg); padding:6px 13px; border-radius:999px;">Operativa</span>
+            <h3 style="font-family:var(--font-display); font-size:32px; font-weight:600; color:var(--color-text); margin:15px 0 12px; line-height:1.08;">Sistema de citas</h3>
+            <p style="font-size:15.5px; color:var(--color-text-soft); line-height:1.7; margin-bottom:18px;">Reservas online, recordatorios automáticos por WhatsApp y gestión de agenda en un solo panel. Adiós a las llamadas perdidas y a los huecos sin cubrir en tu día a día.</p>
+            <div style="display:flex; flex-direction:column; gap:9px; border-top:1px solid var(--color-border); padding-top:18px;">
+              <span style="display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--color-text);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>Reservas online 24/7</span>
+              <span style="display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--color-text);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>Recordatorios automáticos</span>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="position:relative; aspect-ratio:16/10; border-radius:16px; overflow:hidden; border:1px solid var(--color-border); background:var(--color-card-bg); box-shadow:var(--shadow); padding:16px 18px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;"><span style="font-family:var(--font-display); font-size:17px; font-weight:600; color:var(--color-text);">Octubre</span><span style="display:flex; align-items:center; gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--color-primary);"></span><span style="font-size:9px;color:var(--color-text-faint);">Reservado</span></span></div>
+              <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:7px;">
+                <span style="font-size:9px;color:var(--color-text-faint);text-align:center;">L</span><span style="font-size:9px;color:var(--color-text-faint);text-align:center;">M</span><span style="font-size:9px;color:var(--color-text-faint);text-align:center;">X</span><span style="font-size:9px;color:var(--color-text-faint);text-align:center;">J</span><span style="font-size:9px;color:var(--color-text-faint);text-align:center;">V</span>
+                <span style="height:26px;border-radius:6px;background:var(--color-surface-2);"></span><span style="height:26px;border-radius:6px;background:var(--color-primary);color:var(--color-on-primary);font-size:8.5px;font-weight:600;display:flex;align-items:center;justify-content:center;">10:00</span><span style="height:26px;border-radius:6px;background:var(--color-surface-2);"></span><span style="height:26px;border-radius:6px;background:var(--color-primary);color:var(--color-on-primary);font-size:8.5px;font-weight:600;display:flex;align-items:center;justify-content:center;">17:30</span><span style="height:26px;border-radius:6px;background:var(--color-surface-2);"></span>
+                <span style="height:26px;border-radius:6px;background:var(--color-primary);color:var(--color-on-primary);font-size:8.5px;font-weight:600;display:flex;align-items:center;justify-content:center;">12:15</span><span style="height:26px;border-radius:6px;background:var(--color-surface-2);"></span><span style="height:26px;border-radius:6px;background:var(--color-surface-2);"></span><span style="height:26px;border-radius:6px;background:var(--color-primary);color:var(--color-on-primary);font-size:8.5px;font-weight:600;display:flex;align-items:center;justify-content:center;">09:30</span><span style="height:26px;border-radius:6px;background:var(--color-surface-2);"></span>
+              </div>
+            </div>
+            <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:12px; padding:14px 16px;"><span style="font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-tag-ink);">Ejemplo</span><p style="font-size:13px; color:var(--color-text-soft); line-height:1.55; margin-top:5px;">Menos llamadas y cero huecos: el cliente reserva 24/7 desde el móvil.</p></div>
+          </div>
+        </div>
+
+        <!-- R6 Conexión ERP (invertido) -->
+        <div data-row="" style="display:grid; grid-template-columns:1.15fr 1.05fr; gap:30px; align-items:center;">
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="position:relative; aspect-ratio:16/10; border-radius:16px; overflow:hidden; border:1px solid var(--color-border); background:linear-gradient(160deg,var(--color-bg-2),var(--color-surface)); box-shadow:var(--shadow); display:flex; align-items:center; justify-content:center;">
+              <div style="z-index:2; width:74px; text-align:center;"><div style="width:50px;height:50px;margin:0 auto;border-radius:13px;background:var(--color-card-bg);border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line></svg></div><div style="font-size:9.5px;color:var(--color-text-soft);margin-top:7px;">Tu web</div></div>
+              <div style="position:relative; width:90px; height:2px; background:var(--color-border); margin:0 4px;"><span style="position:absolute; top:50%; transform:translateY(-50%); width:9px;height:9px;border-radius:50%;background:var(--color-primary); animation:sdflow 2.4s linear infinite;"></span></div>
+              <div style="z-index:2; width:74px; text-align:center;"><div style="width:50px;height:50px;margin:0 auto;border-radius:13px;background:var(--color-primary);display:flex;align-items:center;justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-on-primary)" stroke-width="1.8"><ellipse cx="12" cy="6" rx="8" ry="3"></ellipse><path d="M4 6v12c0 1.6 3.6 3 8 3s8-1.4 8-3V6"></path></svg></div><div style="font-size:9.5px;color:var(--color-text-soft);margin-top:7px;">ERP</div></div>
+            </div>
+            <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:12px; padding:14px 16px;"><span style="font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--color-tag-ink);">Ejemplo</span><p style="font-size:13px; color:var(--color-text-soft); line-height:1.55; margin-top:5px;">Tu web habla con tu ERP: presupuesto y stock sin teclear nada.</p></div>
+          </div>
+          <div style="background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:20px; padding:36px 32px; box-shadow:var(--shadow);">
+            <span style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--color-tag-ink); background:var(--color-tag-bg); padding:6px 13px; border-radius:999px;">Integración</span>
+            <h3 style="font-family:var(--font-display); font-size:32px; font-weight:600; color:var(--color-text); margin:15px 0 12px; line-height:1.08;">Conexión ERP</h3>
+            <p style="font-size:15.5px; color:var(--color-text-soft); line-height:1.7; margin-bottom:18px;">Conectamos tu web o chatbot con tu ERP (Holded, Odoo y más). Presupuestos automáticos, stock en tiempo real y pedidos que entran sin intervención manual.</p>
+            <div style="display:flex; flex-direction:column; gap:9px; border-top:1px solid var(--color-border); padding-top:18px;">
+              <span style="display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--color-text);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>Integración con Holded, Odoo y más</span>
+              <span style="display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--color-text);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>Stock y pedidos en tiempo real</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+<!-- ===== SECTORES ===== -->
+  <section id="sectores" style="background:var(--color-bg-2); padding:84px 0;">
+    <div style="max-width:1180px; margin:0 auto; padding:0 26px;">
+      <div style="max-width:62ch; margin-bottom:44px;">
+        <div style="font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--color-accent); font-weight:600; margin-bottom:14px;">A quién ayudamos</div>
+        <h2 style="font-family:var(--font-display); font-size:clamp(28px,4vw,44px); line-height:1.08; letter-spacing:-0.01em; font-weight:600; color:var(--color-text);">Sectores con los que <em style="font-style:normal; color:var(--color-primary);">trabajamos</em></h2>
+        <p style="color:var(--color-text-soft); font-size:17px; margin-top:14px; line-height:1.7;">Nos especializamos en pocos sectores para conocerlos a fondo. Hablamos el idioma de tu negocio y sabemos qué necesita tu cliente.</p>
+      </div>
+      <div data-secgrid="" style="display:grid; grid-template-columns:1fr 1fr; gap:22px;">
+
+        <div style="background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:18px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column;">
+          <div style="position:relative; height:150px; background:linear-gradient(135deg,var(--color-primary),var(--color-secondary)); display:flex; align-items:center; justify-content:center; overflow:hidden;">
+            <div style="position:absolute; width:170px;height:170px;border-radius:50%;border:1.5px solid var(--color-on-primary); opacity:.18; top:-50px; right:-40px;"></div>
+            <div style="position:absolute; width:90px;height:90px;border-radius:50%;border:1.5px solid var(--color-on-primary); opacity:.16; bottom:-26px; left:18px;"></div>
+            <svg width="62" height="62" viewBox="0 0 48 48" fill="var(--color-on-primary)" style="position:relative; z-index:1;"><circle cx="15" cy="18" r="4.2"></circle><circle cx="24" cy="13.5" r="4.6"></circle><circle cx="33" cy="18" r="4.2"></circle><circle cx="38" cy="27" r="3.8"></circle><circle cx="10" cy="27" r="3.8"></circle><path d="M24 22c-5.5 0-10 4.8-10 9.4 0 3.4 2.7 5.1 6 5.1 1.7 0 2.8-.7 4-.7s2.3.7 4 .7c3.3 0 6-1.7 6-5.1C34 26.8 29.5 22 24 22z"></path></svg>
+          </div>
+          <div style="padding:22px 24px;">
+            <h3 style="font-family:var(--font-display); font-size:23px; font-weight:600; color:var(--color-text); margin-bottom:8px;">Veterinarias</h3>
+            <p style="font-size:14px; color:var(--color-text-soft); line-height:1.65;">Webs y reservas para clínicas veterinarias: fichas de servicios, citas online y recordatorios para que ningún paciente se quede sin revisión.</p>
+          </div>
+        </div>
+
+        <div style="background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:18px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column;">
+          <div style="position:relative; height:150px; background:linear-gradient(135deg,var(--color-primary),var(--color-secondary)); display:flex; align-items:center; justify-content:center; overflow:hidden;">
+            <div style="position:absolute; width:170px;height:170px;border-radius:50%;border:1.5px solid var(--color-on-primary); opacity:.18; top:-50px; right:-40px;"></div>
+            <div style="position:absolute; width:90px;height:90px;border-radius:50%;border:1.5px solid var(--color-on-primary); opacity:.16; bottom:-26px; left:18px;"></div>
+            <svg width="62" height="62" viewBox="0 0 48 48" fill="none" stroke="var(--color-on-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="position:relative; z-index:1;"><path d="M24 6c2.5 7 4.5 9 11.5 11.5C28.5 20 26.5 22 24 29c-2.5-7-4.5-9-11.5-11.5C19.5 15 21.5 13 24 6z" fill="var(--color-on-primary)" stroke="none"></path><path d="M36 30c1.2 3.3 2.1 4.2 5.4 5.4-3.3 1.2-4.2 2.1-5.4 5.4-1.2-3.3-2.1-4.2-5.4-5.4 3.3-1.2 4.2-2.1 5.4-5.4z" fill="var(--color-on-primary)" stroke="none"></path><circle cx="13" cy="34" r="2.4" fill="var(--color-on-primary)" stroke="none"></circle></svg>
+          </div>
+          <div style="padding:22px 24px;">
+            <h3 style="font-family:var(--font-display); font-size:23px; font-weight:600; color:var(--color-text); margin-bottom:8px;">Servicios de estética</h3>
+            <p style="font-size:14px; color:var(--color-text-soft); line-height:1.65;">Presencia digital para centros de estética y belleza: catálogo de tratamientos, reservas online y campañas que llenan la agenda.</p>
+          </div>
+        </div>
+
+        <div style="background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:18px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column;">
+          <div style="position:relative; height:150px; background:linear-gradient(135deg,var(--color-primary),var(--color-secondary)); display:flex; align-items:center; justify-content:center; overflow:hidden;">
+            <div style="position:absolute; width:170px;height:170px;border-radius:50%;border:1.5px solid var(--color-on-primary); opacity:.18; top:-50px; right:-40px;"></div>
+            <div style="position:absolute; width:90px;height:90px;border-radius:50%;border:1.5px solid var(--color-on-primary); opacity:.16; bottom:-26px; left:18px;"></div>
+            <svg width="62" height="62" viewBox="0 0 48 48" fill="var(--color-on-primary)" style="position:relative; z-index:1;"><path d="M24 8c-5 0-7-2-11-2C8 6 6 10 6 17c0 8 3 14 5 19 1.5 3.8 3 5 4.5 5 2 0 2.2-3 3-6 .7-2.6 1.5-4 5.5-4s4.8 1.4 5.5 4c.8 3 1 6 3 6 1.5 0 3-1.2 4.5-5 2-5 5-11 5-19 0-7-2-11-7-11-4 0-6 2-11 2z"></path></svg>
+          </div>
+          <div style="padding:22px 24px;">
+            <h3 style="font-family:var(--font-display); font-size:23px; font-weight:600; color:var(--color-text); margin-bottom:8px;">Clínicas dentales</h3>
+            <p style="font-size:14px; color:var(--color-text-soft); line-height:1.65;">Captación de pacientes para clínicas dentales: SEO local, reseñas y un sistema de citas que reduce las ausencias de última hora.</p>
+          </div>
+        </div>
+
+        <div style="background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:18px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column;">
+          <div style="position:relative; height:150px; background:linear-gradient(135deg,var(--color-primary),var(--color-secondary)); display:flex; align-items:center; justify-content:center; overflow:hidden;">
+            <div style="position:absolute; width:170px;height:170px;border-radius:50%;border:1.5px solid var(--color-on-primary); opacity:.18; top:-50px; right:-40px;"></div>
+            <div style="position:absolute; width:90px;height:90px;border-radius:50%;border:1.5px solid var(--color-on-primary); opacity:.16; bottom:-26px; left:18px;"></div>
+            <svg width="62" height="62" viewBox="0 0 48 48" fill="var(--color-on-primary)" style="position:relative; z-index:1;"><circle cx="24" cy="10" r="5"></circle><path d="M24 17c-3 0-5 2-5 5v9l-5 9a2.6 2.6 0 0 0 4.5 2.6L23 44h2l4.5 7.6A2.6 2.6 0 0 0 34 49l-5-9v-9c0-3-2-5-5-5z"></path><path d="M14 22l-5 3a2.4 2.4 0 0 0 2.4 4.1L17 26M34 22l5 3a2.4 2.4 0 0 1-2.4 4.1L31 26"></path></svg>
+          </div>
+          <div style="padding:22px 24px;">
+            <h3 style="font-family:var(--font-display); font-size:23px; font-weight:600; color:var(--color-text); margin-bottom:8px;">Fisioterapeutas</h3>
+            <p style="font-size:14px; color:var(--color-text-soft); line-height:1.65;">Webs para fisioterapeutas y osteópatas: explica tus terapias, posiciónate en tu zona y deja que tus pacientes reserven solos.</p>
+          </div>
+        </div>
+
+      </div>
+      <p style="font-size:13px; color:var(--color-text-faint); margin-top:22px; text-align:center;">Selección inicial — abierta a debate según el plan comercial.</p>
+    </div>
+  </section>
+
+  <!-- PAQUETES -->
+  <section id="paquetes" style="padding:var(--section-y) 0">
+    <div class="wrap">
+      <div style="text-align:center;max-width:60ch;margin:0 auto 44px">
+        <div style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--color-accent);font-weight:600;margin-bottom:14px">Paquetes</div>
+        <h2 style="font-family:var(--font-display);font-size:clamp(28px,4vw,44px);line-height:1.08;font-weight:600">Elige tu <em style="font-style:normal;color:var(--color-primary)">paquete</em></h2>
+      </div>
+      <div data-plans="" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch">
+        <div style="background:var(--color-card-bg);border:1px solid var(--color-border);border-radius:var(--radius);padding:32px 28px;display:flex;flex-direction:column">
+          <h3 style="font-family:var(--font-display);font-size:25px;font-weight:600;margin-bottom:6px">Presencia Digital</h3>
+          <p style="font-size:13.5px;color:var(--color-text-soft);margin-bottom:20px;line-height:1.6;flex:1">Lo esencial para existir online y que te encuentren.</p>
+          <a href="#" class="btn" style="text-align:center;background:transparent;color:var(--color-primary);border:1.5px solid var(--color-primary)">Solicitar presupuesto</a>
+        </div>
+        <div style="background:var(--color-card-bg);border:1px solid var(--color-primary);border-radius:var(--radius);padding:32px 28px;box-shadow:var(--shadow);position:relative;display:flex;flex-direction:column">
+          <span style="position:absolute;top:-13px;left:28px;background:var(--color-primary);color:var(--color-on-primary);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 13px;border-radius:999px">Más elegido</span>
+          <h3 style="font-family:var(--font-display);font-size:25px;font-weight:600;margin-bottom:6px">Presencia Activa</h3>
+          <p style="font-size:13.5px;color:var(--color-text-soft);margin-bottom:20px;line-height:1.6;flex:1">Presencia + marketing para crecer cada mes.</p>
+          <a href="#" class="btn b-primary" style="text-align:center">Solicitar presupuesto</a>
+        </div>
+        <div style="background:var(--color-card-bg);border:1px solid var(--color-border);border-radius:var(--radius);padding:32px 28px;display:flex;flex-direction:column">
+          <h3 style="font-family:var(--font-display);font-size:25px;font-weight:600;margin-bottom:6px">Negocio Conectado</h3>
+          <p style="font-size:13.5px;color:var(--color-text-soft);margin-bottom:20px;line-height:1.6;flex:1">Automatiza la operativa de punta a punta.</p>
+          <a href="#" class="btn" style="text-align:center;background:transparent;color:var(--color-primary);border:1.5px solid var(--color-primary)">Solicitar presupuesto</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- ===== CONTACTO ===== -->
+  <section id="contacto" style="background:var(--color-bg-2); padding:84px 0;">
+    <div data-contactgrid="" style="max-width:1180px; margin:0 auto; padding:0 26px; display:grid; grid-template-columns:1fr 1.1fr; gap:54px; align-items:start;">
+      <div>
+        <div style="font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--color-accent); font-weight:600; margin-bottom:14px;">Contacto</div>
+        <h2 style="font-family:var(--font-display); font-size:clamp(28px,4vw,44px); line-height:1.08; font-weight:600; color:var(--color-text);">Cuéntanos qué <em style="font-style:normal; color:var(--color-primary);">necesita</em> tu negocio</h2>
+        <p style="color:var(--color-text-soft); font-size:17px; margin-top:14px; max-width:42ch; line-height:1.7;">Primera consulta gratuita y sin compromiso. Te llamamos y te respondemos en menos de 24 horas.</p>
+        <a href="tel:+34600000000" style="display:inline-flex; align-items:center; gap:11px; margin-top:26px; font-size:16px; font-weight:600; color:var(--color-text);"><span style="width:40px;height:40px;border-radius:50%;background:var(--color-surface-2);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2.1z"></path></svg></span>+34 600 00 00 00</a>
+      </div>
+      <form  style="background:var(--color-card-bg); border:1px solid var(--color-border); border-radius:20px; padding:30px; box-shadow:var(--shadow);">
+        <div data-formrow="" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div><label style="display:block; font-size:13px; font-weight:600; color:var(--color-text-soft); margin-bottom:7px;">Nombre <span style="color:var(--color-primary);">*</span></label><input required="" type="text" placeholder="Tu nombre" style="width:100%; font-family:var(--font-sans); font-size:15px; color:var(--color-text); background:var(--color-surface); border:1px solid var(--color-border); border-radius:11px; padding:13px 14px; outline:none;"></div>
+          <div><label style="display:block; font-size:13px; font-weight:600; color:var(--color-text-soft); margin-bottom:7px;">Correo electrónico <span style="color:var(--color-primary);">*</span></label><input required="" type="email" placeholder="tu@email.com" style="width:100%; font-family:var(--font-sans); font-size:15px; color:var(--color-text); background:var(--color-surface); border:1px solid var(--color-border); border-radius:11px; padding:13px 14px; outline:none;"></div>
+        </div>
+        <div data-formrow="" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
+          <div><label style="display:block; font-size:13px; font-weight:600; color:var(--color-text-soft); margin-bottom:7px;">Teléfono</label><input type="tel" placeholder="600 00 00 00" style="width:100%; font-family:var(--font-sans); font-size:15px; color:var(--color-text); background:var(--color-surface); border:1px solid var(--color-border); border-radius:11px; padding:13px 14px; outline:none;"></div>
+          <div><label style="display:block; font-size:13px; font-weight:600; color:var(--color-text-soft); margin-bottom:7px;">Sector</label><select style="width:100%; font-family:var(--font-sans); font-size:15px; color:var(--color-text-soft); background:var(--color-surface); border:1px solid var(--color-border); border-radius:11px; padding:13px 14px; outline:none; cursor:pointer;"><option>Selecciona tu sector</option><option>Veterinaria</option><option>Servicios de estética</option><option>Clínica dental</option><option>Fisioterapia</option><option>Otro</option></select></div>
+        </div>
+        <div style="margin-top:16px;"><label style="display:block; font-size:13px; font-weight:600; color:var(--color-text-soft); margin-bottom:7px;">¿Qué necesitas?</label><textarea placeholder="Cuéntanos brevemente tu proyecto, servicio o producto..." style="width:100%; font-family:var(--font-sans); font-size:15px; color:var(--color-text); background:var(--color-surface); border:1px solid var(--color-border); border-radius:11px; padding:13px 14px; outline:none; min-height:120px; resize:vertical;"></textarea></div>
+        <button type="submit" style="width:100%; margin-top:22px; font-family:var(--font-sans); font-weight:600; font-size:15px; background:var(--color-primary); color:var(--color-on-primary); border:none; padding:15px; border-radius:999px; cursor:pointer;">Enviar consulta gratuita</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:var(--color-band);border-top:1px solid var(--color-band-border);padding:44px 0">
+    <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px">
+      <span style="font-family:var(--font-display);font-weight:600;font-size:21px;letter-spacing:1.5px;color:var(--color-logo-ink)">cénit <span style="font-family:var(--font-sans);font-size:8px;letter-spacing:5px;color:var(--color-logo-sub)">digital</span></span>
+      <span style="font-size:13.5px;color:var(--color-text-soft)">© 2025 Cénit Digital · Las Rozas, Madrid</span>
+      <div style="display:flex;gap:22px"><a href="#" style="font-size:13.5px;color:var(--color-text-soft)">Aviso legal</a><a href="mailto:hola@cenitdigital.es" style="font-size:13.5px;color:var(--color-text-soft)">hola@cenitdigital.es</a></div>
+    </div>
+  </footer>
+</body>
+</html>

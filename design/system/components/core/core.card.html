@@ -1,0 +1,33 @@
+<!-- @dsCard group="Components" viewport="700x250" subtitle="Button · Tag · Logo · Card" name="Core" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<style>
+ body{margin:0;font-family:var(--font-sans);background:var(--color-bg);color:var(--color-text);padding:22px;display:flex;flex-direction:column;gap:20px}
+ .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+ .btn{display:inline-block;font-weight:600;font-size:15px;padding:14px 28px;border-radius:999px;border:1.5px solid transparent}
+ .b-primary{background:var(--color-primary);color:var(--color-on-primary);border-color:var(--color-primary)}
+ .b-secondary{background:transparent;color:var(--color-primary);border-color:var(--color-primary)}
+ .b-ghost{background:transparent;color:var(--color-text);border-color:var(--color-border)}
+ .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-tag-ink);background:var(--color-tag-bg);padding:6px 13px;border-radius:999px}
+ .logo{display:inline-flex;align-items:center;gap:11px}
+ .wm{display:flex;flex-direction:column;line-height:1}
+ .wm b{font-family:var(--font-display);font-weight:600;font-size:23px;letter-spacing:1.5px;color:var(--color-logo-ink)}
+ .wm s{font-family:var(--font-sans);font-size:8px;letter-spacing:5px;text-transform:lowercase;color:var(--color-logo-sub);margin-top:3px;text-decoration:none}
+ .card{background:var(--color-card-bg);border:1px solid var(--color-primary);border-radius:20px;box-shadow:var(--shadow);padding:18px 20px;width:210px;position:relative}
+ .badge{position:absolute;top:-12px;left:20px;background:var(--color-primary);color:var(--color-on-primary);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 11px;border-radius:999px}
+ .card h4{font-family:var(--font-display);font-weight:600;font-size:19px;margin:6px 0 4px;color:var(--color-text)}
+ .card p{font-size:12.5px;color:var(--color-text-soft);margin:0}
+</style></head><body>
+ <div class="row">
+   <span class="logo">
+     <svg width="40" height="40" viewBox="0 0 80 80" fill="none" aria-hidden="true"><defs><linearGradient id="g" x1="12" y1="40" x2="68" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="var(--color-primary)"/><stop offset="100%" stop-color="var(--color-secondary)"/></linearGradient></defs><circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-ring)" stroke-width="1.8" stroke-opacity=".5"/><path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="url(#g)" stroke-width="3.2" stroke-linecap="round"/><circle cx="40" cy="20" r="3.8" fill="var(--color-zenith)"/></svg>
+     <span class="wm"><b>cénit</b><s>digital</s></span>
+   </span>
+   <span class="tag">Marketing</span>
+ </div>
+ <div class="row">
+   <span class="btn b-primary">Ver paquetes</span>
+   <span class="btn b-secondary">Hablar</span>
+   <span class="btn b-ghost">Ghost</span>
+   <div class="card"><span class="badge">Más elegido</span><h4>Presencia Activa</h4><p>Presencia + marketing para crecer.</p></div>
+ </div>
+</body></html>

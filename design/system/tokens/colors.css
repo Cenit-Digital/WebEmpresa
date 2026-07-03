@@ -1,0 +1,80 @@
+/* Color — Cénit Digital.
+   CLARO = Bosque & Limón (por defecto) · OSCURO = Noche & Oro ([data-theme='dark']).
+   Consumir siempre con var(--color-…). Valores exactos del diseño definitivo. */
+
+:root {
+  /* Marca / acción */
+  --color-primary: #1e7a4f; /* verde bosque */
+  --color-on-primary: #ffffff;
+  --color-secondary: #e3d34a; /* limón */
+  --color-accent: #1e7a4f;
+
+  /* Fondos y superficies */
+  --color-bg: #f2f4ef;
+  --color-bg-2: #e5e7e2;
+  --color-band: #d5d8d3;
+  --color-band-border: rgba(17, 32, 26, 0.16);
+  --color-surface: #fafbf9;
+  --color-surface-2: rgba(30, 122, 79, 0.1);
+  --color-card-bg: #ffffff;
+  --color-border: rgba(17, 32, 26, 0.14);
+
+  /* Texto */
+  --color-text: #0f1d17;
+  --color-text-soft: rgba(17, 32, 26, 0.66);
+  --color-text-faint: rgba(17, 32, 26, 0.45);
+
+  /* Etiquetas */
+  --color-tag-ink: #175d3c;
+  --color-tag-bg: rgba(30, 122, 79, 0.13);
+
+  /* Logotipo */
+  --color-logo-ink: #0f1d17;
+  --color-logo-sub: #1e7a4f;
+  --color-ring: #1e7a4f;
+  --color-zenith: #e3d34a;
+
+  /* Elevación */
+  --shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+
+  /* Alias heredados (deprecados; no usar en código nuevo) */
+  --color-soft: var(--color-secondary);
+  --color-brand: var(--color-primary);
+  --color-brand-mint: var(--color-secondary);
+}
+
+:root[data-theme='dark'] {
+  /* Marca / acción */
+  --color-primary: #c9a84c; /* oro */
+  --color-on-primary: #16121f;
+  --color-secondary: #7c5cbf; /* violeta noche */
+  --color-accent: #7c5cbf;
+
+  /* Fondos y superficies */
+  --color-bg: #12082a;
+  --color-bg-2: #281b2e;
+  --color-band: #251c3b;
+  --color-band-border: rgba(247, 244, 238, 0.12);
+  --color-surface: rgba(247, 244, 238, 0.05);
+  --color-surface-2: rgba(201, 168, 76, 0.16);
+  --color-card-bg: rgba(247, 244, 238, 0.045);
+  --color-border: rgba(201, 168, 76, 0.24);
+
+  /* Texto */
+  --color-text: #f7f4ee;
+  --color-text-soft: rgba(247, 244, 238, 0.66);
+  --color-text-faint: rgba(247, 244, 238, 0.4);
+
+  /* Etiquetas */
+  --color-tag-ink: #7c5cbf;
+  --color-tag-bg: rgba(201, 168, 76, 0.22);
+
+  /* Logotipo */
+  --color-logo-ink: #f7f4ee;
+  --color-logo-sub: #7c5cbf;
+  --color-ring: #c9a84c;
+  --color-zenith: #c9a84c;
+
+  /* Elevación */
+  --shadow: 0 22px 55px rgba(0, 0, 0, 0.5);
+}
