@@ -14,7 +14,8 @@
     "src/lib/nav.ts",
     "src/lib/useIsMobile.ts",
     "src/components/HeaderNav.tsx",
-    "src/components/MobileMenu.tsx"
+    "src/components/MobileMenu.tsx",
+    "src/components/Logo.tsx"
   ],
   "thresholds": {
     "high": 100,

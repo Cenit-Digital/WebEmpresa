@@ -1,34 +1,115 @@
-/* Design tokens — derivados de RF-MARCA-001 (Confluence DDS).
-   Modo claro = Teal Profundo · Modo oscuro = Océano y Coral · Marca = Azul Noche y Menta. */
+/* ============================================================================
+   Design tokens — Cénit Digital
+   Fuente de verdad: "Cenit Digital - Web (final)" (Claude Design) + RF-MARCA-001.
+   Paleta CLARA  = Bosque & Limón   ·  Paleta OSCURA = Noche & Oro
+   Tipografía    = Outfit (display) + DM Sans (texto) · "Geométrica"
+
+   Regla de consumo (docs/conventions.md): los colores se usan SIEMPRE con
+   var(--color-…). Los valores son literales exactos del diseño (no derivados
+   con color-mix) para garantizar fidelidad 1:1.
+
+   El tema se conmuta con [data-theme] en <html> (ver theme_selector):
+     ausencia de atributo / [data-theme='light']  -> Bosque & Limón (claro)
+     [data-theme='dark']                            -> Noche & Oro   (oscuro)
+   ========================================================================== */
 
 :root {
-  /* Tipografía (RF-MARCA-001 §4) */
-  --font-display: 'Outfit', system-ui, sans-serif;
-  --font-sans: 'DM Sans', system-ui, sans-serif;
+  /* ---- Tipografía (RF-MARCA-001 §4) ------------------------------------- */
+  --font-display: 'Outfit', system-ui, -apple-system, sans-serif; /* titulares + wordmark */
+  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif; /* texto e interfaz */
 
-  /* Layout */
-  --radius: 12px;
-  --maxw: 1080px;
+  /* ---- Layout / medidas (fieles al diseño) ------------------------------ */
+  --maxw: 1180px; /* ancho máximo del contenido */
+  --gutter: 26px; /* padding horizontal de página */
+  --section-y: 84px; /* ritmo vertical entre secciones */
 
-  /* Marca — Azul Noche y Menta (logo; independiente del tema) */
-  --color-brand: #2547e0;
-  --color-brand-mint: #4fcba4;
+  --radius: 20px; /* tarjetas grandes (servicios, paquetes, formulario) */
+  --radius-md: 16px; /* mockups / media */
+  --radius-sm: 12px; /* superficies pequeñas, "Ejemplo", inputs */
+  --radius-pill: 999px; /* botones y etiquetas */
 
-  /* Tema claro — Teal Profundo */
-  --color-bg: #eef6f4; /* surface */
-  --color-text: #07211f; /* ink */
-  --color-primary: #0e8a82;
-  --color-soft: #5fd4cb;
-  --color-accent: #e0b25a;
-  --color-border: #d4e6e2; /* derivado para bordes en claro */
+  /* ======================================================================
+     TEMA CLARO — Bosque & Limón  (valor por defecto)
+     ====================================================================== */
+
+  /* Marca / acción */
+  --color-primary: #1e7a4f; /* verde bosque */
+  --color-on-primary: #ffffff; /* texto sobre primary */
+  --color-secondary: #e3d34a; /* limón (2.º color de marca / degradados) */
+  --color-accent: #1e7a4f; /* eyebrows y detalles */
+
+  /* Fondos y superficies */
+  --color-bg: #f2f4ef; /* fondo base */
+  --color-bg-2: #e5e7e2; /* fondo alterno de sección */
+  --color-band: #d5d8d3; /* franja de nav y footer */
+  --color-band-border: rgba(17, 32, 26, 0.16);
+  --color-surface: #fafbf9; /* superficie sutil (inputs, notas) */
+  --color-surface-2: rgba(30, 122, 79, 0.1); /* superficie tintada de primary */
+  --color-card-bg: #ffffff; /* fondo de tarjeta */
+  --color-border: rgba(17, 32, 26, 0.14);
+
+  /* Texto */
+  --color-text: #0f1d17; /* texto principal */
+  --color-text-soft: rgba(17, 32, 26, 0.66); /* texto secundario */
+  --color-text-faint: rgba(17, 32, 26, 0.45); /* texto terciario / metadatos */
+
+  /* Etiquetas (tag pills) */
+  --color-tag-ink: #175d3c;
+  --color-tag-bg: rgba(30, 122, 79, 0.13);
+
+  /* Logotipo (icono "Órbita" + wordmark) */
+  --color-logo-ink: #0f1d17; /* "cénit" */
+  --color-logo-sub: #1e7a4f; /* "digital" */
+  --color-ring: #1e7a4f; /* anillo de la órbita */
+  --color-zenith: #e3d34a; /* punto cénit (limón en claro) */
+
+  /* Sombra de elevación */
+  --shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+
+  /* ---- Alias heredados (DEPRECADOS) ------------------------------------
+     Se mantienen solo para no romper el scaffold previo (Logo antiguo,
+     home.module.scss placeholder). No usar en código nuevo; migrar a los
+     tokens de arriba y eliminar cuando ya no queden referencias. */
+  --color-soft: var(--color-secondary);
+  --color-brand: var(--color-primary);
+  --color-brand-mint: var(--color-secondary);
 }
 
+/* ========================================================================
+   TEMA OSCURO — Noche & Oro
+   ======================================================================== */
 :root[data-theme='dark'] {
-  /* Tema oscuro — Océano y Coral */
-  --color-bg: #0a2740; /* bg */
-  --color-text: #f1f6f9; /* surface */
-  --color-primary: #1e6fa8;
-  --color-soft: #5fd4cb;
-  --color-accent: #f2675c; /* coral */
-  --color-border: #1c466b; /* derivado para bordes en oscuro */
+  /* Marca / acción */
+  --color-primary: #c9a84c; /* oro */
+  --color-on-primary: #16121f; /* texto sobre primary */
+  --color-secondary: #7c5cbf; /* violeta noche (2.º color / degradados) */
+  --color-accent: #7c5cbf; /* eyebrows y detalles */
+
+  /* Fondos y superficies */
+  --color-bg: #12082a; /* noche profunda */
+  --color-bg-2: #281b2e;
+  --color-band: #251c3b;
+  --color-band-border: rgba(247, 244, 238, 0.12);
+  --color-surface: rgba(247, 244, 238, 0.05);
+  --color-surface-2: rgba(201, 168, 76, 0.16);
+  --color-card-bg: rgba(247, 244, 238, 0.045);
+  --color-border: rgba(201, 168, 76, 0.24);
+
+  /* Texto */
+  --color-text: #f7f4ee;
+  --color-text-soft: rgba(247, 244, 238, 0.66);
+  --color-text-faint: rgba(247, 244, 238, 0.4);
+
+  /* Etiquetas */
+  --color-tag-ink: #7c5cbf;
+  --color-tag-bg: rgba(201, 168, 76, 0.22);
+
+  /* Logotipo */
+  --color-logo-ink: #f7f4ee;
+  --color-logo-sub: #7c5cbf;
+  --color-ring: #c9a84c;
+  --color-zenith: #c9a84c; /* punto cénit (oro en oscuro) */
+
+  /* Sombra */
+  --shadow: 0 22px 55px rgba(0, 0, 0, 0.5);
 }
