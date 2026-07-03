@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" fill="none">
+  <title>Cénit Digital — icono Órbita</title>
+  <defs>
+    <linearGradient id="orbita-claro" x1="12" y1="40" x2="68" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1E7A4F"></stop>
+      <stop offset="100%" stop-color="#E3D34A"></stop>
+    </linearGradient>
+  </defs>
+  <circle cx="40" cy="40" r="30" fill="none" stroke="#1E7A4F" stroke-width="1.8" stroke-opacity=".5"></circle>
+  <path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="url(#orbita-claro)" stroke-width="3.2" stroke-linecap="round"></path>
+  <circle cx="40" cy="20" r="3.8" fill="#E3D34A"></circle>
+</svg>

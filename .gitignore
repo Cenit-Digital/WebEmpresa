@@ -31,3 +31,6 @@ Thumbs.db
 
 # vite-react-ssg
 .vite-react-ssg-temp/
+
+# Paquetes de entrega (design handoff, etc.)
+*.zip

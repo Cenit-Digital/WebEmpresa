@@ -1,0 +1,19 @@
+<!-- @dsCard group="Components" viewport="700x260" subtitle="Field — input, select, textarea" name="Formulario" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<style>
+ body{margin:0;font-family:var(--font-sans);background:var(--color-bg);color:var(--color-text);padding:22px}
+ .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:560px}
+ label{display:block}
+ .lab{display:block;font-size:13px;font-weight:600;color:var(--color-text-soft);margin-bottom:7px}
+ .req{color:var(--color-primary)}
+ .ctl{width:100%;font-family:var(--font-sans);font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-border);border-radius:11px;padding:13px 14px;outline:none;box-sizing:border-box}
+ .full{grid-column:1 / -1}
+ textarea.ctl{min-height:74px;resize:vertical}
+</style></head><body>
+ <div class="grid">
+   <label><span class="lab">Nombre <span class="req">*</span></span><input class="ctl" placeholder="Tu nombre"></label>
+   <label><span class="lab">Correo electrónico <span class="req">*</span></span><input class="ctl" placeholder="tu@email.com"></label>
+   <label class="full"><span class="lab">Sector</span><select class="ctl" style="color:var(--color-text-soft)"><option>Selecciona tu sector</option><option>Veterinaria</option></select></label>
+   <label class="full"><span class="lab">¿Qué necesitas?</span><textarea class="ctl" placeholder="Cuéntanos tu proyecto..."></textarea></label>
+ </div>
+</body></html>

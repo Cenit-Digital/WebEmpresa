@@ -1,0 +1,6 @@
+/* Cénit Digital — Design System · punto de entrada global.
+   Los consumidores enlazan SOLO este archivo. Aquí van únicamente @imports. */
+@import "tokens/fonts.css";
+@import "tokens/colors.css";
+@import "tokens/typography.css";
+@import "tokens/spacing.css";

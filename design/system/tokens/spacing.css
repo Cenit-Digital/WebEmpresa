@@ -1,0 +1,14 @@
+/* Layout y espaciado — Cénit Digital. Medidas fieles al diseño definitivo. */
+
+:root {
+  /* Contenedor */
+  --maxw: 1180px; /* ancho máximo del contenido */
+  --gutter: 26px; /* padding horizontal de página */
+  --section-y: 84px; /* ritmo vertical de sección */
+
+  /* Radios */
+  --radius: 20px; /* tarjetas grandes */
+  --radius-md: 16px; /* mockups / media */
+  --radius-sm: 12px; /* superficies pequeñas, inputs */
+  --radius-pill: 999px; /* botones y etiquetas */
+}

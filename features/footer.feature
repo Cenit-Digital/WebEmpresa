@@ -1,23 +1,27 @@
-# Pertenece a WEB-4 (home_layout)
 Feature: Pie de página
-  Como visitante de la web de Cénit Digital
-  quiero ver los datos de contacto y el aviso legal en el pie
-  para encontrar esa información desde cualquier página.
+  Como visitante quiero tener siempre a mano el copyright, el aviso legal y un
+  contacto directo, para confiar en quién está detrás de la web.
 
   @s1
-  Scenario: El pie muestra el copyright con el año actual
-    Given estoy en cualquier página
-    When miro el pie de página
-    Then veo el texto "© <año actual> Cénit Digital. Todos los derechos reservados."
+  Scenario: Copyright con el año actual
+    Given la home renderizada
+    When leo el texto del pie
+    Then contiene "© " seguido del año actual y "Cénit Digital"
 
   @s2
-  Scenario: El pie enlaza al aviso legal
-    Given estoy en cualquier página
-    When pulso el enlace "Aviso legal" del pie
-    Then navego a "/aviso-legal"
+  Scenario: Enlace a Aviso legal
+    Given el pie renderizado
+    When localizo el enlace "Aviso legal"
+    Then su href es "/aviso-legal"
 
   @s3
-  Scenario: El pie muestra un enlace de correo de contacto
-    Given estoy en cualquier página
-    When miro el pie de página
-    Then veo un enlace "hola@cenitdigital.es" con destino "mailto:hola@cenitdigital.es"
+  Scenario: Enlace de contacto por correo
+    Given el pie renderizado
+    When localizo el enlace de correo
+    Then su href es "mailto:hola@cenitdigital.es"
+
+  @s4
+  Scenario: No se muestran enlaces fuera de alcance
+    Given el pie renderizado
+    When busco enlaces "Privacidad" o "Cookies"
+    Then no existe ninguno de esos enlaces (no hay páginas de destino todavía)

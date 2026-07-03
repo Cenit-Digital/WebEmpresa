@@ -1,0 +1,28 @@
+/* Tipografía — Cénit Digital · "Geométrica": Outfit (display) + DM Sans (texto).
+   Los archivos de fuente se declaran con @font-face en tokens/fonts.css
+   (mismos archivos @fontsource que el repo de producción). */
+
+:root {
+  /* Familias */
+  --font-display: 'Outfit', system-ui, -apple-system, sans-serif; /* titulares + wordmark */
+  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif; /* texto e interfaz */
+
+  /* Escala de tamaños (fiel al diseño) */
+  --text-h1: clamp(34px, 5.4vw, 62px);
+  --text-h2: clamp(28px, 4vw, 44px);
+  --text-h3: 32px; /* tarjeta de servicio */
+  --text-lead: 19px;
+  --text-body: 15.5px;
+  --text-eyebrow: 12px;
+  --text-tag: 11px;
+
+  /* Pesos */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Rasgos de interletraje habituales */
+  --tracking-eyebrow: 0.22em;
+  --tracking-tag: 0.1em;
+}
