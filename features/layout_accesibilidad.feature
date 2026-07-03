@@ -1,29 +1,27 @@
-# Pertenece a WEB-4 (home_layout)
 Feature: Accesibilidad y SEO de base del layout
-  Como visitante que navega por teclado o lector de pantalla, y como buscador
-  quiero un enlace para saltar al contenido y un título propio por página
-  para poder usar la web sin depender del ratón y para que cada página se identifique bien en buscadores.
+  Como usuario de teclado quiero saltar directo al contenido y que cada página
+  se identifique bien, para navegar rápido y aparecer correctamente en buscadores.
 
   @s1
-  Scenario: El enlace "saltar al contenido" es lo primero enfocable
-    Given estoy en cualquier página y navego solo con teclado
-    When pulso Tab nada más cargar la página
-    Then el primer elemento enfocable es el enlace "Saltar al contenido"
+  Scenario: El primer elemento enfocable es "Saltar al contenido"
+    Given la home recién cargada
+    When pulso Tab una vez desde el inicio del documento
+    Then el elemento con foco es un enlace con texto "Saltar al contenido"
 
   @s2
-  Scenario: Activar el enlace "saltar al contenido" mueve el foco al contenido principal
-    Given el enlace "Saltar al contenido" tiene el foco
+  Scenario: El enlace de salto mueve el foco al contenido
+    Given el foco en el enlace "Saltar al contenido"
     When lo activo
-    Then el foco pasa al contenedor principal "#contenido"
+    Then el destino "#contenido" recibe el foco
 
   @s3
-  Scenario: La home usa el título del sitio
-    Given estoy en la home
-    When compruebo la etiqueta <title>
-    Then el título es exactamente "Cénit Digital"
+  Scenario: La home lleva su propio título
+    Given la ruta "/"
+    When se prerenderiza la página
+    Then el <title> del documento es exactamente "Cénit Digital — Soluciones digitales para pymes"
 
   @s4
-  Scenario: Una página interior compone su título con el nombre del sitio
-    Given estoy en la página de "Aviso legal"
-    When compruebo la etiqueta <title>
-    Then el título es exactamente "Aviso legal — Cénit Digital"
+  Scenario: Las páginas interiores llevan su propio título
+    Given la ruta "/aviso-legal"
+    When se prerenderiza la página
+    Then el <title> del documento es exactamente "Aviso legal — Cénit Digital"

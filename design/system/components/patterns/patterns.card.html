@@ -1,0 +1,30 @@
+<!-- @dsCard group="Components" viewport="700x330" subtitle="Nav (con menú móvil) y ServiceRow" name="Patrones" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<style>
+ body{margin:0;font-family:var(--font-sans);background:var(--color-bg);color:var(--color-text)}
+ .nav{background:var(--color-band);border-bottom:1px solid var(--color-band-border);display:flex;align-items:center;justify-content:space-between;padding:12px 20px}
+ .lg{display:inline-flex;align-items:center;gap:9px}
+ .lg b{font-family:var(--font-display);font-weight:600;font-size:19px;letter-spacing:1.5px;color:var(--color-logo-ink)}
+ .links{display:flex;gap:18px;align-items:center}
+ .links a{font-size:13.5px;font-weight:500;color:var(--color-text-soft);text-decoration:none}
+ .cta{font-size:13px;font-weight:600;color:var(--color-on-primary);background:var(--color-primary);padding:8px 16px;border-radius:999px}
+ .row{display:grid;grid-template-columns:1.05fr 1.15fr;gap:20px;align-items:center;padding:20px}
+ .card{background:var(--color-card-bg);border:1px solid var(--color-border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+ .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-tag-ink);background:var(--color-tag-bg);padding:5px 12px;border-radius:999px}
+ .card h3{font-family:var(--font-display);font-weight:600;font-size:24px;margin:12px 0 8px}
+ .card p{font-size:13.5px;color:var(--color-text-soft);line-height:1.6;margin:0}
+ .mock{aspect-ratio:16/10;border-radius:var(--radius-md);border:1px solid var(--color-border);background:linear-gradient(160deg,var(--color-bg-2),var(--color-surface));box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center}
+ .mock span{font-family:var(--font-display);font-size:24px;letter-spacing:2px;color:var(--color-primary);opacity:.6}
+</style></head><body>
+ <div class="nav">
+   <span class="lg">
+     <svg width="30" height="30" viewBox="0 0 80 80" fill="none"><defs><linearGradient id="p" x1="12" y1="40" x2="68" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="var(--color-primary)"/><stop offset="100%" stop-color="var(--color-secondary)"/></linearGradient></defs><circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-ring)" stroke-width="1.8" stroke-opacity=".5"/><path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="url(#p)" stroke-width="3.2" stroke-linecap="round"/><circle cx="40" cy="20" r="3.8" fill="var(--color-zenith)"/></svg>
+     <b>cénit</b>
+   </span>
+   <span class="links"><a>Servicios</a><a>Sectores</a><a>Paquetes</a><span class="cta">Hablamos</span></span>
+ </div>
+ <div class="row">
+   <div class="card"><span class="tag">IA</span><h3>Chatbot WhatsApp</h3><p>Asistente con IA que atiende 24/7, resuelve dudas y agenda citas.</p></div>
+   <div class="mock"><span>mockup</span></div>
+ </div>
+</body></html>

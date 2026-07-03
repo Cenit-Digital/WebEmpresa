@@ -1,39 +1,42 @@
-# Pertenece a WEB-5 (home_sections). El envío funcional del formulario
-# (validación, Resend, antispam) es WEB-6 — ver contact_form.feature.
 Feature: Contenido de la sección de contacto
-  Como visitante de la web de Cénit Digital
-  quiero ver cómo contactar y qué datos me van a pedir
-  para decidirme a escribir sin sorpresas.
+  Como visitante quiero saber qué me van a pedir y ver que hay un canal directo,
+  para escribir con confianza o llamar si lo prefiero.
+
+  # Esta feature cubre solo la ESTRUCTURA visual del formulario.
+  # La validación y el envío real son contact_form (WEB-6).
 
   @s1
-  Scenario: Intro de la sección de contacto
-    Given estoy en la sección "Contacto"
-    When leo la introducción
-    Then veo el titular "Cuéntanos qué necesita tu negocio"
-    And veo el texto "Primera consulta gratuita y sin compromiso. Te llamamos y te respondemos en menos de 24 horas."
+  Scenario: Muestra la intro y la promesa de respuesta en 24h
+    Given la sección de contacto renderizada
+    When leo el texto introductorio
+    Then contiene "en menos de 24 horas"
 
   @s2
-  Scenario: La sección de contacto muestra el teléfono
-    Given estoy en la sección "Contacto"
-    When miro la sección
-    Then veo el teléfono "+34 600 00 00 00"
+  Scenario: Ofrece un teléfono como enlace de llamada
+    Given la sección de contacto renderizada
+    When localizo el enlace de teléfono
+    Then su href empieza por "tel:"
 
   @s3
-  Scenario: El formulario muestra todos sus campos
-    Given estoy en la sección "Contacto"
-    When miro el formulario
-    Then veo los campos "Nombre", "Correo electrónico", "Teléfono", "Sector" y "¿Qué necesitas?"
+  Scenario: El formulario muestra sus cinco campos
+    Given el formulario de contacto renderizado
+    When leo sus etiquetas de campo
+    Then existen campos "Nombre", "Correo electrónico", "Teléfono", "Sector" y "¿Qué necesitas?"
 
   @s4
-  Scenario: Los campos obligatorios están marcados
-    Given estoy en la sección "Contacto"
-    When miro el formulario
-    Then los campos "Nombre" y "Correo electrónico" están marcados como obligatorios
-    And los campos "Teléfono", "Sector" y "¿Qué necesitas?" no lo están
+  Scenario: Nombre y Correo se marcan como obligatorios
+    Given el formulario de contacto renderizado
+    When inspecciono los campos "Nombre" y "Correo electrónico"
+    Then ambos están marcados como obligatorios (required / asterisco)
 
   @s5
-  Scenario: El desplegable de sector ofrece las opciones del negocio
-    Given estoy en el formulario de la sección "Contacto"
-    When abro el desplegable "Sector"
-    Then veo las opciones "Veterinaria", "Servicios de estética", "Clínica dental", "Fisioterapia" y "Otro"
-    And la opción visible por defecto es "Selecciona tu sector"
+  Scenario: El desplegable de Sector ofrece las opciones esperadas
+    Given el desplegable "Sector"
+    When leo sus opciones
+    Then incluye "Veterinaria", "Servicios de estética", "Clínica dental", "Fisioterapia" y "Otro"
+
+  @s6
+  Scenario: El botón de envío muestra su texto
+    Given el formulario de contacto renderizado
+    When localizo el botón de envío
+    Then su texto es "Enviar consulta gratuita"

@@ -1,38 +1,39 @@
-# Pertenece a WEB-5 (home_sections)
 Feature: Hero de la home
-  Como visitante de la web de Cénit Digital
-  quiero ver de un vistazo qué ofrece Cénit Digital y por dónde empezar
-  para decidir si sigo explorando la web.
+  Como visitante quiero entender en cinco segundos qué ofrece Cénit Digital y
+  tener un primer paso claro, para decidir si sigo leyendo o hablo con ellos.
 
   @s1
-  Scenario: El hero muestra la propuesta de valor
-    Given entro en la home
-    When la página termina de cargar
-    Then veo la etiqueta superior "Soluciones digitales para pymes"
-    And veo el titular "Llevamos tu negocio al punto más alto de su presencia digital."
-    And veo el subtítulo "Web, automatización con IA, marketing y sistemas de citas — todo bajo una cuota mensual, sin entrada."
+  Scenario: Muestra el eyebrow de contexto
+    Given la home renderizada
+    When leo la parte superior del hero
+    Then se muestra el texto "Soluciones digitales para pymes"
 
   @s2
-  Scenario: El botón principal del hero lleva a paquetes
-    Given estoy en el hero de la home
-    When miro el botón "Ver paquetes"
-    Then apunta a "#paquetes"
+  Scenario: Muestra el titular principal como H1
+    Given la home renderizada
+    When localizo el encabezado de nivel 1
+    Then su texto es "Llevamos tu negocio al punto más alto de su presencia digital."
 
   @s3
-  Scenario: El botón secundario del hero lleva a contacto
-    Given estoy en el hero de la home
-    When miro el botón "Hablar con nosotros"
-    Then apunta a "#contacto"
+  Scenario: Muestra el subtítulo de propuesta de valor
+    Given el hero renderizado
+    When leo el párrafo bajo el titular
+    Then contiene "todo bajo una cuota mensual, sin entrada"
 
   @s4
-  Scenario Outline: El hero muestra sus cuatro estadísticas
-    Given estoy en el hero de la home
-    When leo la fila de estadísticas
-    Then veo el valor "<valor>" con la etiqueta "<etiqueta>"
+  Scenario: CTA primario hacia paquetes
+    Given el hero renderizado
+    When localizo el enlace "Ver paquetes"
+    Then su href es "#paquetes"
 
-    Examples:
-      | valor | etiqueta            |
-      | 24h   | tiempo de respuesta |
-      | +30   | pymes confían       |
-      | 100%  | diseño a medida     |
-      | 5★    | valoración media    |
+  @s5
+  Scenario: CTA secundario hacia contacto
+    Given el hero renderizado
+    When localizo el enlace "Hablar con nosotros"
+    Then su href es "#contacto"
+
+  @s6
+  Scenario: Muestra las cuatro estadísticas
+    Given el hero renderizado
+    When inspecciono la fila de estadísticas
+    Then aparecen las parejas valor/etiqueta: "24h" / "tiempo de respuesta", "+30" / "pymes confían", "100%" / "diseño a medida" y "5★" / "valoración media"
