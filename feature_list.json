@@ -8,7 +8,7 @@
     "valid_status": ["pending", "spec_ready", "in_progress", "done", "blocked"],
     "sdd_required_when": "feature has \"sdd\": true"
   },
-"features": [
+  "features": [
     {
       "id": 1,
       "name": "infra_base",

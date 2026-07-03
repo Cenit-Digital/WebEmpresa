@@ -44,7 +44,7 @@ diseñé las aserciones de @s3/@s7 (hash) y @s4 (sin depender de layout).
 4. **useIsMobile · subscribe** — rojo → alta/baja en `'change'`. Verde
    (test verifica alta, aviso y que la baja deja de avisar).
 5. **useIsMobile · hook** — rojo → `useSyncExternalStore(subscribe, getSnapshot,
-   getServerSnapshot)`. Verde (probe reacciona al cambio de viewport).
+getServerSnapshot)`. Verde (probe reacciona al cambio de viewport).
 6. **@s5 panel abre + 4 enlaces** — `MobileMenu.test.tsx` rojo → `MobileMenu`
    (Radix `Dialog`: trigger "☰"/aria "Abrir menú", panel "Menú", 4 enlaces de
    `NAV_LINKS`). Verde. Reduje el componente al mínimo de @s5 tras un exceso
@@ -94,25 +94,25 @@ in-page es semánticamente un enlace. Se testea por `role="link"` con nombre
 ## Trazabilidad @s → test
 
 - **@s1** (logo → "/") → `Header.test.tsx` › `@s1 el logotipo "CÉNIT DIGITAL"
-  enlaza a "/"`.
+enlaza a "/"`.
 - **@s2** (nav escritorio + CTA) → `lib/nav.test.ts` › `@s2 NAV_LINKS …` y
   `@s2 CTA_LINK …`; `HeaderNav.test.tsx` › `@s2 en escritorio muestra los 4
-  enlaces … y el CTA "Hablamos" → #contacto`.
+enlaces … y el CTA "Hablamos" → #contacto`.
 - **@s3** (cada enlace desplaza) → `HeaderNav.test.tsx` › `it.each … @s3 pulsar
-  "%s" desplaza a la sección "%s"` (Servicios/Sectores/Paquetes/Contacto).
+"%s" desplaza a la sección "%s"` (Servicios/Sectores/Paquetes/Contacto).
 - **@s4** (cabecera sticky) → `Header.test.tsx` › `@s4 la cabecera es fija …
-  (sticky)` (clase aplicada + `position: sticky; top: 0` en el módulo).
+(sticky)` (clase aplicada + `position: sticky; top: 0` en el módulo).
 - **@s5** (menú abre + 4 enlaces) → `MobileMenu.test.tsx` › `@s5 el botón de
-  menú abre el panel con los 4 enlaces en orden`; `HeaderNav.test.tsx` › `@s5
-  en móvil muestra el botón de menú y oculta la nav de escritorio`; base de
+menú abre el panel con los 4 enlaces en orden`; `HeaderNav.test.tsx` › `@s5
+en móvil muestra el botón de menú y oculta la nav de escritorio`; base de
   responsive en `lib/useIsMobile.test.tsx` (`@s5 getSnapshot …`, `@s5 subscribe
-  …`, `@s5 useIsMobile es true en viewport móvil`).
+…`, `@s5 useIsMobile es true en viewport móvil`).
 - **@s6** (✕ cierra) → `MobileMenu.test.tsx` › `@s6 el botón "✕" cierra el
-  panel`.
+panel`.
 - **@s7** (enlace cierra + navega) → `MobileMenu.test.tsx` › `@s7 pulsar un
-  enlace del panel lo cierra y navega a su sección`.
+enlace del panel lo cierra y navega a su sección`.
 - **@s8** (fondo cierra) → `MobileMenu.test.tsx` › `@s8 pulsar el fondo
-  oscurecido cierra el panel`.
+oscurecido cierra el panel`.
 - **@s9** (menú sólo en móvil / escritorio ve la nav) → `HeaderNav.test.tsx` ›
   `@s9 en escritorio no hay botón de menú y sí la nav de escritorio`; base en
   `lib/useIsMobile.test.tsx` (`@s9 getServerSnapshot …`, `@s9 getSnapshot …`,

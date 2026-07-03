@@ -15,11 +15,11 @@ break threshold 100`). **0 supervivientes.** Duración ~1 min 22 s.
 
 ## Puntuación por archivo (corrida final)
 
-Nota: el "score" de Stryker cuenta como *detectados* tanto los `killed` como los
+Nota: el "score" de Stryker cuenta como _detectados_ tanto los `killed` como los
 `timeout`. Fórmula: `(killed + timeout) / total`.
 
 | Archivo                   | Score       | killed | timeout | survived | total |
-|---------------------------|-------------|--------|---------|----------|-------|
+| ------------------------- | ----------- | ------ | ------- | -------- | ----- |
 | **All files**             | **100.00%** | 34     | 4       | 0        | 38    |
 | components/HeaderNav.tsx  | 100.00%     | 5      | 0       | 0        | 5     |
 | components/MobileMenu.tsx | 100.00%     | 2      | 0       | 0        | 2     |
@@ -49,7 +49,7 @@ título "Menú", aria-labels "Abrir menú"/"Cerrar menú"/"Principal", `data-tes
   el mutante `MOBILE_QUERY = ""`, producción llama `window.matchMedia("")`, el
   fake devuelve `matches: false`, y falla el test
   `useIsMobile @s5 getSnapshot devuelve matches de la MOBILE_QUERY (true en
-  móvil)` (marcado `killed 1` en la corrida final). El `judge` ratificó el
+móvil)` (marcado `killed 1` en la corrida final). El `judge` ratificó el
   cambio: sigue APROBADO, suite en verde (26 tests).
 - **Equivalentes excluidos:** 0. No se aplicó ninguna exclusión.
 

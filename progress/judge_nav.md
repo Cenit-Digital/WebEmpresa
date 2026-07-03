@@ -57,7 +57,7 @@
   (`data-testid`) cierra el diálogo. Aserción significativa. **OK**.
 - **@s9** (menú solo en móvil / escritorio ve la nav) — `HeaderNav.test.tsx`
   (escritorio: nav presente, sin botón "Abrir menú") + `useIsMobile` (`getServer
-  Snapshot`/`getSnapshot` false). **OK**.
+Snapshot`/`getSnapshot` false). **OK**.
 
 ## Olores TDD
 
@@ -106,6 +106,7 @@ en verde, 26 tests, 0 warnings. Pasa a `mutation_tester` (C7).
 **test-only**. Único diff desde mi aprobación: `src/lib/useIsMobile.test.tsx`.
 
 **Verificado:**
+
 1. `pnpm typecheck` (exit 0) · `pnpm lint` (exit 0, sin warnings) · `pnpm test`
    → **26 tests verdes** (7 archivos). Sin regresión.
 2. El endurecimiento es una aserción **legítima**, no un olor: el fake
@@ -114,7 +115,7 @@ en verde, 26 tests, 0 warnings. Pasa a `mutation_tester` (C7).
    tautología "el test importa la misma constante que verifica": ahora, si
    producción muta `MOBILE_QUERY → ""`, `window.matchMedia("")` no coincide con
    el literal, el fake devuelve `false` y `@s5 getSnapshot` / `@s5 useIsMobile
-   móvil` / `@s9 reacciona` se ponen rojos → el mutante muere. Pinar el
+móvil` / `@s9 reacciona` se ponen rojos → el mutante muere. Pinar el
    breakpoint del contrato no es sobre-ajuste: es exactamente el comportamiento
    que producción debe cumplir (consultar la media query correcta).
 3. `MOBILE_QUERY` **ya no se importa** en ningún test (línea 4 depurada): sin
