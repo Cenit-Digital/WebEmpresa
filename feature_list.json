@@ -33,7 +33,7 @@
         "Ver criterio de aceptación de WEB-4 en Jira (parcial: navegación y responsive)"
       ],
       "sdd": true,
-      "status": "done"
+      "status": "spec_ready"
     },
     {
       "id": 3,
@@ -143,6 +143,18 @@
       ],
       "sdd": true,
       "status": "spec_ready"
+    },
+    {
+      "id": 12,
+      "name": "marca",
+      "title": "Marca: logotipo \"Órbita\" y tokens de tema (WEB-4)",
+      "description": "Logo \"Órbita\" adaptativo (anillo + onda degradada + punto cénit, colores desde tokens) que sustituye el logo azul/menta anterior, y tokens de tema Bosque & Limón (claro) / Noche & Oro (oscuro) en _tokens.scss. Fuente de verdad: docs/DESIGN_SYSTEM.md y el handoff (design/HANDOFF.md).",
+      "acceptance": [
+        "Todos los escenarios de features/marca.feature pasan (mapa @s → test en progress/tdd_marca.md)",
+        "Colores solo vía var(--color-…); paleta Bosque&Limón/Noche&Oro; logo Órbita adaptativo con id de degradado único por instancia"
+      ],
+      "sdd": true,
+      "status": "done"
     }
   ]
 }

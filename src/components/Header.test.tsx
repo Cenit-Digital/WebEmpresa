@@ -28,12 +28,12 @@ afterEach(() => {
 })
 
 describe('Header', () => {
-  it('@s1 el logotipo "CÉNIT DIGITAL" enlaza a "/"', () => {
+  it('@s1 el logotipo enlaza a "/" (inicio)', () => {
     renderHeader()
 
     const brand = screen.getByRole('link', { name: /inicio/i })
     expect(brand).toHaveAttribute('href', '/')
-    expect(brand).toHaveTextContent('CÉNIT DIGITAL')
+    expect(brand).toHaveAccessibleName(/cénit digital/i)
   })
 
   it('@s4 la cabecera es fija en la parte superior de la ventana (sticky)', () => {
