@@ -1,6 +1,46 @@
 {
-  "$schema_comment": "Hooks que automatizan la verificación del harness (RF-CODE-001 / GU-HARNESS-001). Los ejecuta el harness, no el agente, así que no se pueden saltar.",
+  "$schema_comment": "Hooks que automatizan la verificación del harness (RF-CODE-001 / GU-HARNESS-001) y la activación de ponytail (ver docs/tooling.md). Los ejecuta el harness, no el agente, así que no se pueden saltar.",
   "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/ponytail/hooks/ponytail-activate.js\"",
+            "commandWindows": "if (Get-Command node -ErrorAction SilentlyContinue) { node \"$env:CLAUDE_PROJECT_DIR\\.claude\\ponytail\\hooks\\ponytail-activate.js\" }",
+            "timeout": 5,
+            "description": "ponytail: activa el modo (lazy senior dev) e inyecta su ruleset al iniciar la sesión."
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/ponytail/hooks/ponytail-subagent.js\"",
+            "commandWindows": "if (Get-Command node -ErrorAction SilentlyContinue) { node \"$env:CLAUDE_PROJECT_DIR\\.claude\\ponytail\\hooks\\ponytail-subagent.js\" }",
+            "timeout": 5,
+            "description": "ponytail: propaga el ruleset a cada subagente (Task) porque no heredan el contexto de SessionStart."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/ponytail/hooks/ponytail-mode-tracker.js\"",
+            "commandWindows": "if (Get-Command node -ErrorAction SilentlyContinue) { node \"$env:CLAUDE_PROJECT_DIR\\.claude\\ponytail\\hooks\\ponytail-mode-tracker.js\" }",
+            "timeout": 5,
+            "description": "ponytail: detecta /ponytail lite|full|ultra|off y 'stop ponytail' para cambiar el nivel activo."
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
@@ -26,6 +66,12 @@
     ]
   },
   "permissions": {
-    "allow": ["Bash(./init.sh)", "Bash(bash ./init.sh)", "Bash(pnpm*)", "Bash(npx stryker*)"]
+    "allow": [
+      "Bash(./init.sh)",
+      "Bash(bash ./init.sh)",
+      "Bash(pnpm*)",
+      "Bash(npx stryker*)",
+      "Bash(node .claude/ponytail/hooks/*)"
+    ]
   }
 }
