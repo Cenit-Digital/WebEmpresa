@@ -3,3 +3,16 @@ dist
 coverage
 reports
 .stryker-tmp
+
+# Código de terceros vendorizado (ponytail) — idéntico a upstream v4.8.4.
+# Ver .claude/ponytail/NOTICE.md. NO reformatear: debe coincidir con upstream.
+.claude/ponytail/
+.claude/skills/
+
+# Skills vendorizadas por autoskills (fuentes externas, ver skills-lock.json).
+# Son de terceros: no las gestiona Prettier, igual que node_modules.
+.agents/
+
+# Artefacto de diseño (snapshot HTML entregable). No es fuente que Prettier deba
+# gestionar; reformatearlo generaría un diff enorme sin valor.
+Cenit Digital - Web (final) - Diseño - Final- Definitivo.html

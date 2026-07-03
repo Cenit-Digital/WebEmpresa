@@ -32,8 +32,9 @@
 | `docs/architecture.md`     | Capas del proyecto y qué es "buen trabajo"                                | Antes de implementar              |
 | `docs/conventions.md`      | Estilo, nombres, estructura (alineado a RF-CODE-001)                      | Antes de escribir código          |
 | `docs/verification.md`     | Cómo demostrar que funciona                                               | Antes de declarar `done`          |
+| `docs/tooling.md`          | Skills (ponytail), hooks y agentes de apoyo; verificación adversarial     | Para entender el tooling          |
 | `CHECKPOINTS.md`           | Criterios objetivos de "estado final correcto"                            | Para auto-evaluarte               |
-| `.claude/agents/`          | Definiciones de los 6 subagentes                                          | Si orquestas                      |
+| `.claude/agents/`          | Subagentes: 6 del pipeline + 3 de apoyo (opcionales, solo lectura)        | Si orquestas                      |
 | `src/`                     | Código de la aplicación (React + TS + SCSS)                               | Para implementar                  |
 | `src/**/*.test.ts(x)`      | Tests (Vitest + Testing Library), co-locados                              | Para verificar                    |
 
