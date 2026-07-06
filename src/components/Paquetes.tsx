@@ -52,7 +52,9 @@ export default function Paquetes() {
     <section id="paquetes" className={styles.packages}>
       <div className={styles.inner}>
         <p className={styles.eyebrow}>Paquetes</p>
-        <h2 className={styles.title}>Elige tu paquete</h2>
+        <h2 className={styles.title}>
+          Elige tu <em className={styles.highlight}>paquete</em>
+        </h2>
         <p className={styles.intro}>
           Tres niveles según lo que necesite tu negocio. Te preparamos un presupuesto a medida, sin
           entrada y sin sorpresas.

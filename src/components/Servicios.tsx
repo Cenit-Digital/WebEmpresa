@@ -66,7 +66,9 @@ export default function Servicios() {
     <section id="servicios" className={styles.services}>
       <div className={styles.inner}>
         <p className={styles.eyebrow}>Lo que hacemos</p>
-        <h2 className={styles.title}>Servicios que transforman negocios locales</h2>
+        <h2 className={styles.title}>
+          Servicios que <em className={styles.highlight}>transforman</em> negocios locales
+        </h2>
         <p className={styles.intro}>
           No somos solo una agencia de diseño. Cada servicio se ve con su tarjeta, una referencia
           visual de cómo queda en uso, y una nota con un ejemplo real.

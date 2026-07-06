@@ -16,4 +16,21 @@ describe('LegalNotice — SEO', () => {
 
     expect(document.title).toBe('Aviso legal — Cénit Digital')
   })
+
+  it('tiene su propia description, canonical y og:url de ruta (no los de la home)', () => {
+    render(<LegalNotice />)
+
+    expect(document.querySelector('meta[name="description"]')).toHaveAttribute(
+      'content',
+      'Aviso legal de Cénit Digital.',
+    )
+    expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      'https://www.cenitdigital.es/aviso-legal',
+    )
+    expect(document.querySelector('meta[property="og:url"]')).toHaveAttribute(
+      'content',
+      'https://www.cenitdigital.es/aviso-legal',
+    )
+  })
 })

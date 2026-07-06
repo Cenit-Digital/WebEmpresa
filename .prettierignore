@@ -19,3 +19,7 @@ Cenit Digital - Web (final) - Diseño - Final- Definitivo.html
 
 # Material de referencia del design system (no es fuente de producción).
 design
+
+# Estáticos sin parser de Prettier (SEO). Se sirven tal cual desde public/.
+public/robots.txt
+public/sitemap.xml

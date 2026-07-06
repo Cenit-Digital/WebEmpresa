@@ -40,3 +40,14 @@ Decisión de producto: **sin precios** (ni "€" ni "/mes").
   "Solicitar presupuesto", sin "€" ni "/mes".
 - Composición: `home.tsx` renderiza `<Paquetes/>` tras `<Sectores/>`.
 - Pendiente: `judge` + `mutation_tester`. NO marcado `done`.
+
+## Nota de acabado — resalte <em> de color en el H2 (fidelidad al diseño)
+
+Se resalta la palabra destacada del titular con `<em className={styles.highlight}>`
+
+- regla `.highlight { font-style: normal; color: var(--color-primary); }` en el
+  `.module.scss` (mismo patrón que Sectores). Espacios JSX LITERALES alrededor del
+  `<em>` (nunca `{' '}`) para no crear StringLiterals mutables que sobrevivan.
+  El texto accesible del H2 (accessible name) no cambia: los tests siguen usando
+  `getByRole('heading', { level: 2 })` + `.textContent` exacto y quedan verdes.
+  Mutación Stryker 100% (0 supervivientes) reconfirmada en el fichero.

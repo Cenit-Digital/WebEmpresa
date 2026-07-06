@@ -63,7 +63,9 @@ export default function Contacto() {
       <div className={styles.inner}>
         <div className={styles.header}>
           <p className={styles.eyebrow}>Contacto</p>
-          <h2 className={styles.title}>Cuéntanos qué necesita tu negocio</h2>
+          <h2 className={styles.title}>
+            Cuéntanos qué <em className={styles.highlight}>necesita</em> tu negocio
+          </h2>
           <p className={styles.intro}>
             Primera consulta gratuita y sin compromiso. Te llamamos y te respondemos en menos de 24
             horas.

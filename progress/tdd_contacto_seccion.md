@@ -80,3 +80,14 @@
   `Contacto.test.tsx`, `progress/tdd_contacto_seccion.md`. Modificado:
   `src/pages/home.tsx` (+`<Contacto/>`), `progress/current.md`.
 - NO marcado `done`: pendiente de `judge` + `mutation_tester` (Stryker break=100%).
+
+## Nota de acabado — resalte <em> de color en el H2 (fidelidad al diseño)
+
+Se resalta la palabra destacada del titular con `<em className={styles.highlight}>`
+
+- regla `.highlight { font-style: normal; color: var(--color-primary); }` en el
+  `.module.scss` (mismo patrón que Sectores). Espacios JSX LITERALES alrededor del
+  `<em>` (nunca `{' '}`) para no crear StringLiterals mutables que sobrevivan.
+  El texto accesible del H2 (accessible name) no cambia: los tests siguen usando
+  `getByRole('heading', { level: 2 })` + `.textContent` exacto y quedan verdes.
+  Mutación Stryker 100% (0 supervivientes) reconfirmada en el fichero.
