@@ -68,6 +68,9 @@ pnpm preview          # sirve el build para comprobarlo en local
 ```
 .
 ├── index.html                # plantilla raíz (script de tema anti-FOUC)
+├── api/
+│   └── contact.ts            # Vercel Function: envío del formulario con Resend
+├── design/                   # referencia 1:1 del diseño + design system (no producción)
 ├── src/
 │   ├── main.tsx              # entrada: ViteReactSSG(routes) + estilos + fuentes
 │   ├── App.tsx               # definición de rutas (RouteRecord[])
@@ -93,15 +96,34 @@ pnpm preview          # sirve el build para comprobarlo en local
 
 ## Design tokens (identidad de marca)
 
-Los colores y la tipografía provienen de **RF-MARCA-001** y viven en
-`src/styles/_tokens.scss` como **CSS custom properties**:
+Los colores y la tipografía provienen de **RF-MARCA-001** / el design system
+(`docs/DESIGN_SYSTEM.md`) y viven en `src/styles/_tokens.scss` como **CSS custom
+properties**:
 
-- **Modo claro** (Teal Profundo) en `:root`; **modo oscuro** (Océano y Coral)
-  en `:root[data-theme='dark']`; **marca** (Azul Noche y Menta) común.
+- **Modo claro = Bosque & Limón** en `:root`; **modo oscuro = Noche & Oro** en
+  `:root[data-theme='dark']`. Logotipo **"Órbita"** adaptativo (`Logo.tsx`).
 - Los componentes consumen `var(--color-…)`, nunca hex sueltos.
 - El tema se aplica antes del primer pintado (script en `index.html`) y se
-  conmuta con el botón de la cabecera (`ThemeToggle`, persistido en
-  `localStorage`).
+  conmuta con el selector de 3 estados **Claro / Oscuro / Sistema** de la
+  cabecera (`ThemeToggle`, persistido en `localStorage['cenit-theme']`;
+  ausencia de clave = "Sistema", que sigue a `prefers-color-scheme` en vivo).
+- Referencia visual 1:1 del diseño: `design/Cenit Home (referencia) - standalone.html`
+  y el paquete `design/system/`.
+
+## Formulario de contacto (Resend)
+
+La sección de contacto (`#contacto`) envía el mensaje a la función serverless
+`api/contact.ts` (Vercel), que usa **Resend** para mandar el correo. El cliente
+(`src/lib/contact.ts`) valida y hace `POST /api/contact`; el honeypot antispam se
+descarta en el cliente. Para que el envío funcione en producción:
+
+1. En Resend, verifica el dominio remitente y crea una API key.
+2. En las variables de entorno de Vercel define `RESEND_API_KEY` (obligatoria) y,
+   si quieres personalizar, `CONTACT_TO` (destino, por defecto
+   `hola@cenitdigital.es`) y `RESEND_FROM` (remitente del dominio verificado).
+
+En local, `pnpm dev` no ejecuta las funciones de `/api` (usa `vercel dev` para
+probarlas); los tests cubren el comportamiento del formulario mockeando el envío.
 
 ## Variables de entorno
 

@@ -47,8 +47,11 @@ describe('Logo', () => {
     const gradients = container.querySelectorAll('linearGradient')
     expect(gradients).toHaveLength(2)
     const [first, second] = Array.from(gradients).map((g) => g.getAttribute('id'))
-    expect(first).toBeTruthy()
-    expect(second).toBeTruthy()
+    // El id debe ser un identificador válido "cenit-wave-<useId sin ':'>": sin
+    // espacios ni caracteres raros. Si producción muta el reemplazo de ':' (a otra
+    // cadena), el id contendría basura/espacios y dejaría de casar → mutante muerto.
+    expect(first).toMatch(/^cenit-wave-[A-Za-z0-9_-]+$/)
+    expect(second).toMatch(/^cenit-wave-[A-Za-z0-9_-]+$/)
     expect(first).not.toBe(second)
   })
 

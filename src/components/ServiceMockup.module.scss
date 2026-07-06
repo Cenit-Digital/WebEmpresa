@@ -1,0 +1,103 @@
+.mockup {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: linear-gradient(160deg, var(--color-bg-2), var(--color-surface));
+  box-shadow: var(--shadow);
+}
+
+.chrome {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 14px;
+  background: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  opacity: 0.6;
+}
+
+.dot:first-child {
+  background: var(--color-zenith);
+  opacity: 1;
+}
+
+.dot:nth-child(2) {
+  background: var(--color-secondary);
+  opacity: 0.7;
+}
+
+.omnibox {
+  margin-left: 10px;
+  height: 16px;
+  flex: 1;
+  max-width: 190px;
+  border-radius: 8px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+}
+
+.body {
+  padding: 20px 22px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.lines {
+  flex: 1;
+}
+
+.lineStrong {
+  display: block;
+  width: 72%;
+  height: 14px;
+  border-radius: 5px;
+  background: var(--color-primary);
+  margin-bottom: 10px;
+}
+
+.line,
+.lineShort {
+  display: block;
+  height: 7px;
+  border-radius: 4px;
+  background: var(--color-text-faint);
+  margin-bottom: 7px;
+}
+
+.line {
+  width: 100%;
+}
+
+.lineShort {
+  width: 84%;
+  margin-bottom: 18px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 9px 17px;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.thumb {
+  width: 92px;
+  height: 84px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  opacity: 0.85;
+}

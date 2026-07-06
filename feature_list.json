@@ -5,13 +5,7 @@
     "one_feature_at_a_time": true,
     "require_tests_to_close": true,
     "require_approved_spec_to_implement": true,
-    "valid_status": [
-      "pending",
-      "spec_ready",
-      "in_progress",
-      "done",
-      "blocked"
-    ],
+    "valid_status": ["pending", "spec_ready", "in_progress", "done", "blocked"],
     "sdd_required_when": "feature has \"sdd\": true"
   },
   "features": [
@@ -63,7 +57,7 @@
         "Ver criterio de aceptación de WEB-4 en Jira (parcial: pie de página)"
       ],
       "sdd": true,
-      "status": "spec_ready"
+      "status": "done"
     },
     {
       "id": 5,
@@ -75,7 +69,7 @@
         "Ver criterio de aceptación de WEB-4 en Jira (parcial: accesibilidad)"
       ],
       "sdd": true,
-      "status": "spec_ready"
+      "status": "done"
     },
     {
       "id": 6,
@@ -87,7 +81,7 @@
         "Ver criterio de aceptación de WEB-5 en Jira (parcial: sección hero)"
       ],
       "sdd": true,
-      "status": "spec_ready"
+      "status": "done"
     },
     {
       "id": 7,
@@ -99,7 +93,7 @@
         "Ver criterio de aceptación de WEB-5 en Jira (parcial: sección servicios)"
       ],
       "sdd": true,
-      "status": "spec_ready"
+      "status": "done"
     },
     {
       "id": 8,
@@ -111,7 +105,7 @@
         "Ver criterio de aceptación de WEB-5 en Jira (parcial: sección sectores)"
       ],
       "sdd": true,
-      "status": "spec_ready"
+      "status": "done"
     },
     {
       "id": 9,
@@ -124,7 +118,7 @@
         "Pendiente de decisión de producto: si se muestran precios fijos, hay que ampliar este feature antes de darlo por done"
       ],
       "sdd": true,
-      "status": "spec_ready"
+      "status": "done"
     },
     {
       "id": 10,
@@ -136,7 +130,7 @@
         "Ver criterio de aceptación de WEB-5 en Jira (parcial: sección contacto, solo estructura)"
       ],
       "sdd": true,
-      "status": "spec_ready"
+      "status": "done"
     },
     {
       "id": 11,
@@ -148,7 +142,7 @@
         "Ver criterio de aceptación de WEB-6 en Jira"
       ],
       "sdd": true,
-      "status": "spec_ready"
+      "status": "done"
     },
     {
       "id": 12,

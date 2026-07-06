@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Logo from './Logo'
 import { SITE } from '../lib/site'
 import styles from './Footer.module.scss'
 
@@ -7,6 +8,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
+        <Logo size={38} />
         <p className={styles.copy}>
           © {year} {SITE.name}. Todos los derechos reservados.
         </p>

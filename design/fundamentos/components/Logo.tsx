@@ -16,7 +16,11 @@ type LogoProps = {
  */
 export default function Logo({ withWordmark = true, size = 40 }: LogoProps) {
   // id único por instancia para el degradado (evita colisiones nav/footer).
-  const gradId = `cenit-wave-${useId().replace(/:/g, '')}`
+  // React 19 useId() no incluye ':'; este replace es un no-op defensivo (para
+  // ids estilo React 18). Mutar su reemplazo es equivalente (no observable).
+  // Stryker disable next-line all
+  const cleanId = useId().replace(/:/g, '')
+  const gradId = `cenit-wave-${cleanId}`
 
   return (
     <span className={styles.logo}>

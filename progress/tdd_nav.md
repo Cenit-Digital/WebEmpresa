@@ -27,15 +27,15 @@ se reutilizan los componentes y se adaptan nombres accesibles y aserciones.
 
 ## Delta respecto al contrato anterior (qué cambió en esta re-alineación)
 
-| Escenario | Antes | Ahora (contrato @s1..@s8) |
-| --------- | ----- | ------------------------- |
-| Sticky    | `@s4` | **`@s3`** (position: sticky; top: 0) |
-| Móvil     | `@s5` botón "Abrir menú" | **`@s4`** botón nombre accesible **"Menú"** + nav de escritorio no visible |
-| Abrir     | `@s5` "Abrir menú" | **`@s5`** botón **"Menú"** abre panel, 4 enlaces en orden |
-| Cerrar    | `@s6` "Cerrar menú" ("✕") | **`@s6`** botón nombre accesible **"Cerrar"** |
-| Enlace    | `@s7` cierra **y navega** (`#paquetes`) | **`@s7`** pulsar "Servicios" **cierra** (el contrato ya no exige el hash) |
-| Overlay   | `@s8` | **`@s8`** (sin cambios funcionales) |
-| Desktop-only / desplazamiento por ancla (`@s3`, `@s9` antiguos) | escenarios propios | **eliminados** del contrato; sus tests se retiran o se re-etiquetan a `@s2`/`@s4` |
+| Escenario                                                       | Antes                                   | Ahora (contrato @s1..@s8)                                                         |
+| --------------------------------------------------------------- | --------------------------------------- | --------------------------------------------------------------------------------- |
+| Sticky                                                          | `@s4`                                   | **`@s3`** (position: sticky; top: 0)                                              |
+| Móvil                                                           | `@s5` botón "Abrir menú"                | **`@s4`** botón nombre accesible **"Menú"** + nav de escritorio no visible        |
+| Abrir                                                           | `@s5` "Abrir menú"                      | **`@s5`** botón **"Menú"** abre panel, 4 enlaces en orden                         |
+| Cerrar                                                          | `@s6` "Cerrar menú" ("✕")               | **`@s6`** botón nombre accesible **"Cerrar"**                                     |
+| Enlace                                                          | `@s7` cierra **y navega** (`#paquetes`) | **`@s7`** pulsar "Servicios" **cierra** (el contrato ya no exige el hash)         |
+| Overlay                                                         | `@s8`                                   | **`@s8`** (sin cambios funcionales)                                               |
+| Desktop-only / desplazamiento por ancla (`@s3`, `@s9` antiguos) | escenarios propios                      | **eliminados** del contrato; sus tests se retiran o se re-etiquetan a `@s2`/`@s4` |
 
 Producción tocada: `MobileMenu.tsx` (aria-labels `Abrir menú`→`Menú`,
 `Cerrar menú`→`Cerrar`). El CTA "Hablamos" ya era un `<a href="#contacto">`
@@ -65,7 +65,7 @@ aserción diverge de la producción vigente) y se adapta el mínimo de producci�
    (`@s4 getSnapshot true`, `@s4 subscribe`, `@s4 useIsMobile true`).
 6. **@s5 (abrir panel + 4 enlaces en orden)** — `MobileMenu.test.tsx`: pulsar
    **"Menú"** abre el `dialog` con `['Servicios','Sectores','Paquetes',
-   'Contacto']`. Rojo por el nombre del trigger → Verde con `aria-label="Menú"`.
+'Contacto']`. Rojo por el nombre del trigger → Verde con `aria-label="Menú"`.
 7. **@s6 (cerrar con "Cerrar")** — `MobileMenu.test.tsx`: el botón nombre
    accesible **"Cerrar"** cierra el panel. Rojo contra `"Cerrar menú"` anterior
    → se renombra el `Dialog.Close` a `aria-label="Cerrar"`. Verde.
@@ -96,26 +96,26 @@ aserción diverge de la producción vigente) y se adapta el mínimo de producci�
 ## Trazabilidad @s → test
 
 - **@s1** (logo → "/") → `Header.test.tsx` › `@s1 el logotipo enlaza a "/"
-  (inicio)`.
+(inicio)`.
 - **@s2** (nav escritorio + CTA) → `lib/nav.test.ts` › `@s2 NAV_LINKS …` y
   `@s2 CTA_LINK …`; `HeaderNav.test.tsx` › `@s2 en escritorio muestra los 4
-  enlaces … y el CTA "Hablamos" → #contacto` y `@s2 en escritorio no aparece el
-  botón de menú móvil`; base en `lib/useIsMobile.test.tsx`
+enlaces … y el CTA "Hablamos" → #contacto` y `@s2 en escritorio no aparece el
+botón de menú móvil`; base en `lib/useIsMobile.test.tsx`
   (`@s2 getServerSnapshot …`, `@s2 getSnapshot … escritorio`).
 - **@s3** (cabecera sticky) → `Header.test.tsx` › `@s3 la cabecera es fija …
-  (position: sticky; top: 0)`.
+(position: sticky; top: 0)`.
 - **@s4** (móvil oculta escritorio + botón "Menú") → `HeaderNav.test.tsx` ›
   `@s4 en móvil se oculta la nav de escritorio y aparece el botón "Menú"`; base
   en `lib/useIsMobile.test.tsx` (`@s4 getSnapshot … móvil`, `@s4 subscribe …`,
   `@s4 useIsMobile es true …`, `@s4 useIsMobile es false … reacciona al cambio`).
 - **@s5** (abrir panel + 4 enlaces en orden) → `MobileMenu.test.tsx` › `@s5 el
-  botón "Menú" abre el panel con los 4 enlaces en orden`.
+botón "Menú" abre el panel con los 4 enlaces en orden`.
 - **@s6** (cerrar con "Cerrar") → `MobileMenu.test.tsx` › `@s6 el botón "Cerrar"
-  cierra el panel`.
+cierra el panel`.
 - **@s7** (enlace cierra el panel) → `MobileMenu.test.tsx` › `@s7 pulsar el
-  enlace "Servicios" del panel lo cierra`.
+enlace "Servicios" del panel lo cierra`.
 - **@s8** (fondo cierra el panel) → `MobileMenu.test.tsx` › `@s8 pulsar el fondo
-  oscurecido (overlay) cierra el panel`.
+oscurecido (overlay) cierra el panel`.
 
 ## Stryker (mutación)
 
@@ -131,7 +131,7 @@ re-alineación. `Header.tsx` queda fuera del glob (composición estática; la is
   **`--color-band-border`** (antes `--color-bg`/`--color-border`), fiel a §6.
   Conserva `position: sticky; top: 0` (exigido por @s3).
 - `HeaderNav.module.scss`: CTA "Hablamos" primario → `color:
-  var(--color-on-primary)` y `border-radius: var(--radius-pill)` (elimina el
+var(--color-on-primary)` y `border-radius: var(--radius-pill)` (elimina el
   `#fff` y el `999px` sueltos; colores sólo vía `var(--color-…)`).
 
 ## Estado
@@ -140,7 +140,7 @@ re-alineación. `Header.tsx` queda fuera del glob (composición estática; la is
 (baseline 68 − 4 tests del antiguo `@s3` de desplazamiento por ancla, fuera del
 contrato nuevo; los `href` siguen cubiertos por `@s2`), `pnpm build` (SSG) verde.
 
-Mutación *scoped* sobre `HeaderNav.tsx`, `MobileMenu.tsx`, `nav.ts`,
+Mutación _scoped_ sobre `HeaderNav.tsx`, `MobileMenu.tsx`, `nav.ts`,
 `useIsMobile.ts`: **100.00%** (28 killed + 4 timeout, 0 survived) — `break: 100`
 satisfecho. `stryker.config.json` no tocado (ya mutaba estos ficheros).
 

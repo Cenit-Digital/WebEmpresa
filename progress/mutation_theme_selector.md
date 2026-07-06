@@ -16,7 +16,7 @@ Encontrado 1 de 208 ficheros a mutar. Instrumentado 1 fichero con **49 mutantes*
 Suite inicial (dry run): **37 tests verdes**. Media de 2.06 tests por mutante.
 
 | Fichero            | Score  | # killed | # timeout | # survived | # no cov | # errors | Umbral | Veredicto |
-|--------------------|--------|----------|-----------|------------|----------|----------|--------|-----------|
+| ------------------ | ------ | -------- | --------- | ---------- | -------- | -------- | ------ | --------- |
 | `src/lib/theme.ts` | 100.00 | 47       | 2         | 0          | 0        | 0        | 100    | PASA      |
 | **All files**      | 100.00 | 47       | 2         | 0          | 0        | 0        | 100    | PASA      |
 

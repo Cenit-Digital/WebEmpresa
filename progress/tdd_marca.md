@@ -44,12 +44,12 @@
   del `<path>` de la onda en `stroke=""` y ningún test lo detectaba (@s5 solo
   compara ids; @s6 no asertaba el stroke del path). ROJO real: nuevo caso
   `Logo.test @s6` (`la onda (path) pinta su trazo con el degradado de su
-  instancia`) que asserta `wave` con `stroke=url(#<id del linearGradient>)`;
+instancia`) que asserta `wave` con `stroke=url(#<id del linearGradient>)`;
   verificado que FALLA con el mutante (`stroke=""`) y pasa con el código actual.
   VERDE: **sin tocar `Logo.tsx`** (sigue idéntico 1:1 al target). Mata al
   mutante de `Logo.tsx:59`.
 - **@s7** — ROJO: `tokens.test @s7` (`:root` claro define `--color-primary:
-  #1e7a4f`); falla (paleta Teal vieja #0e8a82). VERDE: portado el bloque
+#1e7a4f`); falla (paleta Teal vieja #0e8a82). VERDE: portado el bloque
   `:root` claro (Bosque & Limón) con alias deprecados; bloque dark antiguo
   conservado para mantener @s8 en rojo.
 - **@s8** — ROJO: `tokens.test @s8` (`:root[data-theme='dark']` define
@@ -66,17 +66,17 @@
 
 ## Trazabilidad @s → test
 
-| Escenario | Test |
-| --- | --- |
-| @s1 icono Órbita (anillo+onda+punto, aria-hidden) | `src/components/Logo.test.tsx` › `@s1` |
-| @s2 wordmark por defecto ("cénit"/"digital") | `src/components/Logo.test.tsx` › `@s2` |
-| @s3 oculta wordmark (`withWordmark=false`) | `src/components/Logo.test.tsx` › `@s3` |
-| @s4 tamaño configurable (`size=38`) | `src/components/Logo.test.tsx` › `@s4` |
-| @s5 id de degradado único por instancia | `src/components/Logo.test.tsx` › `@s5` |
-| @s6 colores del logo desde tokens | `src/components/Logo.test.tsx` › `@s6` (colores) |
+| Escenario                                                         | Test                                                                             |
+| ----------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| @s1 icono Órbita (anillo+onda+punto, aria-hidden)                 | `src/components/Logo.test.tsx` › `@s1`                                           |
+| @s2 wordmark por defecto ("cénit"/"digital")                      | `src/components/Logo.test.tsx` › `@s2`                                           |
+| @s3 oculta wordmark (`withWordmark=false`)                        | `src/components/Logo.test.tsx` › `@s3`                                           |
+| @s4 tamaño configurable (`size=38`)                               | `src/components/Logo.test.tsx` › `@s4`                                           |
+| @s5 id de degradado único por instancia                           | `src/components/Logo.test.tsx` › `@s5`                                           |
+| @s6 colores del logo desde tokens                                 | `src/components/Logo.test.tsx` › `@s6` (colores)                                 |
 | @s6 onda (path) consume el degradado — mata mutante `Logo.tsx:59` | `src/components/Logo.test.tsx` › `@s6` (la onda pinta su trazo con el degradado) |
-| @s7 tema claro `--color-primary: #1e7a4f` | `src/styles/tokens.test.ts` › `@s7` |
-| @s8 tema oscuro `--color-primary: #c9a84c` | `src/styles/tokens.test.ts` › `@s8` |
+| @s7 tema claro `--color-primary: #1e7a4f`                         | `src/styles/tokens.test.ts` › `@s7`                                              |
+| @s8 tema oscuro `--color-primary: #c9a84c`                        | `src/styles/tokens.test.ts` › `@s8`                                              |
 
 ## Estado
 
@@ -88,3 +88,25 @@
   target sigue vacío).
 - NO marcado `done`: pendiente de re-verificación de `mutation_tester` (Stryker
   break=100% sobre `Logo.tsx`).
+
+## Endurecimiento de mutación (corrida global, break=100)
+
+- `Logo.tsx:19` `useId().replace(/:/g, '')` (mutado el `''` a `"Stryker was
+here!"`) → en `Logo.test.tsx` @s5 se asere que el `id` del `<linearGradient>`
+  casa `/^cenit-wave-[A-Za-z0-9_-]+$/` (sin espacios ni caracteres raros). Con la
+  mutación el id contendría "Stryker was here!" (espacios/`!`) y no casa → muerto.
+  `Logo.tsx` NO se tocó (diff con design/fundamentos sigue 1:1).
+
+Resultado: `Logo.tsx` 100% (0 supervivientes; 2 killed + 6 timeout).
+
+### Corrección: mutante equivalente en `Logo.tsx:19` (corrida GLOBAL)
+
+La corrida global (11 ficheros) dejó 1 superviviente: la mutación del string de
+reemplazo de `useId().replace(/:/g, '')` (`''`→`"Stryker was here!"`). React 19
+devuelve ids SIN `:` (p.ej. `_R_1d_`), así que ese `replace` es un no-op y mutar su
+reemplazo NO es observable → mutante EQUIVALENTE, no matable con test honesto.
+Solución: se reestructura a dos líneas y se anula SOLO la del replace con
+`// Stryker disable next-line all` (comentario justificado). El literal
+`cenit-wave-` queda en su propia línea (`gradId`) SIN anular, así que @s5 lo sigue
+matando. Cambio idéntico aplicado en `src/` y `design/fundamentos/` (diff vacío).
+Resultado: `Logo.tsx` 100% (0 supervivientes; 7 killed, mutante equivalente Ignored).

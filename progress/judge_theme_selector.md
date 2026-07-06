@@ -15,16 +15,16 @@ Verde de punta a punta, exit 0:
 
 ## Cobertura de escenarios (@s → test concreto)
 
-| @s | Escenario | Test que lo verifica | OK |
-| --- | --- | --- | --- |
-| @s1 | Sin clave + SO oscuro → `dark` | `src/lib/theme.test.tsx` › applyInitialTheme › `@s1` (línea 125) | ✅ |
-| @s2 | Sin clave + SO claro → `light` | `src/lib/theme.test.tsx` › applyInitialTheme › `@s2` (línea 131) | ✅ |
-| @s3 | Elegir "Claro" fija y persiste | `ThemeToggle.test.tsx` › `@s3` UI (66) + `theme.test.tsx` › setMode › `@s3` (146) | ✅ |
-| @s4 | Elegir "Oscuro" fija y persiste | `ThemeToggle.test.tsx` › `@s4` UI (75) + `theme.test.tsx` › setMode › `@s4` (153) | ✅ |
-| @s5 | Elegir "Sistema" borra clave y sigue al SO | `ThemeToggle.test.tsx` › `@s5` (83) + `theme.test.tsx` › setMode › `@s5` x2 (160/168) | ✅ |
-| @s6 | Sistema reacciona en vivo sin recargar | `ThemeToggle.test.tsx` › `@s6` reacciona (92) + `@s6` limpia listener fuera de Sistema (104) | ✅ |
-| @s7 | La preferencia sobrevive a la recarga | `theme.test.tsx` › applyInitialTheme › `@s7` (137) + `ThemeToggle.test.tsx` › `@s7` (58) | ✅ |
-| @s8 | Anti-FOUC antes del primer pintado | `theme.test.tsx` › initialThemeAttribute 5 casos (187–205) + regresión que lee `index.html` (207) | ✅ |
+| @s  | Escenario                                  | Test que lo verifica                                                                              | OK  |
+| --- | ------------------------------------------ | ------------------------------------------------------------------------------------------------- | --- |
+| @s1 | Sin clave + SO oscuro → `dark`             | `src/lib/theme.test.tsx` › applyInitialTheme › `@s1` (línea 125)                                  | ✅  |
+| @s2 | Sin clave + SO claro → `light`             | `src/lib/theme.test.tsx` › applyInitialTheme › `@s2` (línea 131)                                  | ✅  |
+| @s3 | Elegir "Claro" fija y persiste             | `ThemeToggle.test.tsx` › `@s3` UI (66) + `theme.test.tsx` › setMode › `@s3` (146)                 | ✅  |
+| @s4 | Elegir "Oscuro" fija y persiste            | `ThemeToggle.test.tsx` › `@s4` UI (75) + `theme.test.tsx` › setMode › `@s4` (153)                 | ✅  |
+| @s5 | Elegir "Sistema" borra clave y sigue al SO | `ThemeToggle.test.tsx` › `@s5` (83) + `theme.test.tsx` › setMode › `@s5` x2 (160/168)             | ✅  |
+| @s6 | Sistema reacciona en vivo sin recargar     | `ThemeToggle.test.tsx` › `@s6` reacciona (92) + `@s6` limpia listener fuera de Sistema (104)      | ✅  |
+| @s7 | La preferencia sobrevive a la recarga      | `theme.test.tsx` › applyInitialTheme › `@s7` (137) + `ThemeToggle.test.tsx` › `@s7` (58)          | ✅  |
+| @s8 | Anti-FOUC antes del primer pintado         | `theme.test.tsx` › initialThemeAttribute 5 casos (187–205) + regresión que lee `index.html` (207) | ✅  |
 
 Los 8 escenarios tienen al menos un test concreto y medible. Los fakes de
 `matchMedia` van keyeados al literal `'(prefers-color-scheme: dark)'`

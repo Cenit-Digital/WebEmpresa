@@ -6,6 +6,7 @@
 > scaffold previo.
 >
 > **Decisiones cerradas por el equipo (Pablo + 2):**
+>
 > - Paleta **CLARA = Bosque & Limón** · Paleta **OSCURA = Noche & Oro**.
 > - Tipografía **Outfit** (display) + **DM Sans** (texto) — "Geométrica".
 > - Logotipo = icono **"Órbita"** (anillo + onda degradada + punto cénit),
@@ -49,10 +50,10 @@ anterior, no rotar/inclinar el anillo (es un círculo, no una elipse).
 
 Dos temas, conmutados con `data-theme` en `<html>`:
 
-| Estado | `data-theme` | Paleta |
-| --- | --- | --- |
+| Estado              | `data-theme`      | Paleta             |
+| ------------------- | ----------------- | ------------------ |
 | Claro (por defecto) | ausente o `light` | **Bosque & Limón** |
-| Oscuro | `dark` | **Noche & Oro** |
+| Oscuro              | `dark`            | **Noche & Oro**    |
 
 - Selector de 3 estados **Claro / Oscuro / Sistema** (ver
   `features/theme_selector.feature`). Persistencia en
@@ -68,30 +69,30 @@ Dos temas, conmutados con `data-theme` en `<html>`:
 
 Todos definidos en `:root` (claro) y `:root[data-theme='dark']` (oscuro).
 
-| Token | Claro · Bosque & Limón | Oscuro · Noche & Oro | Uso |
-| --- | --- | --- | --- |
-| `--color-primary` | `#1E7A4F` | `#C9A84C` | Acción, marca, CTAs |
-| `--color-on-primary` | `#ffffff` | `#16121f` | Texto sobre `primary` |
-| `--color-secondary` | `#E3D34A` | `#7C5CBF` | 2.º color de marca, degradados |
-| `--color-accent` | `#1E7A4F` | `#7C5CBF` | Eyebrows / detalles |
-| `--color-bg` | `#F2F4EF` | `#12082A` | Fondo base |
-| `--color-bg-2` | `#e5e7e2` | `#281b2e` | Fondo de sección alterna |
-| `--color-band` | `#d5d8d3` | `#251c3b` | Franja de nav y footer |
-| `--color-band-border` | `rgba(17,32,26,.16)` | `rgba(247,244,238,.12)` | Borde de la franja |
-| `--color-surface` | `#fafbf9` | `rgba(247,244,238,.05)` | Inputs, notas "Ejemplo" |
-| `--color-surface-2` | `rgba(30,122,79,.10)` | `rgba(201,168,76,.16)` | Superficie tintada |
-| `--color-card-bg` | `#ffffff` | `rgba(247,244,238,.045)` | Fondo de tarjeta |
-| `--color-border` | `rgba(17,32,26,.14)` | `rgba(201,168,76,.24)` | Bordes |
-| `--color-text` | `#0f1d17` | `#F7F4EE` | Texto principal |
-| `--color-text-soft` | `rgba(17,32,26,.66)` | `rgba(247,244,238,.66)` | Texto secundario |
-| `--color-text-faint` | `rgba(17,32,26,.45)` | `rgba(247,244,238,.40)` | Metadatos |
-| `--color-tag-ink` | `#175d3c` | `#7C5CBF` | Texto de etiqueta |
-| `--color-tag-bg` | `rgba(30,122,79,.13)` | `rgba(201,168,76,.22)` | Fondo de etiqueta |
-| `--color-logo-ink` | `#0f1d17` | `#F7F4EE` | "cénit" |
-| `--color-logo-sub` | `#1E7A4F` | `#7C5CBF` | "digital" |
-| `--color-ring` | `#1E7A4F` | `#C9A84C` | Anillo del logo |
-| `--color-zenith` | `#E3D34A` | `#C9A84C` | Punto cénit del logo |
-| `--shadow` | `0 18px 45px rgba(0,0,0,.12)` | `0 22px 55px rgba(0,0,0,.5)` | Elevación de tarjetas |
+| Token                 | Claro · Bosque & Limón        | Oscuro · Noche & Oro         | Uso                            |
+| --------------------- | ----------------------------- | ---------------------------- | ------------------------------ |
+| `--color-primary`     | `#1E7A4F`                     | `#C9A84C`                    | Acción, marca, CTAs            |
+| `--color-on-primary`  | `#ffffff`                     | `#16121f`                    | Texto sobre `primary`          |
+| `--color-secondary`   | `#E3D34A`                     | `#7C5CBF`                    | 2.º color de marca, degradados |
+| `--color-accent`      | `#1E7A4F`                     | `#7C5CBF`                    | Eyebrows / detalles            |
+| `--color-bg`          | `#F2F4EF`                     | `#12082A`                    | Fondo base                     |
+| `--color-bg-2`        | `#e5e7e2`                     | `#281b2e`                    | Fondo de sección alterna       |
+| `--color-band`        | `#d5d8d3`                     | `#251c3b`                    | Franja de nav y footer         |
+| `--color-band-border` | `rgba(17,32,26,.16)`          | `rgba(247,244,238,.12)`      | Borde de la franja             |
+| `--color-surface`     | `#fafbf9`                     | `rgba(247,244,238,.05)`      | Inputs, notas "Ejemplo"        |
+| `--color-surface-2`   | `rgba(30,122,79,.10)`         | `rgba(201,168,76,.16)`       | Superficie tintada             |
+| `--color-card-bg`     | `#ffffff`                     | `rgba(247,244,238,.045)`     | Fondo de tarjeta               |
+| `--color-border`      | `rgba(17,32,26,.14)`          | `rgba(201,168,76,.24)`       | Bordes                         |
+| `--color-text`        | `#0f1d17`                     | `#F7F4EE`                    | Texto principal                |
+| `--color-text-soft`   | `rgba(17,32,26,.66)`          | `rgba(247,244,238,.66)`      | Texto secundario               |
+| `--color-text-faint`  | `rgba(17,32,26,.45)`          | `rgba(247,244,238,.40)`      | Metadatos                      |
+| `--color-tag-ink`     | `#175d3c`                     | `#7C5CBF`                    | Texto de etiqueta              |
+| `--color-tag-bg`      | `rgba(30,122,79,.13)`         | `rgba(201,168,76,.22)`       | Fondo de etiqueta              |
+| `--color-logo-ink`    | `#0f1d17`                     | `#F7F4EE`                    | "cénit"                        |
+| `--color-logo-sub`    | `#1E7A4F`                     | `#7C5CBF`                    | "digital"                      |
+| `--color-ring`        | `#1E7A4F`                     | `#C9A84C`                    | Anillo del logo                |
+| `--color-zenith`      | `#E3D34A`                     | `#C9A84C`                    | Punto cénit del logo           |
+| `--shadow`            | `0 18px 45px rgba(0,0,0,.12)` | `0 22px 55px rgba(0,0,0,.5)` | Elevación de tarjetas          |
 
 Degradado de marca (logo, mockups, cabeceras de sector):
 `linear-gradient(135deg, var(--color-primary), var(--color-secondary))`.
@@ -112,19 +113,19 @@ Degradado de marca (logo, mockups, cabeceras de sector):
 
 Escala (fiel al diseño; `clamp()` para fluidez):
 
-| Rol | Familia · peso | Tamaño |
-| --- | --- | --- |
-| H1 hero | Outfit 600 | `clamp(34px, 5.4vw, 62px)` · line-height 1.04 · `-0.015em` |
-| H2 sección | Outfit 600 | `clamp(28px, 4vw, 44px)` · line-height 1.08 · `-0.01em` |
-| H3 tarjeta servicio | Outfit 600 | 32px |
-| H3 paquete | Outfit 600 | 25px |
-| H3 sector | Outfit 600 | 23px |
-| Wordmark "cénit" | Outfit 600 | 23px · `letter-spacing 1.5px` |
-| Eyebrow | DM Sans 600 | 12px · `letter-spacing .22em` · uppercase |
-| Lead / intro | DM Sans 400 | 17–19px · line-height 1.7 |
-| Cuerpo | DM Sans 400 | 14–15.5px · line-height 1.65–1.7 |
-| Etiqueta (tag pill) | DM Sans 700 | 11px · `letter-spacing .1em` · uppercase |
-| Nota "Ejemplo" | DM Sans 700 | 9.5px · `letter-spacing .14em` · uppercase |
+| Rol                 | Familia · peso | Tamaño                                                     |
+| ------------------- | -------------- | ---------------------------------------------------------- |
+| H1 hero             | Outfit 600     | `clamp(34px, 5.4vw, 62px)` · line-height 1.04 · `-0.015em` |
+| H2 sección          | Outfit 600     | `clamp(28px, 4vw, 44px)` · line-height 1.08 · `-0.01em`    |
+| H3 tarjeta servicio | Outfit 600     | 32px                                                       |
+| H3 paquete          | Outfit 600     | 25px                                                       |
+| H3 sector           | Outfit 600     | 23px                                                       |
+| Wordmark "cénit"    | Outfit 600     | 23px · `letter-spacing 1.5px`                              |
+| Eyebrow             | DM Sans 600    | 12px · `letter-spacing .22em` · uppercase                  |
+| Lead / intro        | DM Sans 400    | 17–19px · line-height 1.7                                  |
+| Cuerpo              | DM Sans 400    | 14–15.5px · line-height 1.65–1.7                           |
+| Etiqueta (tag pill) | DM Sans 700    | 11px · `letter-spacing .1em` · uppercase                   |
+| Nota "Ejemplo"      | DM Sans 700    | 9.5px · `letter-spacing .14em` · uppercase                 |
 
 `em` en cursiva dentro de titulares = `font-style:normal; color:var(--color-primary)`
 (resalte de color, no cursiva real).
@@ -133,15 +134,15 @@ Escala (fiel al diseño; `clamp()` para fluidez):
 
 ## 5 · Layout y espaciado
 
-| Token | Valor | Uso |
-| --- | --- | --- |
-| `--maxw` | `1180px` | Ancho máximo del contenido centrado |
-| `--gutter` | `26px` | Padding horizontal de página |
-| `--section-y` | `84px` | Padding vertical de sección |
-| `--radius` | `20px` | Tarjetas grandes (servicios, paquetes, formulario) |
-| `--radius-md` | `16px` | Mockups / media |
-| `--radius-sm` | `12px` | Superficies pequeñas, notas, inputs (11–12px) |
-| `--radius-pill` | `999px` | Botones y etiquetas |
+| Token           | Valor    | Uso                                                |
+| --------------- | -------- | -------------------------------------------------- |
+| `--maxw`        | `1180px` | Ancho máximo del contenido centrado                |
+| `--gutter`      | `26px`   | Padding horizontal de página                       |
+| `--section-y`   | `84px`   | Padding vertical de sección                        |
+| `--radius`      | `20px`   | Tarjetas grandes (servicios, paquetes, formulario) |
+| `--radius-md`   | `16px`   | Mockups / media                                    |
+| `--radius-sm`   | `12px`   | Superficies pequeñas, notas, inputs (11–12px)      |
+| `--radius-pill` | `999px`  | Botones y etiquetas                                |
 
 Patrón de contenedor de sección:
 `max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter);`
@@ -169,8 +170,9 @@ check SVG (`stroke:primary`) + texto 13.5px. Bajo el mockup, nota **"Ejemplo"**
 en superficie `surface`.
 
 **Tarjeta de sector** — `radius:18px`, cabecera de 150px con degradado de marca
-+ círculos decorativos (`on-primary` a baja opacidad) + icono 62px; cuerpo con
-H3 23px + descripción. Hover: `translateY(-4px)`, `border-color:primary`.
+
+- círculos decorativos (`on-primary` a baja opacidad) + icono 62px; cuerpo con
+  H3 23px + descripción. Hover: `translateY(-4px)`, `border-color:primary`.
 
 **Tarjeta de paquete** — `radius:20px`, `padding:32px 28px`. La destacada
 ("Presencia Activa") lleva borde `primary`, `shadow` e insignia **"Más elegido"**

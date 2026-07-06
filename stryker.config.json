@@ -17,7 +17,15 @@
     "src/components/HeaderNav.tsx",
     "src/components/MobileMenu.tsx",
     "src/components/Logo.tsx",
-    "src/components/ThemeToggle.tsx"
+    "src/components/ThemeToggle.tsx",
+    "src/components/Footer.tsx",
+    "src/components/Layout.tsx",
+    "src/components/Hero.tsx",
+    "src/components/Servicios.tsx",
+    "src/components/Sectores.tsx",
+    "src/components/Paquetes.tsx",
+    "src/components/Contacto.tsx",
+    "src/lib/contact.ts"
   ],
   "thresholds": {
     "high": 100,

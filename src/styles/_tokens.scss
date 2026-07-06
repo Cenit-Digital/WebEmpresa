@@ -63,6 +63,10 @@
   --color-ring: #1e7a4f; /* anillo de la órbita */
   --color-zenith: #e3d34a; /* punto cénit (limón en claro) */
 
+  /* Estados de feedback (validación y envío del formulario de contacto) */
+  --color-danger: #b3261e; /* error de campo / envío fallido */
+  --color-success: #1e7a4f; /* envío correcto (verde bosque) */
+
   /* Sombra de elevación */
   --shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
 
@@ -109,6 +113,10 @@
   --color-logo-sub: #7c5cbf;
   --color-ring: #c9a84c;
   --color-zenith: #c9a84c; /* punto cénit (oro en oscuro) */
+
+  /* Estados de feedback */
+  --color-danger: #f2b8b5; /* rojo claro legible sobre fondo noche */
+  --color-success: #8fd0a3; /* verde claro legible sobre fondo noche */
 
   /* Sombra */
   --shadow: 0 22px 55px rgba(0, 0, 0, 0.5);

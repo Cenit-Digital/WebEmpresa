@@ -22,16 +22,16 @@ No se aprueba nada con `init.sh` en rojo: aquí está verde.
 
 ## 2 · Cobertura de escenarios (cada @s con test concreto, re-mapeado al NUEVO contrato)
 
-| @s | Comportamiento | Test que lo verifica |
-| -- | -------------- | -------------------- |
-| @s1 | Logo enlaza a "/" | `Header.test.tsx:31` `@s1 el logotipo enlaza a "/"` — `href="/"` + nombre accesible "Cénit Digital … inicio" (prod: `Header.tsx:12`). |
-| @s2 | Nav escritorio + CTA | `HeaderNav.test.tsx:20` (array exacto de 5 enlaces, incl. `Hablamos → #contacto`) y `:37` (no aparece "Menú"); `lib/nav.test.ts:5,14`; base `useIsMobile.test.tsx:47,56`. |
-| @s3 | Cabecera sticky | `Header.test.tsx:39` lee `Header.module.scss` (`position: sticky` + `top: 0`) — patrón del repo, jsdom no hace layout (prod: `Header.module.scss:2-3`). |
-| @s4 | Móvil oculta escritorio + botón "Menú" | `HeaderNav.test.tsx:45`; base `useIsMobile.test.tsx:51,61,76,82`. |
-| @s5 | Abrir panel + 4 enlaces en orden | `MobileMenu.test.tsx:7`. |
-| @s6 | Cerrar con botón "Cerrar" | `MobileMenu.test.tsx:24`. |
-| @s7 | Enlace del panel cierra | `MobileMenu.test.tsx:37`. |
-| @s8 | Fondo (overlay) cierra | `MobileMenu.test.tsx:48`. |
+| @s  | Comportamiento                         | Test que lo verifica                                                                                                                                                      |
+| --- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| @s1 | Logo enlaza a "/"                      | `Header.test.tsx:31` `@s1 el logotipo enlaza a "/"` — `href="/"` + nombre accesible "Cénit Digital … inicio" (prod: `Header.tsx:12`).                                     |
+| @s2 | Nav escritorio + CTA                   | `HeaderNav.test.tsx:20` (array exacto de 5 enlaces, incl. `Hablamos → #contacto`) y `:37` (no aparece "Menú"); `lib/nav.test.ts:5,14`; base `useIsMobile.test.tsx:47,56`. |
+| @s3 | Cabecera sticky                        | `Header.test.tsx:39` lee `Header.module.scss` (`position: sticky` + `top: 0`) — patrón del repo, jsdom no hace layout (prod: `Header.module.scss:2-3`).                   |
+| @s4 | Móvil oculta escritorio + botón "Menú" | `HeaderNav.test.tsx:45`; base `useIsMobile.test.tsx:51,61,76,82`.                                                                                                         |
+| @s5 | Abrir panel + 4 enlaces en orden       | `MobileMenu.test.tsx:7`.                                                                                                                                                  |
+| @s6 | Cerrar con botón "Cerrar"              | `MobileMenu.test.tsx:24`.                                                                                                                                                 |
+| @s7 | Enlace del panel cierra                | `MobileMenu.test.tsx:37`.                                                                                                                                                 |
+| @s8 | Fondo (overlay) cierra                 | `MobileMenu.test.tsx:48`.                                                                                                                                                 |
 
 Los 8 escenarios están cubiertos. Los tests citan el `@s` en su nombre y están
 re-alineados al contrato nuevo. **Sin restos del contrato viejo**: no aparecen

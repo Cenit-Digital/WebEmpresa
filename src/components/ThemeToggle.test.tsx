@@ -6,26 +6,37 @@ import ThemeToggle from './ThemeToggle'
 
 type Listener = () => void
 
-/** `matchMedia` falso controlable, keyeado al literal de la query de tema. */
+/**
+ * `matchMedia` falso controlable, keyeado al literal EXACTO de la query de tema
+ * (`'(prefers-color-scheme: dark)'`). Los listeners se registran por query y
+ * `emitChange` sólo dispara los de la query de tema: así, si producción muta la
+ * cadena (p. ej. a `""`), `window.matchMedia("")` registra su listener en otra
+ * ranura, el cambio del SO no llega y el test de "sistema→dark" falla → mutante muerto.
+ */
+const DARK_QUERY = '(prefers-color-scheme: dark)'
+
 function fakeMatchMedia(prefersDark: boolean) {
   let current = prefersDark
-  const listeners = new Set<Listener>()
+  const listenersByQuery = new Map<string, Set<Listener>>()
   window.matchMedia = ((query: string) => ({
-    matches: query === '(prefers-color-scheme: dark)' ? current : false,
+    matches: query === DARK_QUERY ? current : false,
     media: query,
     addEventListener: (type: string, cb: Listener) => {
-      if (type === 'change') listeners.add(cb)
+      if (type !== 'change') return
+      const set = listenersByQuery.get(query) ?? new Set<Listener>()
+      set.add(cb)
+      listenersByQuery.set(query, set)
     },
     removeEventListener: (type: string, cb: Listener) => {
-      if (type === 'change') listeners.delete(cb)
+      if (type === 'change') listenersByQuery.get(query)?.delete(cb)
     },
   })) as unknown as typeof window.matchMedia
   return {
     setDark: (value: boolean) => {
       current = value
     },
-    emitChange: () => listeners.forEach((cb) => cb()),
-    activeListeners: () => listeners.size,
+    emitChange: () => listenersByQuery.get(DARK_QUERY)?.forEach((cb) => cb()),
+    activeListeners: () => listenersByQuery.get(DARK_QUERY)?.size ?? 0,
   }
 }
 

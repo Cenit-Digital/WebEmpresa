@@ -78,15 +78,15 @@
 
 ## Trazabilidad @s → test
 
-| @s | Escenario | Test |
-| --- | --- | --- |
-| @s1 | Sin clave + sistema oscuro → `dark` | `src/lib/theme.test.tsx` › applyInitialTheme › `@s1` |
-| @s2 | Sin clave + sistema claro → `light` | `src/lib/theme.test.tsx` › applyInitialTheme › `@s2` |
-| @s3 | Elegir "Claro" fija y persiste | `src/components/ThemeToggle.test.tsx` › `@s3` (UI) · `src/lib/theme.test.tsx` › setMode › `@s3` (lógica) |
-| @s4 | Elegir "Oscuro" fija y persiste | `src/components/ThemeToggle.test.tsx` › `@s4` (UI) · `src/lib/theme.test.tsx` › setMode › `@s4` (lógica) |
-| @s5 | Elegir "Sistema" borra la clave y sigue al SO | `src/components/ThemeToggle.test.tsx` › `@s5` (UI) · `src/lib/theme.test.tsx` › setMode › `@s5` (lógica) |
-| @s6 | Sistema reacciona en vivo sin recargar | `src/components/ThemeToggle.test.tsx` › `@s6` (reacciona) + `@s6` (limpia listener fuera de Sistema) |
-| @s7 | La preferencia sobrevive a la recarga | `src/lib/theme.test.tsx` › applyInitialTheme › `@s7` · `src/components/ThemeToggle.test.tsx` › `@s7` (aria-checked) |
+| @s  | Escenario                                          | Test                                                                                                                           |
+| --- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| @s1 | Sin clave + sistema oscuro → `dark`                | `src/lib/theme.test.tsx` › applyInitialTheme › `@s1`                                                                           |
+| @s2 | Sin clave + sistema claro → `light`                | `src/lib/theme.test.tsx` › applyInitialTheme › `@s2`                                                                           |
+| @s3 | Elegir "Claro" fija y persiste                     | `src/components/ThemeToggle.test.tsx` › `@s3` (UI) · `src/lib/theme.test.tsx` › setMode › `@s3` (lógica)                       |
+| @s4 | Elegir "Oscuro" fija y persiste                    | `src/components/ThemeToggle.test.tsx` › `@s4` (UI) · `src/lib/theme.test.tsx` › setMode › `@s4` (lógica)                       |
+| @s5 | Elegir "Sistema" borra la clave y sigue al SO      | `src/components/ThemeToggle.test.tsx` › `@s5` (UI) · `src/lib/theme.test.tsx` › setMode › `@s5` (lógica)                       |
+| @s6 | Sistema reacciona en vivo sin recargar             | `src/components/ThemeToggle.test.tsx` › `@s6` (reacciona) + `@s6` (limpia listener fuera de Sistema)                           |
+| @s7 | La preferencia sobrevive a la recarga              | `src/lib/theme.test.tsx` › applyInitialTheme › `@s7` · `src/components/ThemeToggle.test.tsx` › `@s7` (aria-checked)            |
 | @s8 | Tema aplicado antes del primer pintado (anti-FOUC) | `src/lib/theme.test.tsx` › initialThemeAttribute (5 casos puros) + test que lee `index.html` (script antes de `type="module"`) |
 
 ## Estado
@@ -104,3 +104,14 @@
 - Colores del selector solo vía `var(--color-…)`; foco visible con
   `outline: 2px solid var(--color-primary)`.
 - NO marcado `done`: pendiente de `judge` + `mutation_tester`.
+
+## Endurecimiento de mutación (corrida global, break=100)
+
+- `ThemeToggle.tsx:29` `window.matchMedia('(prefers-color-scheme: dark)')` (mutado
+  a `matchMedia("")`) → afinado el mock `fakeMatchMedia`: los listeners se
+  registran POR query y `emitChange` sólo dispara los de la query EXACTA de tema.
+  Si producción muta la cadena, el listener queda en otra ranura, el cambio del SO
+  no llega y @s6 ("sistema reacciona en vivo → dark") falla → mutante muerto.
+  `useIsMobile.test` no se toca (usa su propio mock keyeado a `(max-width: 767px)`).
+
+Resultado: `ThemeToggle.tsx` 100% (0 supervivientes; 30 killed).

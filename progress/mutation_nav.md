@@ -50,7 +50,8 @@ Score total **100.00% >= break 100** (umbral). Stryker confirma:
 
 **PASS.** La red de tests de la feature #2 `nav` muerde a todo el catálogo de
 mutaciones sobre su código mutable. Con `judge` APPROVED (`progress/judge_nav.md`)
-+ mutación al 100%, la feature `nav` (#2) **puede marcarse `done`** (acción del
-`craftsman_lead`, no del `mutation_tester`).
+
+- mutación al 100%, la feature `nav` (#2) **puede marcarse `done`** (acción del
+  `craftsman_lead`, no del `mutation_tester`).
 
 Informe HTML: `reports/mutation/index.html`
