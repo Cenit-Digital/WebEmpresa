@@ -10,7 +10,7 @@ import styles from './MobileMenu.module.scss'
 export default function MobileMenu() {
   return (
     <Dialog.Root>
-      <Dialog.Trigger className={styles.trigger} aria-label="Abrir menú">
+      <Dialog.Trigger className={styles.trigger} aria-label="Menú">
         ☰
       </Dialog.Trigger>
       <Dialog.Portal>
@@ -24,7 +24,7 @@ export default function MobileMenu() {
               </Dialog.Close>
             ))}
           </nav>
-          <Dialog.Close className={styles.close} aria-label="Cerrar menú">
+          <Dialog.Close className={styles.close} aria-label="Cerrar">
             ✕
           </Dialog.Close>
         </Dialog.Content>

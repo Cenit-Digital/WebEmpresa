@@ -3,8 +3,8 @@
 > Estado vivo de la sesión. Vacíalo (deja esta plantilla) al cerrar y mueve el
 > resumen a `progress/history.md`.
 
-**Feature en curso:** theme_selector (#3)
-**Escenarios:** features/theme_selector.feature (@s1–@s8)
+**Feature en curso:** nav (#2) — re-alineación al contrato NUEVO
+**Escenarios:** features/nav.feature (@s1–@s8)
 
 ## Bitácora
 
