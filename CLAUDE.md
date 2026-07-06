@@ -53,3 +53,18 @@ referencia. El contenido vive en disco, no en el chat.
 - `pnpm typecheck` · `pnpm lint` · `pnpm test` · `pnpm coverage`.
 - `pnpm mutation` — prueba de mutación (Stryker).
 - `pnpm verify` / `./init.sh` — verificación completa del arnés.
+
+## Tooling de agente (refuerza el harness, no lo reemplaza)
+
+Ver `docs/tooling.md` para el detalle. En resumen:
+
+- **ponytail** (lazy senior dev) está **activo por defecto** (nivel `full`) vía
+  hooks en `.claude/settings.json`. Escribe lo mínimo que funciona sin recortar
+  validación/seguridad/accesibilidad. Control: `/ponytail lite|full|ultra|off`,
+  `stop ponytail`. Skills: `/ponytail-review`, `/ponytail-audit`,
+  `/ponytail-debt`, `/ponytail-gain`, `/ponytail-help`. Vendorizado en
+  `.claude/ponytail/` (MIT, ver su `NOTICE.md`).
+- **Agentes de apoyo** (solo lectura, opcionales, los convoca el `craftsman_lead`,
+  no sustituyen `judge`/`mutation_tester`): `security_reviewer`,
+  `a11y_seo_auditor`, `mentor`.
+- Las skills del stack se gestionan con **autoskills** (`skills-lock.json`).
