@@ -1,131 +1,102 @@
-# Veredicto del `judge` — feature #2 `nav` (Navegación de la cabecera, WEB-4)
+# Veredicto del Juez — feature #2 `nav` (Navegación de la cabecera, WEB-4)
 
-**Fecha:** 2026-07-03 · **Contrato:** `features/nav.feature` (@s1..@s9) ·
-**Bitácora:** `progress/tdd_nav.md`
+**Contrato juzgado:** `features/nav.feature` (@s1–@s8, contrato NUEVO reabierto en
+la puerta humana; sustituye al viejo de 9 escenarios).
+**Rama:** `feat/design-system`.
+**Resultado:** **APPROVED**.
 
-## Comprobaciones ejecutables
-
-- `./init.sh` → **exit 0** (typecheck · lint · test verdes).
-- `pnpm typecheck` → sin errores.
-- `pnpm lint` → sin errores **ni warnings** (exit 0, salida vacía).
-- `pnpm test` → **26 tests verdes** (7 archivos). **0 líneas de stderr**, sin
-  avisos de React/`act()`/deprecación (la etiqueta `stderr |` del reporter
-  verbose resultó ser un artefacto de orden: la ejecución limpia arroja 0).
-  21 de los 26 son de nav; el resto son `seo` (feature 1) y `ThemeToggle`
-  (feature 3), que **no regresionan**.
-
-## Checklist C1–C6 (C7 lo valida el `mutation_tester`)
-
-- **C1 — Arnés completo:** [x] `./init.sh` termina en 0; docs y archivos base
-  presentes.
-- **C2 — Estado coherente:** [x] solo `nav` en `in_progress`; feature 1 `done`
-  con tests que pasan; `progress/current.md` describe la sesión activa.
-- **C3 — Arquitectura:** [x] lógica en `src/lib/` pura (`nav.ts` datos,
-  `useIsMobile.ts` hook sin JSX); componentes PascalCase, 1 por archivo; TS sin
-  `any` injustificado en producción (los `as unknown as typeof window.matchMedia`
-  viven solo en tests, justificados para el mock); sin `console.*`, `TODO` ni
-  `debugger`. (Observación menor abajo.)
-- **C4 — Verificación real:** [x] cada módulo con lógica tiene test co-locado;
-  `pnpm test` > 0 y verde; typecheck+lint sin warnings.
-- **C5 — Sesión bien cerrada:** [x] `current.md` al día y `tdd_nav.md` con
-  bitácora + trazabilidad. (La entrada en `history.md` la cierra el lead.)
-- **C6 — Contrato Gherkin:** [x] `.feature` con `@s1..@s9`, cada `Then`
-  medible; cada `@s` cubierto por ≥1 test significativo; mapa `@s → test` en
-  `tdd_nav.md`; sin producción que ningún test rojo pidiera.
-
-## Estado de cada escenario
-
-- **@s1** (logo → "/") — `Header.test.tsx`: `href="/"` + texto "CÉNIT DIGITAL".
-  Significativo. **OK**.
-- **@s2** (nav escritorio + CTA) — `nav.test.ts` (datos exactos) +
-  `HeaderNav.test.tsx` compara el array de `[label, href]` de los 5 enlaces en
-  orden, con CTA "Hablamos" → `#contacto`. **OK**.
-- **@s3** (cada enlace desplaza) — `HeaderNav.test.tsx` `it.each` de los 4
-  ejemplos; clic real y aserción `window.location.hash === ancla`. **OK**.
-- **@s4** (sticky) — `Header.test.tsx`: liga la clase del `banner` y verifica
-  `position: sticky`/`top: 0` en el módulo SCSS. Estrategia jsdom razonable y
-  documentada; aserción significativa (no trivial). **OK**.
-- **@s5** (panel abre + 4 enlaces en orden) — `MobileMenu.test.tsx` verifica
-  cierre inicial, apertura y `[Servicios, Sectores, Paquetes, Contacto]` (la
-  decisión de la puerta); `HeaderNav.test.tsx` (botón visible / nav oculta en
-  móvil); base responsive en `useIsMobile.test.tsx`. **OK**.
-- **@s6** (✕ cierra) — `MobileMenu.test.tsx`: abre, comprueba diálogo, pulsa
-  "Cerrar menú" (texto ✕), diálogo desaparece. **OK**.
-- **@s7** (enlace cierra + navega) — `MobileMenu.test.tsx`: pulsa "Paquetes"
-  dentro del panel; asevera **cierre** y `hash === "#paquetes"`. **OK**.
-- **@s8** (fondo cierra) — `MobileMenu.test.tsx`: clic en el overlay
-  (`data-testid`) cierra el diálogo. Aserción significativa. **OK**.
-- **@s9** (menú solo en móvil / escritorio ve la nav) — `HeaderNav.test.tsx`
-  (escritorio: nav presente, sin botón "Abrir menú") + `useIsMobile` (`getServer
-  Snapshot`/`getSnapshot` false). **OK**.
-
-## Olores TDD
-
-Ninguno material. La bitácora evidencia Rojo→Verde→Refactor por ciclo y
-documenta honestamente dos autocorrecciones (ciclos 2 y 6: se **podó**
-producción que se había adelantado a su test, para que cada trozo naciera de un
-rojo) — refuerza las Tres Leyes, no las viola: al cerrar no queda producción sin
-test. No hay tests "a futuro", refactors en rojo, funciones largas ni nombres
-opacos. `ThemeToggle` (isla `ClientOnly`, feature 3) se **preserva** en
-`Header.tsx:16` y sus tests siguen verdes: sin regresión.
-
-## Stryker
-
-`stryker.config.json` incluye `nav.ts`, `useIsMobile.ts`, `HeaderNav.tsx`,
-`MobileMenu.tsx` y **conserva** `seo.ts`. `Header.tsx` queda fuera del glob:
-justificado (composición estática sin lógica condicional + isla
-`ClientOnly(ThemeToggle)` de otra feature). Razonable; el umbral `break: 100`
-sobre lo tocado lo valida el `mutation_tester` (C7).
-
-## Observaciones menores (no bloqueantes)
-
-- Colores hardcodeados en SCSS: `HeaderNav.module.scss:14` (`color: #fff`),
-  `MobileMenu.module.scss:18` (`rgba(7,33,31,.55)`) y `:34`
-  (`rgba(0,0,0,.25)`). Convención `docs/conventions.md` pide `var(--color-…)`,
-  pero **no existe token** para blanco-sobre-primario ni para scrim/sombra, y el
-  baseline ya `done` (feature 1: `ContactDialog.module.scss:4,13,27` y
-  `_base.scss:46`) usa **exactamente** estos mismos patrones. No regresiona la
-  línea base; queda como deuda para un futuro `--color-on-primary`/`--color-scrim`.
-- El mock de `matchMedia` se repite en tres tests (patrón local co-locado);
-  aceptable.
-
-## Veredicto
-
-**APROBADO.** El contrato @s1..@s9 está cubierto con aserciones significativas,
-la disciplina TDD es demostrable y verde, la arquitectura y las convenciones se
-respetan (con la única observación menor, alineada con el baseline). `./init.sh`
-en verde, 26 tests, 0 warnings. Pasa a `mutation_tester` (C7).
+> El juez valora diseño y cobertura. La mutación (`mutation_tester`) corre
+> después y es la otra puerta; ambas deben pasar antes de `done`.
 
 ---
 
-## Re-review (post-mutación) — 2026-07-03
+## 1 · Puerta dura — `./init.sh`
 
-**Contexto:** tras mi aprobación, el `mutation_tester` reportó 1 superviviente
-(score 97.37% < `break: 100`): `MOBILE_QUERY = '(max-width: 767px)' → ""` en
-`src/lib/useIsMobile.ts:4`. El `tdd_craftsman` lo cerró con un cambio
-**test-only**. Único diff desde mi aprobación: `src/lib/useIsMobile.test.tsx`.
+Verde de punta a punta (exit 0):
 
-**Verificado:**
-1. `pnpm typecheck` (exit 0) · `pnpm lint` (exit 0, sin warnings) · `pnpm test`
-   → **26 tests verdes** (7 archivos). Sin regresión.
-2. El endurecimiento es una aserción **legítima**, no un olor: el fake
-   (`useIsMobile.test.tsx:20`) ancla `matches` al breakpoint **codificado a
-   mano** `'(max-width: 767px)'` en vez del símbolo importado. Rompe la
-   tautología "el test importa la misma constante que verifica": ahora, si
-   producción muta `MOBILE_QUERY → ""`, `window.matchMedia("")` no coincide con
-   el literal, el fake devuelve `false` y `@s5 getSnapshot` / `@s5 useIsMobile
-   móvil` / `@s9 reacciona` se ponen rojos → el mutante muere. Pinar el
-   breakpoint del contrato no es sobre-ajuste: es exactamente el comportamiento
-   que producción debe cumplir (consultar la media query correcta).
-3. `MOBILE_QUERY` **ya no se importa** en ningún test (línea 4 depurada): sin
-   import muerto. Confirmado por grep en `src/`.
-4. **Producción intacta:** `useIsMobile.ts` sin cambios (`MOBILE_QUERY`
-   exportado y usado en :8 y :15; el literal del test coincide byte a byte). El
-   resto de la cobertura @s1..@s9 no se tocó.
-5. Ciclo extra registrado en `progress/tdd_nav.md` (#16) con causa raíz
-   (tautología), arreglo y verificación Rojo→Verde documentada.
+- `pnpm typecheck` — sin errores.
+- `pnpm lint` — sin warnings.
+- `pnpm test` — **64 passed**, 0 fallos, 0 skips.
 
-**Veredicto de re-review: RATIFICADO — sigue APROBADO.** El cambio es
-test-only, endurece la red sin alterar producción ni el contrato, y no
-introduce olor. Listo para revalidar la mutación (esperado 100% sobre lo
-tocado).
+No se aprueba nada con `init.sh` en rojo: aquí está verde.
+
+## 2 · Cobertura de escenarios (cada @s con test concreto, re-mapeado al NUEVO contrato)
+
+| @s | Comportamiento | Test que lo verifica |
+| -- | -------------- | -------------------- |
+| @s1 | Logo enlaza a "/" | `Header.test.tsx:31` `@s1 el logotipo enlaza a "/"` — `href="/"` + nombre accesible "Cénit Digital … inicio" (prod: `Header.tsx:12`). |
+| @s2 | Nav escritorio + CTA | `HeaderNav.test.tsx:20` (array exacto de 5 enlaces, incl. `Hablamos → #contacto`) y `:37` (no aparece "Menú"); `lib/nav.test.ts:5,14`; base `useIsMobile.test.tsx:47,56`. |
+| @s3 | Cabecera sticky | `Header.test.tsx:39` lee `Header.module.scss` (`position: sticky` + `top: 0`) — patrón del repo, jsdom no hace layout (prod: `Header.module.scss:2-3`). |
+| @s4 | Móvil oculta escritorio + botón "Menú" | `HeaderNav.test.tsx:45`; base `useIsMobile.test.tsx:51,61,76,82`. |
+| @s5 | Abrir panel + 4 enlaces en orden | `MobileMenu.test.tsx:7`. |
+| @s6 | Cerrar con botón "Cerrar" | `MobileMenu.test.tsx:24`. |
+| @s7 | Enlace del panel cierra | `MobileMenu.test.tsx:37`. |
+| @s8 | Fondo (overlay) cierra | `MobileMenu.test.tsx:48`. |
+
+Los 8 escenarios están cubiertos. Los tests citan el `@s` en su nombre y están
+re-alineados al contrato nuevo. **Sin restos del contrato viejo**: no aparecen
+"Abrir menú", "Cerrar menú", `scrollIntoView`, ni los escenarios eliminados
+(desplazamiento por ancla, escritorio-oculta-menú `@s9`). El único match de
+"botón de menú" es la descripción legítima de un test (`HeaderNav.test.tsx:37`),
+no producción.
+
+## 3 · Disciplina TDD
+
+`progress/tdd_nav.md` documenta Rojo→Verde→Refactor por ciclo, con tabla de delta
+explícita respecto al contrato anterior y trazabilidad `@s → test`. Los renombres
+de producción (aria-label `Abrir menú`→`Menú`, `Cerrar menú`→`Cerrar`) están
+justificados por un test rojo (`@s4`, `@s6`). No detecto producción que ningún
+test exija: `nav.ts`, `useIsMobile.ts`, `HeaderNav.tsx` y `MobileMenu.tsx` están
+íntegramente ejercitados; `Header.tsx` es composición estática (marca/sticky
+cubiertos por @s1/@s3; `Logo`/`ThemeToggle` son de features #12/#3, ya `done`).
+
+## 4 · Calidad (lente de artesano)
+
+- **Nombres accesibles correctos:** trigger `aria-label="Menú"` (glifo ☰) y cierre
+  `aria-label="Cerrar"` (glifo ✕). El `aria-label` gana el nombre accesible; los
+  glifos son solo iconografía visual, no el nombre del contrato viejo. Correcto.
+- **Enlaces correctos:** `#servicios/#sectores/#paquetes/#contacto` y
+  `Hablamos → #contacto` (`lib/nav.ts:11-19`); mismo orden en escritorio y panel
+  (lista única `NAV_LINKS`, sin duplicación).
+- **CTA como enlace:** `<a href="#contacto">` con estilo de botón — casa con el
+  `@s2` literal ("existe un **enlace** 'Hablamos'").
+- **Foco visible:** cubierto globalmente en `_base.scss:41` (`:focus-visible`
+  → `outline: 2px solid var(--color-primary)`), fiel a DESIGN_SYSTEM §7.
+- **Logo Órbita + ThemeToggle preservados** en `Header.tsx:12-16`
+  (`<Logo/>` dentro del enlace a inicio; `ClientOnly(ThemeToggle)`); sus suites
+  siguen verdes dentro de los 64 tests.
+- **Colores por token:** `Header.module.scss` usa `--color-band` /
+  `--color-band-border` (fiel a §6); `HeaderNav.module.scss` CTA con
+  `--color-primary` / `--color-on-primary` / `--radius-pill` (sin `#fff`/`999px`
+  sueltos). Funciones cortas, un componente por archivo, sin números mágicos.
+- **Arquitectura:** datos puros en `lib/`, componentes en `components/`; `lib` no
+  importa de `components`. Respeta `docs/architecture.md`.
+
+### Observación no bloqueante (recomendación, no condición de aprobación)
+
+- `MobileMenu.module.scss:18` usa un scrim literal `rgba(7, 33, 31, 0.55)` para el
+  overlay (mismo valor repetido en `ContactDialog.module.scss:13`, de otra
+  feature). No es `hex` (la prohibición explícita de §8 es "0 hex") y no existe
+  token de scrim; el `box-shadow` en `:34` usa `rgba(0,0,0,.25)`, idiomático y
+  coherente con cómo `--shadow` se define en tokens. **No bloquea.** Recomiendo,
+  en una limpieza futura, extraer un token `--color-scrim` para matar la
+  duplicación del valor mágico entre `MobileMenu` y `ContactDialog`.
+
+## 5 · Checkpoints (CHECKPOINTS.md)
+
+- **C1 — Arnés completo:** [x] `init.sh` exit 0; archivos base presentes.
+- **C2 — Estado coherente:** [x] `nav` única en `in_progress`; `current.md` describe la sesión.
+- **C3 — Arquitectura:** [x] módulos previstos; TS estricto sin `any`; sin `console.log`/TODOs.
+- **C4 — Verificación real:** [x] cada módulo con lógica tiene test; 64 verdes; typecheck+lint sin warnings.
+- **C5 — Cierre de sesión:** [ ] N/A para el juez (lo cierra el lead: `history.md`, estado `done`).
+- **C6 — Contrato Gherkin:** [x] `.feature` con `@s1..@s8`, cada `Then` medible; mapa `@s → test` en `tdd_nav.md`; sin producción sin test.
+- **C7 — Mutación:** [ ] pendiente del `mutation_tester` (puerta posterior).
+
+---
+
+## Veredicto
+
+**APPROVED.** Contrato nuevo íntegramente cubierto y re-mapeado, TDD disciplinado,
+`init.sh` verde, calidad conforme al Design System §6/§7 y a `RF-CODE-001`. La
+única observación (scrim rgba) es de fidelidad menor y no bloquea. Queda pendiente
+la puerta de mutación antes de marcar la feature `done`.
