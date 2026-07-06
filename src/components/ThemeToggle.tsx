@@ -1,40 +1,56 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import {
+  applyTheme,
+  getStoredMode,
+  resolveTheme,
+  setMode,
+  systemPrefersDark,
+  type ThemeMode,
+} from '../lib/theme'
 import styles from './ThemeToggle.module.scss'
 
-type Theme = 'light' | 'dark'
-
-function getInitialTheme(): Theme {
-  if (typeof document === 'undefined') {
-    return 'light'
-  }
-  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'
-}
+const OPTIONS: { mode: ThemeMode; label: string }[] = [
+  { mode: 'light', label: 'Claro' },
+  { mode: 'dark', label: 'Oscuro' },
+  { mode: 'system', label: 'Sistema' },
+]
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme)
+  const [mode, setModeState] = useState<ThemeMode>(getStoredMode)
 
-  function toggle() {
-    const next: Theme = theme === 'dark' ? 'light' : 'dark'
-    setTheme(next)
-    document.documentElement.dataset.theme = next
-    try {
-      localStorage.setItem('cenit-theme', next)
-    } catch {
-      // Almacenamiento no disponible: el tema se mantiene solo en memoria.
+  // Sincroniza el DOM con el modo activo. En "Sistema" registra un listener de
+  // prefers-color-scheme para reaccionar en vivo (@s6); en cualquier otro modo
+  // no hay listener (y se limpia al cambiar de modo).
+  useEffect(() => {
+    applyTheme(resolveTheme(mode, systemPrefersDark()))
+    if (mode !== 'system') {
+      return
     }
+    const mql = window.matchMedia('(prefers-color-scheme: dark)')
+    const onChange = () => applyTheme(resolveTheme('system', systemPrefersDark()))
+    mql.addEventListener('change', onChange)
+    return () => mql.removeEventListener('change', onChange)
+  }, [mode])
+
+  function choose(next: ThemeMode) {
+    setMode(next)
+    setModeState(next)
   }
 
-  const isDark = theme === 'dark'
   return (
-    <button
-      type="button"
-      className={styles.toggle}
-      onClick={toggle}
-      aria-pressed={isDark}
-      title={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
-    >
-      <span aria-hidden="true">{isDark ? '☀' : '☾'}</span>
-      <span className={styles.label}>{isDark ? 'Claro' : 'Oscuro'}</span>
-    </button>
+    <div role="radiogroup" aria-label="Tema" className={styles.group}>
+      {OPTIONS.map((option) => (
+        <button
+          key={option.mode}
+          type="button"
+          role="radio"
+          aria-checked={mode === option.mode}
+          className={styles.option}
+          onClick={() => choose(option.mode)}
+        >
+          {option.label}
+        </button>
+      ))}
+    </div>
   )
 }

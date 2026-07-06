@@ -1,19 +1,38 @@
-.toggle {
+.group {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.7rem;
+  gap: 2px;
+  padding: 3px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-band-border);
+  border-radius: var(--radius-pill);
+}
+
+.option {
+  appearance: none;
+  border: 0;
   background: transparent;
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-  color: inherit;
-}
-
-.toggle:hover {
-  border-color: var(--color-primary);
-}
-
-.label {
-  font-size: 0.85rem;
+  color: var(--color-text-soft);
+  font-family: var(--font-sans);
+  font-size: 13px;
   font-weight: 500;
+  line-height: 1;
+  padding: 7px 12px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.option:hover {
+  color: var(--color-text);
+}
+
+.option[aria-checked='true'] {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 600;
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }

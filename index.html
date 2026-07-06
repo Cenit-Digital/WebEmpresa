@@ -8,11 +8,17 @@
     <meta name="color-scheme" content="light dark" />
     <script>
       // Aplica el tema (claro/oscuro) antes del primer pintado para evitar FOUC.
+      // Espeja src/lib/theme.ts:initialThemeAttribute: la clave solo vale
+      // 'light'|'dark'; su ausencia (o cualquier otro valor) = "Sistema".
       ;(function () {
         try {
           var stored = localStorage.getItem('cenit-theme')
           var theme =
-            stored || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+            stored === 'dark' || stored === 'light'
+              ? stored
+              : matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light'
           document.documentElement.dataset.theme = theme
         } catch (e) {
           document.documentElement.dataset.theme = 'light'

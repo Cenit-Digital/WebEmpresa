@@ -12,10 +12,12 @@
   "mutate": [
     "src/lib/seo.ts",
     "src/lib/nav.ts",
+    "src/lib/theme.ts",
     "src/lib/useIsMobile.ts",
     "src/components/HeaderNav.tsx",
     "src/components/MobileMenu.tsx",
-    "src/components/Logo.tsx"
+    "src/components/Logo.tsx",
+    "src/components/ThemeToggle.tsx"
   ],
   "thresholds": {
     "high": 100,
