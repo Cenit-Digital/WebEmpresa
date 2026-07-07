@@ -6,6 +6,7 @@ import {
   applyTheme,
   getStoredMode,
   initialThemeAttribute,
+  nextMode,
   resolveTheme,
   setMode,
   systemPrefersDark,
@@ -118,6 +119,20 @@ describe('theme', () => {
 
     it('"system" + prefers claro -> "light"', () => {
       expect(resolveTheme('system', false)).toBe('light')
+    })
+  })
+
+  describe('nextMode (ciclo light → dark → system → light)', () => {
+    it('light → dark', () => {
+      expect(nextMode('light')).toBe('dark')
+    })
+
+    it('dark → system', () => {
+      expect(nextMode('dark')).toBe('system')
+    })
+
+    it('system → light (cierra el ciclo)', () => {
+      expect(nextMode('system')).toBe('light')
     })
   })
 

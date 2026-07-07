@@ -4,6 +4,11 @@ Feature: Selector de tema Claro/Oscuro/Sistema
 
   # Paleta CLARA = Bosque & Limón · OSCURA = Noche & Oro (RF-MARCA-001).
   # Persistencia en localStorage['cenit-theme']; ausencia de clave = "Sistema".
+  # PRESENTACIÓN del control (un único botón de icono que cicla los 3 modos) se
+  # especifica en features/fidelidad_referencia.feature (feature #13). Aquí se
+  # contrata solo el COMPORTAMIENTO (data-theme + persistencia). Ambos contratos
+  # deben coincidir: el "elijo la opción X" de antes es hoy avanzar el ciclo del
+  # botón único hasta que el modo activo es X.
 
   @s1
   Scenario: Sin preferencia guardada, sigue al sistema (oscuro)
@@ -20,21 +25,21 @@ Feature: Selector de tema Claro/Oscuro/Sistema
   @s3
   Scenario: Elegir "Claro" fija el tema y lo persiste
     Given el selector de tema visible
-    When elijo la opción "Claro"
+    When avanzo el ciclo del botón de tema hasta que el modo activo es "Claro"
     Then el atributo "data-theme" de <html> es "light"
     And localStorage["cenit-theme"] es "light"
 
   @s4
   Scenario: Elegir "Oscuro" fija el tema y lo persiste
     Given el selector de tema visible
-    When elijo la opción "Oscuro"
+    When avanzo el ciclo del botón de tema hasta que el modo activo es "Oscuro"
     Then el atributo "data-theme" de <html> es "dark"
     And localStorage["cenit-theme"] es "dark"
 
   @s5
   Scenario: Elegir "Sistema" borra la preferencia y vuelve a seguir al SO
     Given una preferencia "dark" guardada y el sistema prefiere esquema claro
-    When elijo la opción "Sistema"
+    When avanzo el ciclo del botón de tema hasta que el modo activo es "Sistema"
     Then no existe la clave "cenit-theme" en localStorage
     And el atributo "data-theme" de <html> es "light"
 

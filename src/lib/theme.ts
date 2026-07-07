@@ -60,6 +60,21 @@ export function setMode(mode: ThemeMode): void {
   applyTheme(resolveTheme(mode, systemPrefersDark()))
 }
 
+/** Sucesor de cada modo en el ciclo del botón de tema. */
+const MODE_CYCLE: Record<ThemeMode, ThemeMode> = {
+  light: 'dark',
+  dark: 'system',
+  system: 'light',
+}
+
+/**
+ * Avanza el modo un paso en el ciclo `light → dark → system → light`. Función
+ * pura: la usa el botón de tema para ciclar los tres modos en cada activación.
+ */
+export function nextMode(mode: ThemeMode): ThemeMode {
+  return MODE_CYCLE[mode]
+}
+
 /**
  * Réplica pura de la lógica del script anti-FOUC del `index.html` (@s8): decide
  * el `data-theme` inicial a partir del valor bruto de `localStorage` y de la

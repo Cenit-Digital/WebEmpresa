@@ -1,5 +1,5 @@
 import { render, screen, within } from '@testing-library/react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import HeaderNav from './HeaderNav'
 
 /** matchMedia estático: controla si el viewport se considera móvil. */
@@ -11,6 +11,11 @@ function mockMatchMedia(mobile: boolean) {
     removeEventListener: () => {},
   })) as unknown as typeof window.matchMedia
 }
+
+beforeEach(() => {
+  localStorage.clear()
+  delete document.documentElement.dataset.theme
+})
 
 afterEach(() => {
   vi.unstubAllGlobals()
@@ -34,6 +39,20 @@ describe('HeaderNav', () => {
     ])
   })
 
+  it('@s6 el clúster ordena: enlaces → botón de tema → "Hablamos" (tema entre Contacto y Hablamos)', async () => {
+    mockMatchMedia(false)
+    render(<HeaderNav />)
+
+    // El botón de tema es client-only (ClientOnly): esperamos a que aparezca.
+    await screen.findByRole('button', { name: /Cambiar tema/ })
+    const nav = screen.getByRole('navigation', { name: 'Principal' })
+
+    const order = Array.from(nav.querySelectorAll('a, button')).map((el) =>
+      el.tagName === 'BUTTON' ? 'TEMA' : el.textContent,
+    )
+    expect(order).toEqual(['Servicios', 'Sectores', 'Paquetes', 'Contacto', 'TEMA', 'Hablamos'])
+  })
+
   it('@s2 en escritorio no aparece el botón de menú móvil', () => {
     mockMatchMedia(false)
     render(<HeaderNav />)
@@ -48,5 +67,14 @@ describe('HeaderNav', () => {
 
     expect(screen.getByRole('button', { name: 'Menú' })).toBeInTheDocument()
     expect(screen.queryByRole('navigation', { name: 'Principal' })).not.toBeInTheDocument()
+  })
+
+  it('@móvil conserva el botón de tema visible junto a "Menú" (anti-regresión)', async () => {
+    mockMatchMedia(true)
+    render(<HeaderNav />)
+
+    // El tema sigue accesible en móvil (client-only): no se regresa su visibilidad.
+    expect(await screen.findByRole('button', { name: /Cambiar tema/ })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Menú' })).toBeInTheDocument()
   })
 })

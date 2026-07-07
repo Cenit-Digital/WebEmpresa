@@ -36,3 +36,43 @@ Observación menor no bloqueante (heredada del baseline `ContactDialog`):
 hex/rgba sueltos en `HeaderNav.module.scss` y `MobileMenu.module.scss` por
 falta de token para blanco-sobre-primario y scrim/sombra — candidato a
 `RF-MARCA-001` cuando se definan esos tokens.
+
+## 2026-07-06 · #3–#12 Design System (WEB-4/WEB-5/WEB-6) — home completa 1:1
+
+Sesión del Design System en `feat/design-system`: implementadas por TDD estricto,
+en orden del handoff y fieles 1:1 a `design/Cenit Home (referencia).dc.html` +
+`docs/DESIGN_SYSTEM.md`, las features #12 marca (logo Órbita + tokens
+Bosque&Limón/Noche&Oro), #3 theme_selector (3 estados, `cenit-theme`, reacción en
+vivo, anti-FOUC), #2 nav, #4 footer, #5 layout_accesibilidad, #6 hero, #7 servicios,
+#8 sectores, #9 paquetes (sin precios), #10 contacto_seccion, #11 contact_form
+(Resend vía `api/contact.ts`). Cada una cerró con las tres puertas (TDD Rojo→Verde→
+Refactor · judge APROBADO · mutación Stryker 100%). Reconciliado `main` en
+`feat/design-system` (PR #2). Verificación 0/0/0: typecheck · lint 0 warnings · 147
+tests · build SSG · mutación 100% (356/356). Estado: 12/12 `done`.
+
+## 2026-07-07 · #13 fidelidad_referencia (WEB-4/WEB-5) — restaurar fidelidad cabecera + hero
+
+Pipeline SDD completo sobre `feat/design-system`. Conversación (lead ↔ Pablo): la
+home había DERIVADO de la referencia versionada en 3 puntos de cabecera/hero; Pablo
+confirmó "restaurar fidelidad" y eligió, para el tema, la **opción A1** (botón de
+icono único que CICLA los 3 modos) para no regresar el requisito Jira WEB-4 (3
+estados). Spec en `project-spec.md` #13; contrato en
+`features/fidelidad_referencia.feature` (9 escenarios) + parche de presentación en
+`features/theme_selector.feature` (@s3–@s5 al modelo de ciclo, comportamiento
+intacto). El lead corrigió `@s7` del contrato (la referencia usa `space-between` con
+2 grupos; la corrección del hueco central es estructural —2 hijos, no 3—, no de CSS).
+
+Implementación por TDD estricto (`tdd_craftsman`): (1) `ThemeToggle` pasa de píldora
+`radiogroup` a un único `<button>` que cicla `light→dark→system→light` (iconos
+sol/luna/monitor, SVG verbatim de la referencia; monitor de Feather = única adición
+aprobada), con `aria-hidden` en los iconos decorativos y nombre accesible que comunica
+el modo; `theme.ts` intacto (+`nextMode` puro). (2) Cabecera a 2 grupos: `Header` deja
+2 hijos (logo | `HeaderNav`); el clúster derecho ordena `[enlaces · tema · Hablamos]`;
+tema preservado en móvil (anti-regresión). (3) Hero recupera el arco decorativo
+`data-hero-arc` (círculo+onda+punto), `overflow:hidden` en `.hero`, `aria-hidden`.
+
+Review: `judge` **APROBADO**; `a11y_seo_auditor` **0 bloqueantes** (WCAG 2.1 AA; se
+aplicó la mejora de `aria-hidden` en iconos por TDD). Mutación (`mutation_tester`):
+**100%** (98/98) acotada a los 4 ficheros tocados (`theme.ts`, `ThemeToggle.tsx`,
+`HeaderNav.tsx`, `Hero.tsx`). Verificación final 0/0/0: typecheck · lint 0 warnings ·
+**159 tests** · build SSG (2 páginas). Estado: `done`.
