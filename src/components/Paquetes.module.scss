@@ -42,7 +42,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 22px;
   margin-top: 54px;
   align-items: start;
 }
@@ -146,5 +146,11 @@
 @media (max-width: 880px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .card {
+    padding: 28px 22px;
   }
 }

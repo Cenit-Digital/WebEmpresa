@@ -1,8 +1,40 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import Hero from './Hero'
 
 describe('Hero', () => {
+  it('@s7 el arco decorativo es el primer hijo del hero, aria-hidden y no enfocable', () => {
+    const { container } = render(<Hero />)
+
+    const hero = container.querySelector('section')
+    const arc = hero?.firstElementChild
+    expect(arc).toHaveAttribute('data-hero-arc')
+    expect(arc).toHaveAttribute('aria-hidden', 'true')
+    // Un <div> no es enfocable por defecto (tabIndex -1); el arco no entra en el orden de tabulación.
+    expect((arc as HTMLElement).tabIndex).toBe(-1)
+  })
+
+  it('@s8 el SVG del arco contiene círculo de contorno, onda (path) y punto (círculo)', () => {
+    const { container } = render(<Hero />)
+
+    const arc = container.querySelector('[data-hero-arc]')
+    const svg = arc?.querySelector('svg')
+    expect(svg).not.toBeNull()
+    // Anillo de contorno + punto = dos <circle>; la onda es un <path>.
+    expect(svg?.querySelectorAll('circle')).toHaveLength(2)
+    expect(svg?.querySelectorAll('path')).toHaveLength(1)
+    // El color sale del token de acento, no de un hex fijo.
+    expect(svg?.querySelector('path')).toHaveAttribute('stroke', 'var(--color-accent)')
+  })
+
+  it('@s9 el ".hero" recorta el arco con overflow:hidden (evita scroll horizontal)', () => {
+    // jsdom no hace layout: verificamos la propiedad sobre el .module.scss (patrón sticky).
+    const scss = readFileSync(resolve(process.cwd(), 'src/components/Hero.module.scss'), 'utf8')
+    // El overflow:hidden debe vivir DENTRO de la regla del .hero, no en otra cualquiera.
+    expect(scss).toMatch(/\.hero\s*\{[^}]*overflow:\s*hidden[^}]*\}/)
+  })
   it('@s1 muestra el eyebrow de contexto', () => {
     render(<Hero />)
 

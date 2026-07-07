@@ -21,12 +21,13 @@ h3 {
   letter-spacing: -0.01em;
 }
 
-/* Interiores de texto (aviso legal, etc.). La home usa secciones a sangre
-   completa con su propio contenedor, así que no se envuelve en <main>. */
+/* `main#contenido` es el landmark y el destino del enlace "saltar al contenido":
+   NO restringe ancho ni añade sangrado. La home son secciones a sangre completa,
+   cada una con su propio `.inner` (max-width + gutter); si `main` añadiera
+   max-width/padding duplicaría el gutter y recortaría las bandas de color de
+   sección. Las páginas de texto (aviso legal) se maquetan con `.prose`. */
 main {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 2rem var(--gutter) 4rem;
+  display: block;
 }
 
 a {
@@ -59,7 +60,9 @@ a:hover {
 }
 
 .prose {
-  max-width: 70ch;
+  max-width: 72ch;
+  margin: 0 auto;
+  padding: 3.5rem var(--gutter) 5rem;
 }
 
 .prose h1 {

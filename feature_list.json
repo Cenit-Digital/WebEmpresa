@@ -155,6 +155,19 @@
       ],
       "sdd": true,
       "status": "done"
+    },
+    {
+      "id": 13,
+      "name": "fidelidad_referencia",
+      "title": "Fidelidad al diseño de referencia: cabecera (tema icono + Hablamos) y hero (arco)",
+      "description": "Reconcilia la implementación con design/Cenit Home (referencia).dc.html donde derivó: (1) selector de tema como botón de icono único que cicla Claro→Oscuro→Sistema (sol/luna/monitor) conservando toda la lógica de theme.ts (WEB-4 de 3 estados, persistencia, reacción en vivo a prefers-color-scheme, anti-FOUC); (2) cabecera a 2 grupos (logo | clúster derecho [enlaces · tema · Hablamos]) eliminando el hueco central, con Hablamos a la derecha del icono de tema; (3) arco decorativo del hero (SVG círculo+onda+punto, data-hero-arc) arriba-derecha, opacity .45 (.10 ≤820px), detrás del texto, aria-hidden, con overflow:hidden en el hero. Fuente de verdad: design/Cenit Home (referencia).dc.html.",
+      "acceptance": [
+        "Todos los escenarios de features/fidelidad_referencia.feature pasan (mapa @s → test en progress/tdd_fidelidad_referencia.md)",
+        "theme_selector.feature actualizado al control de icono (ciclo) sin regresar la lógica de 3 estados de WEB-4",
+        "verify 0/0/0 (typecheck · lint 0 warnings · test) + mutación 100% sobre los ficheros tocados"
+      ],
+      "sdd": true,
+      "status": "done"
     }
   ]
 }
