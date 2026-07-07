@@ -48,10 +48,21 @@ Cada feature cerró con las tres puertas (TDD Rojo→Verde→Refactor · judge A
 - Limpieza: `ContactDialog` (scaffold muerto) eliminado; README actualizado
   (paleta nueva + Resend). `design/system/` (zip "Listo") integrado como referencia.
 
+### Reconciliación con `main` (hecho en esta sesión)
+
+- ✅ Fusionado `main` en `feat/design-system` para desbloquear el PR #2 (tenía
+  conflictos). `main` solo tenía los cimientos (tooling/handoff/marca/theme)
+  rehechos por otro camino con SHAs distintos; `feat` es el superconjunto
+  completo (12/12 `done`). Todos los conflictos resueltos a la versión de `feat`
+  (feat ⊇ main, verificado): el árbol resultante es idéntico a feat HEAD, la
+  fusión solo reconcilia el historial. Eliminado `src/lib/theme.test.ts` de main
+  (redundante con `theme.test.tsx`). Reparados de paso los marcadores de conflicto
+  que `main` tenía commiteados en `.prettierignore` y `progress/current.md`.
+- Verificación 0/0/0: typecheck · lint 0 warnings · **147 tests** · build SSG ·
+  format:check · mutación **100%** (356/356, break=100).
+
 ### Pendiente (no técnico)
 
-- Reconciliar la divergencia de la rama con `origin/feat/design-system` antes del
-  push definitivo (decisión de Pablo; hubo commits en paralelo entre sesiones).
 - Opcional (visual, no bloqueante): resaltar con `<em>` de color la palabra
   destacada de las H2 de `hero`/`paquetes`/`contacto` para igualar el matiz del
   diseño (mismo texto; `servicios`/`sectores` ya lo hacen).
