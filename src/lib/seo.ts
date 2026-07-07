@@ -12,3 +12,13 @@ export function buildPageTitle(pageTitle?: string): string {
   }
   return `${pageTitle} — ${SITE.name}`
 }
+
+/**
+ * Título de la home: "<sitio> — <tagline>".
+ *
+ * Orden inverso al de las páginas interiores (el nombre va primero) para que la
+ * marca encabece el resultado de búsqueda de la portada.
+ */
+export function buildHomeTitle(): string {
+  return `${SITE.name} — ${SITE.tagline}`
+}

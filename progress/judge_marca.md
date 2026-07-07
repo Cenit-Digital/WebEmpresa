@@ -15,16 +15,16 @@ puerta de mutación (`mutation_tester`).
 
 ## 1 · Cobertura de escenarios (@s -> test)
 
-| @s | Escenario | Test que lo verifica | Then medible |
-| --- | --- | --- | --- |
-| @s1 | icono "Órbita" (2 circle + path, aria-hidden) | src/components/Logo.test.tsx:6 | querySelectorAll('circle') = 2, path != null, aria-hidden="true" |
-| @s2 | wordmark por defecto ("cénit"/"digital") | src/components/Logo.test.tsx:17 | getByText('cénit') y getByText('digital') |
-| @s3 | oculta wordmark con withWordmark=false | src/components/Logo.test.tsx:24 | queryByText no en el documento |
-| @s4 | tamaño configurable (size=38) | src/components/Logo.test.tsx:31 | width/height = "38" |
-| @s5 | id de degradado único por instancia | src/components/Logo.test.tsx:39 | 2 linearGradient, ids truthy y distintos |
-| @s6 | colores desde tokens (ring/zenith/primary/secondary) | src/components/Logo.test.tsx:55 | stroke/fill/stop-color = var(--color-…) exactos |
-| @s7 | claro -> --color-primary: #1e7a4f | src/styles/tokens.test.ts:23 | regex sobre bloque :root claro |
-| @s8 | oscuro -> --color-primary: #c9a84c | src/styles/tokens.test.ts:27 | regex sobre bloque :root[data-theme=dark] |
+| @s  | Escenario                                            | Test que lo verifica            | Then medible                                                     |
+| --- | ---------------------------------------------------- | ------------------------------- | ---------------------------------------------------------------- |
+| @s1 | icono "Órbita" (2 circle + path, aria-hidden)        | src/components/Logo.test.tsx:6  | querySelectorAll('circle') = 2, path != null, aria-hidden="true" |
+| @s2 | wordmark por defecto ("cénit"/"digital")             | src/components/Logo.test.tsx:17 | getByText('cénit') y getByText('digital')                        |
+| @s3 | oculta wordmark con withWordmark=false               | src/components/Logo.test.tsx:24 | queryByText no en el documento                                   |
+| @s4 | tamaño configurable (size=38)                        | src/components/Logo.test.tsx:31 | width/height = "38"                                              |
+| @s5 | id de degradado único por instancia                  | src/components/Logo.test.tsx:39 | 2 linearGradient, ids truthy y distintos                         |
+| @s6 | colores desde tokens (ring/zenith/primary/secondary) | src/components/Logo.test.tsx:55 | stroke/fill/stop-color = var(--color-…) exactos                  |
+| @s7 | claro -> --color-primary: #1e7a4f                    | src/styles/tokens.test.ts:23    | regex sobre bloque :root claro                                   |
+| @s8 | oscuro -> --color-primary: #c9a84c                   | src/styles/tokens.test.ts:27    | regex sobre bloque :root[data-theme=dark]                        |
 
 8/8 cubiertos. Ningún @s queda sin test.
 

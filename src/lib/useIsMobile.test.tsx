@@ -44,21 +44,21 @@ afterEach(() => {
 })
 
 describe('useIsMobile', () => {
-  it('@s9 getServerSnapshot es false (escritorio por defecto en SSR)', () => {
+  it('@s2 getServerSnapshot es false (escritorio por defecto en SSR)', () => {
     expect(getServerSnapshot()).toBe(false)
   })
 
-  it('@s5 getSnapshot devuelve matches de la MOBILE_QUERY (true en móvil)', () => {
+  it('@s4 getSnapshot devuelve matches de la MOBILE_QUERY (true en móvil)', () => {
     fakeMatchMedia(true)
     expect(getSnapshot()).toBe(true)
   })
 
-  it('@s9 getSnapshot devuelve false fuera de la MOBILE_QUERY (escritorio)', () => {
+  it('@s2 getSnapshot devuelve false fuera de la MOBILE_QUERY (escritorio)', () => {
     fakeMatchMedia(false)
     expect(getSnapshot()).toBe(false)
   })
 
-  it('@s5 subscribe avisa en "change" y la baja deja de avisar', () => {
+  it('@s4 subscribe avisa en "change" y la baja deja de avisar', () => {
     const media = fakeMatchMedia(false)
     const onChange = vi.fn()
 
@@ -73,13 +73,13 @@ describe('useIsMobile', () => {
     expect(onChange).toHaveBeenCalledTimes(1)
   })
 
-  it('@s5 useIsMobile es true en viewport móvil', () => {
+  it('@s4 useIsMobile es true en viewport móvil', () => {
     fakeMatchMedia(true)
     render(<Probe />)
     expect(screen.getByText('movil')).toBeInTheDocument()
   })
 
-  it('@s9 useIsMobile es false en escritorio y reacciona al cambio de viewport', () => {
+  it('@s4 useIsMobile es false en escritorio y reacciona al cambio de viewport', () => {
     const media = fakeMatchMedia(false)
     render(<Probe />)
     expect(screen.getByText('escritorio')).toBeInTheDocument()

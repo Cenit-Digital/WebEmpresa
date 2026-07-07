@@ -68,6 +68,9 @@ pnpm preview          # sirve el build para comprobarlo en local
 ```
 .
 ├── index.html                # plantilla raíz (script de tema anti-FOUC)
+├── api/
+│   └── contact.ts            # Vercel Function: envío del formulario con Resend
+├── design/                   # referencia 1:1 del diseño + design system (no producción)
 ├── src/
 │   ├── main.tsx              # entrada: ViteReactSSG(routes) + estilos + fuentes
 │   ├── App.tsx               # definición de rutas (RouteRecord[])
@@ -93,15 +96,54 @@ pnpm preview          # sirve el build para comprobarlo en local
 
 ## Design tokens (identidad de marca)
 
-Los colores y la tipografía provienen de **RF-MARCA-001** y viven en
-`src/styles/_tokens.scss` como **CSS custom properties**:
+Los colores y la tipografía provienen de **RF-MARCA-001** / el design system
+(`docs/DESIGN_SYSTEM.md`) y viven en `src/styles/_tokens.scss` como **CSS custom
+properties**:
 
-- **Modo claro** (Teal Profundo) en `:root`; **modo oscuro** (Océano y Coral)
-  en `:root[data-theme='dark']`; **marca** (Azul Noche y Menta) común.
+- **Modo claro = Bosque & Limón** en `:root`; **modo oscuro = Noche & Oro** en
+  `:root[data-theme='dark']`. Logotipo **"Órbita"** adaptativo (`Logo.tsx`).
 - Los componentes consumen `var(--color-…)`, nunca hex sueltos.
 - El tema se aplica antes del primer pintado (script en `index.html`) y se
-  conmuta con el botón de la cabecera (`ThemeToggle`, persistido en
-  `localStorage`).
+  conmuta con el selector de 3 estados **Claro / Oscuro / Sistema** de la
+  cabecera (`ThemeToggle`, persistido en `localStorage['cenit-theme']`;
+  ausencia de clave = "Sistema", que sigue a `prefers-color-scheme` en vivo).
+- Referencia visual 1:1 del diseño: `design/Cenit Home (referencia) - standalone.html`
+  y el paquete `design/system/`.
+
+## Formulario de contacto (Resend)
+
+La sección de contacto (`#contacto`) envía el mensaje a la función serverless
+`api/contact.ts` (Vercel), que usa **Resend** para mandar el correo. El cliente
+(`src/lib/contact.ts`) valida y hace `POST /api/contact`. La frontera de confianza
+está endurecida en el servidor (ver `progress/security_review.md`): honeypot,
+validación de formato de correo, topes de longitud, saneado CRLF y **rate limiting
+por IP** con `@vercel/firewall`.
+
+Para que el envío funcione en producción:
+
+1. En Resend, verifica el dominio remitente y crea una API key.
+2. En las variables de entorno de Vercel define `RESEND_API_KEY` (obligatoria) y,
+   si quieres personalizar, `CONTACT_TO` (destino, por defecto
+   `hola@cenitdigital.es`) y `RESEND_FROM` (remitente del dominio verificado).
+3. **Rate limiting**: en el dashboard de Vercel → **Firewall** → nueva regla con
+   **Rate limit ID** `contact-form` (el que consume `checkRateLimit` en
+   `api/contact.ts`). Sin esa regla, `checkRateLimit` es un no-op seguro (no
+   limita, pero no rompe). Ref. oficial: Vercel WAF → Rate Limiting SDK.
+
+En local, `pnpm dev` no ejecuta las funciones de `/api` (usa `vercel dev` para
+probarlas); los tests cubren el comportamiento del formulario mockeando el envío.
+
+## Accesibilidad — pendiente de decisión de diseño
+
+La auditoría (`progress/audit_a11y_seo.md`) señala **3 puntos de contraste (WCAG
+1.4.3 AA)** en el **tema oscuro**, heredados de los valores de token del diseño
+(violeta `#7c5cbf` en eyebrows/etiquetas y `--color-text-faint` en notas, sobre
+el fondo Noche & Oro). Corregirlos implica **ajustar la paleta de marca**, que es
+una decisión de diseño (no se toca de forma automática para respetar la réplica
+1:1). Recomendación mínima para cumplir AA sin cambiar la identidad: aclarar el
+violeta de esos usos pequeños en oscuro (o usar el oro `--color-primary` del tema
+oscuro para eyebrows/etiquetas). El resto del contraste (botones, texto principal,
+feedback) cumple AA.
 
 ## Variables de entorno
 

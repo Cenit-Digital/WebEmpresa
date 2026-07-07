@@ -36,7 +36,7 @@ describe('Header', () => {
     expect(brand).toHaveAccessibleName(/cénit digital/i)
   })
 
-  it('@s4 la cabecera es fija en la parte superior de la ventana (sticky)', () => {
+  it('@s3 la cabecera es fija en la parte superior de la ventana (position: sticky; top: 0)', () => {
     renderHeader()
 
     const header = screen.getByRole('banner')

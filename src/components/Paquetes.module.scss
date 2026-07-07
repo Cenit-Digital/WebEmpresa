@@ -1,0 +1,150 @@
+.packages {
+  background: var(--color-bg);
+}
+
+.inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: var(--section-y) var(--gutter);
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.highlight {
+  font-style: normal;
+  color: var(--color-primary);
+}
+
+.intro {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--color-text-soft);
+  max-width: 58ch;
+  margin-top: 18px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 54px;
+  align-items: start;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+}
+
+/* La destacada es la única con insignia: borde primary + sombra. */
+.card:has(.badge) {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow);
+}
+
+.badge {
+  position: absolute;
+  top: -13px;
+  left: 28px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  padding: 6px 13px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.tagline {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-soft);
+  margin-top: 10px;
+}
+
+.features {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+/* Por defecto (paquetes no destacados): botón outline. */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  padding: 14px 28px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  background: transparent;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-border);
+  transition:
+    filter 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.cta:hover {
+  border-color: var(--color-primary);
+}
+
+/* En la destacada: botón primario. */
+.card:has(.badge) .cta {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+}
+
+.card:has(.badge) .cta:hover {
+  filter: brightness(1.08);
+}
+
+@media (max-width: 880px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

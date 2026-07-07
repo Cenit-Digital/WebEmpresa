@@ -29,11 +29,13 @@
   "dependencies": {
     "@fontsource/dm-sans": "^5.0.0",
     "@fontsource/outfit": "^5.0.0",
+    "@vercel/firewall": "^1.2.1",
     "autoskills": "^0.3.6",
     "radix-ui": "^1.6.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^6.30.0"
+    "react-router-dom": "^6.30.0",
+    "resend": "^6.17.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.0",

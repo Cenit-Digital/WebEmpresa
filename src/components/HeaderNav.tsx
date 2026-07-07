@@ -4,9 +4,10 @@ import MobileMenu from './MobileMenu'
 import styles from './HeaderNav.module.scss'
 
 /**
- * Navegación de la cabecera. En móvil (@s5) muestra el botón de menú que abre
- * el panel; en escritorio (@s2, @s9) muestra los enlaces del contrato y el CTA
- * "Hablamos". La decisión la toma `useIsMobile` (testeable con matchMedia).
+ * Navegación de la cabecera. En móvil (@s4) oculta la nav de escritorio y
+ * muestra el botón "Menú" que abre el panel; en escritorio (@s2) muestra los
+ * enlaces del contrato y el CTA "Hablamos". La decisión la toma `useIsMobile`
+ * (testeable con matchMedia).
  */
 export default function HeaderNav() {
   const isMobile = useIsMobile()

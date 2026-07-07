@@ -1,6 +1,5 @@
 import { render, screen, within } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import HeaderNav from './HeaderNav'
 
 /** matchMedia estático: controla si el viewport se considera móvil. */
@@ -12,10 +11,6 @@ function mockMatchMedia(mobile: boolean) {
     removeEventListener: () => {},
   })) as unknown as typeof window.matchMedia
 }
-
-beforeEach(() => {
-  window.location.hash = ''
-})
 
 afterEach(() => {
   vi.unstubAllGlobals()
@@ -39,34 +34,19 @@ describe('HeaderNav', () => {
     ])
   })
 
-  it.each([
-    ['Servicios', '#servicios'],
-    ['Sectores', '#sectores'],
-    ['Paquetes', '#paquetes'],
-    ['Contacto', '#contacto'],
-  ])('@s3 pulsar "%s" desplaza a la sección "%s"', async (label, anchor) => {
-    mockMatchMedia(false)
-    const user = userEvent.setup()
-    render(<HeaderNav />)
-
-    await user.click(screen.getByRole('link', { name: label }))
-
-    expect(window.location.hash).toBe(anchor)
-  })
-
-  it('@s9 en escritorio no hay botón de menú y sí la nav de escritorio', () => {
+  it('@s2 en escritorio no aparece el botón de menú móvil', () => {
     mockMatchMedia(false)
     render(<HeaderNav />)
 
     expect(screen.getByRole('navigation', { name: 'Principal' })).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: 'Abrir menú' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Menú' })).not.toBeInTheDocument()
   })
 
-  it('@s5 en móvil muestra el botón de menú y oculta la nav de escritorio', () => {
+  it('@s4 en móvil se oculta la nav de escritorio y aparece el botón "Menú"', () => {
     mockMatchMedia(true)
     render(<HeaderNav />)
 
-    expect(screen.getByRole('button', { name: 'Abrir menú' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Menú' })).toBeInTheDocument()
     expect(screen.queryByRole('navigation', { name: 'Principal' })).not.toBeInTheDocument()
   })
 })

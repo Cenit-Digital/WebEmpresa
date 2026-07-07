@@ -1,67 +1,57 @@
-# Prueba de mutación — feature #2 `nav` (Navegación de la cabecera, WEB-4)
+# Prueba de mutación — feature `nav` (#2)
 
-Herramienta: StrykerJS + runner Vitest (`coverageAnalysis: perTest`).
-Comando: `pnpm mutation`. Umbral: `thresholds.break: 100` -> **100% exigido**
-sobre el glob `mutate`. Informe HTML: `reports/mutation/index.html`.
+Fecha: 2026-07-06 (re-validación fresca del `mutation_tester`)
+Herramienta: StrykerJS 9.6 + runner Vitest (`coverageAnalysis: perTest`)
+Rama: `feat/design-system`
+Umbral (`stryker.config.json` -> `thresholds.break`): **100%** sobre los
+archivos del `mutate` (ver `docs/mutation-testing.md`). No se editó `src/` ni tests.
 
-Glob `mutate`: `src/lib/nav.ts`, `src/lib/useIsMobile.ts`,
-`src/components/HeaderNav.tsx`, `src/components/MobileMenu.tsx`, `src/lib/seo.ts`.
+## Pre-condiciones verificadas
 
-## Veredicto (corrida final)
+- `judge` APPROVED -> `progress/judge_nav.md` (init.sh verde, 64 tests, @s1–@s8 cubiertos).
+- Los 4 ficheros mutables de nav están en el `mutate` de `stryker.config.json`:
+  `src/lib/nav.ts`, `src/lib/useIsMobile.ts`, `src/components/HeaderNav.tsx`,
+  `src/components/MobileMenu.tsx`.
 
-**APROBADO.** Puntuación global **100.00%** (38 detectados / 38). Stryker cerró
-con exit code 0 (`Final mutation score of 100.00 is greater than or equal to
-break threshold 100`). **0 supervivientes.** Duración ~1 min 22 s.
+## Comando (acotado a los 4 ficheros de la feature)
 
-## Puntuación por archivo (corrida final)
+```bash
+pnpm exec stryker run --mutate "src/lib/nav.ts,src/lib/useIsMobile.ts,src/components/HeaderNav.tsx,src/components/MobileMenu.tsx"
+```
 
-Nota: el "score" de Stryker cuenta como _detectados_ tanto los `killed` como los
-`timeout`. Fórmula: `(killed + timeout) / total`.
+- 4 ficheros mutados, **32 mutantes** instrumentados.
+- Test run inicial: **17 tests**, éxito (dry run verde).
+- Media: 1.38 tests por mutante.
 
-| Archivo                   | Score       | killed | timeout | survived | total |
-| ------------------------- | ----------- | ------ | ------- | -------- | ----- |
-| **All files**             | **100.00%** | 34     | 4       | 0        | 38    |
-| components/HeaderNav.tsx  | 100.00%     | 5      | 0       | 0        | 5     |
-| components/MobileMenu.tsx | 100.00%     | 2      | 0       | 0        | 2     |
-| lib/nav.ts                | 100.00%     | 16     | 0       | 0        | 16    |
-| lib/seo.ts                | 100.00%     | 6      | 0       | 0        | 6     |
-| lib/useIsMobile.ts        | 100.00%     | 5      | 4       | 0        | 9     |
+## Resultado por fichero
 
-Todos los archivos del glob al 100%. Los 4 `timeout` de `useIsMobile.ts`
-cuentan como detectados (mutantes en la suscripción/hook que provocan
-cuelgue/re-render) y no son accionables. Componentes TSX (glifos de menú/cierre,
-título "Menú", aria-labels "Abrir menú"/"Cerrar menú"/"Principal", `data-testid`
-`mobile-menu-overlay`, condicional `isMobile` de `HeaderNav`) y datos
-(`nav.ts`, `seo.ts`) sin supervivientes, como en la corrida anterior.
+| Fichero                       | Score       | Killed | Timeout | Survived | No cov |
+| ----------------------------- | ----------- | ------ | ------- | -------- | ------ |
+| src/components/HeaderNav.tsx  | 100.00%     | 5      | 0       | 0        | 0      |
+| src/components/MobileMenu.tsx | 100.00%     | 2      | 0       | 0        | 0      |
+| src/lib/nav.ts                | 100.00%     | 16     | 0       | 0        | 0      |
+| src/lib/useIsMobile.ts        | 100.00%     | 5      | 4       | 0        | 0      |
+| **All files**                 | **100.00%** | 28     | 4       | 0        | 0      |
 
-## Cierre del superviviente #1
+> Los 4 timeouts de `useIsMobile.ts` cuentan como mutantes **muertos** (killed) a
+> efectos de score: la suscripción/lectura del store con `matchMedia` mockeado
+> hace que el defecto no termine, y la suite lo detecta. No son supervivientes.
 
-- **Mutante:** `src/lib/useIsMobile.ts:4:29` — StringLiteral
-  `MOBILE_QUERY = '(max-width: 767px)'` -> `MOBILE_QUERY = ""`.
-- **Estado: MUERTO.** En la corrida anterior sobrevivía por una tautología del
-  fake de `matchMedia`, que comparaba la query recibida contra la **constante
-  importada** (`query === MOBILE_QUERY`): mutar la constante movía en bloque la
-  lectura de producción y el valor esperado del test, así que ningún test
-  fallaba.
-- **Fix (test-only, producción intacta):** el `tdd_craftsman` ancló el fake al
-  literal codificado `query === '(max-width: 767px)'` en
-  `src/lib/useIsMobile.test.tsx` y depuró `MOBILE_QUERY` del import. Ahora, con
-  el mutante `MOBILE_QUERY = ""`, producción llama `window.matchMedia("")`, el
-  fake devuelve `matches: false`, y falla el test
-  `useIsMobile @s5 getSnapshot devuelve matches de la MOBILE_QUERY (true en
-móvil)` (marcado `killed 1` en la corrida final). El `judge` ratificó el
-  cambio: sigue APROBADO, suite en verde (26 tests).
-- **Equivalentes excluidos:** 0. No se aplicó ninguna exclusión.
+## Mutantes supervivientes
 
-## Resumen
+**Ninguno.** 0 supervivientes sobre 32 mutantes (28 killed + 4 timeout).
+0 mutantes sin cobertura. No aplica exclusión de equivalentes (no hubo
+supervivientes que justificar).
 
-- Global: **100.00%** (38/38) — cumple `break: 100`, build verde (exit 0).
-- Supervivientes: **0**. Superviviente #1 (`MOBILE_QUERY -> ""`) confirmado
-  muerto.
-- **Veredicto: APROBADO.** La red de tests de la feature #2 `nav` muerde al
-  100% sobre el glob.
+## Veredicto
 
-### Historial
+Score total **100.00% >= break 100** (umbral). Stryker confirma:
+`Final mutation score of 100.00 is greater than or equal to break threshold 100`.
 
-- Corrida 1: 97.37% (37/38), 1 superviviente en `useIsMobile.ts:4`. RECHAZADO.
-- Corrida 2 (final): 100.00% (38/38), 0 supervivientes. APROBADO.
+**PASS.** La red de tests de la feature #2 `nav` muerde a todo el catálogo de
+mutaciones sobre su código mutable. Con `judge` APPROVED (`progress/judge_nav.md`)
+
+- mutación al 100%, la feature `nav` (#2) **puede marcarse `done`** (acción del
+  `craftsman_lead`, no del `mutation_tester`).
+
+Informe HTML: `reports/mutation/index.html`

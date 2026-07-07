@@ -3,7 +3,6 @@ dist
 coverage
 reports
 .stryker-tmp
-<<<<<<< HEAD
 
 # Código de terceros vendorizado (ponytail) — idéntico a upstream v4.8.4.
 # Ver .claude/ponytail/NOTICE.md. NO reformatear: debe coincidir con upstream.
@@ -17,6 +16,10 @@ reports
 # Artefacto de diseño (snapshot HTML entregable). No es fuente que Prettier deba
 # gestionar; reformatearlo generaría un diff enorme sin valor.
 Cenit Digital - Web (final) - Diseño - Final- Definitivo.html
-=======
+
+# Material de referencia del design system (no es fuente de producción).
 design
->>>>>>> 2081c53 (feat(marca): logo Órbita + tokens Bosque&Limón/Noche&Oro por TDD (#12))
+
+# Estáticos sin parser de Prettier (SEO). Se sirven tal cual desde public/.
+public/robots.txt
+public/sitemap.xml

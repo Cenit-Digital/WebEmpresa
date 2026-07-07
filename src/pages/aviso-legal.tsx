@@ -7,6 +7,9 @@ export default function LegalNotice() {
     <article className="prose">
       <Head>
         <title>{buildPageTitle('Aviso legal')}</title>
+        <meta name="description" content={`Aviso legal de ${SITE.name}.`} />
+        <link rel="canonical" href={`${SITE.url}/aviso-legal`} />
+        <meta property="og:url" content={`${SITE.url}/aviso-legal`} />
       </Head>
       <h1>Aviso legal</h1>
       <p>

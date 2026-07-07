@@ -1,25 +1,35 @@
 .footer {
-  border-top: 1px solid var(--color-border);
+  background: var(--color-band);
+  border-top: 1px solid var(--color-band-border);
+  padding: 44px 0;
 }
 
 .inner {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 1.5rem 1.25rem;
+  padding: 0 var(--gutter);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem 1.5rem;
+  gap: 18px;
 }
 
 .copy {
   font-size: 0.9rem;
-  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  color: var(--color-text-soft);
 }
 
 .links {
   display: flex;
   gap: 1.25rem;
   font-size: 0.9rem;
+}
+
+.links a {
+  color: var(--color-text-soft);
+}
+
+.links a:hover {
+  color: var(--color-primary);
 }

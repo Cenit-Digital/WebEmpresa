@@ -3,52 +3,66 @@
 > Estado vivo de la sesión. Vacíalo (deja esta plantilla) al cerrar y mueve el
 > resumen a `progress/history.md`.
 
-<<<<<<< HEAD
-**Feature en curso:** — (sesión de **tooling**, no de feature SDD)
+**Feature en curso:** — (Design System COMPLETO: 12/12 features `done`)
 **Escenarios:** —
 
-## Bitácora
+## Bitácora — Integración del Design System (rama `feat/design-system`)
 
-- Tooling del arnés (rama `feat/harness-tooling-ponytail`). Decisión: **reforzar
-  el harness SDD, no reemplazarlo**. No se tocó `src/` ni tests ni el pipeline.
-- **ponytail** vendorizado (`.claude/ponytail/`, MIT v4.8.4) + 6 skills en
-  `.claude/skills/` + hooks `SessionStart`/`SubagentStart`/`UserPromptSubmit` en
-  `.claude/settings.json`. Activo por defecto (nivel `full`). Verificado en Windows.
-- Adaptación clave: `package.json` en `.claude/ponytail/` con `"type":"commonjs"`
-  (el repo raíz es `"type":"module"`, que rompería los hooks `require()`).
-- **3 agentes de apoyo** (solo lectura, opcionales): `security_reviewer`,
-  `a11y_seo_auditor`, `mentor`. No sustituyen `judge`/`mutation_tester`.
-- Verificación adversarial de la plantilla "Agent Teams": `TeamCreate`/`TeamDelete`
-  retirados (doc oficial v2.1.178), experimental, sin paneles en Windows, estructura
-  backend/Prisma incompatible con el sitio SSG. Documentado en `docs/tooling.md`.
-- `docs/tooling.md` nuevo; `CLAUDE.md` y `AGENTS.md` actualizados con punteros.
-=======
-**Feature en curso:** theme_selector (#3)
-**Escenarios:** features/theme_selector.feature (@s1–@s8)
+Objetivo cumplido: implementar TODO el sistema por TDD, feature a feature, en el
+orden del handoff, fiel 1:1 al diseño (`design/Cenit Home (referencia) - standalone.html`
 
-## Bitácora
+- `docs/DESIGN_SYSTEM.md`). Puerta humana sobre los `.feature` delegada.
 
-- **Integración del Design System** (rama `feat/design-system`). Objetivo:
-  implementar TODO el sistema por TDD, feature a feature, en orden del handoff.
-  Puerta humana sobre los `.feature` delegada.
-- **Zip "Listo" integrado**: el paquete completo del Design System de Claude
-  Design (tokens CSS, componentes `.jsx` de referencia, guidelines, UI kit,
-  `.dc.html`, assets) colocado como material de referencia en `design/system/`
-  y `design/Cenit Home (referencia).dc.html`. Verificado: `tokens/colors.css`
-  coincide 1:1 con `docs/DESIGN_SYSTEM.md §3`; `cenit-design-system-export/`
-  idéntico a lo ya integrado. `design/` excluido de eslint/prettier.
-- **marca (#12): DONE.** 35 tests verdes, judge APROBADO (progress/judge_marca.md),
-  mutación Logo.tsx 100% (progress/mutation_marca.md, tras matar el superviviente
-  del stroke del path). `_tokens.scss`/`_base.scss`/`main.tsx`/`Logo.*` 1:1 con
-  `design/fundamentos/`. Tema oscuro migrado a Noche & Oro.
-- **Orden restante:** theme_selector → nav → footer → layout_accesibilidad →
-  hero → servicios → sectores → paquetes → contacto_seccion → contact_form.
-- Cierre: `pnpm verify` global verde (0 fallos/0 warnings) + commit & push.
+### Estado final: 12/12 features `done`
 
-## Estado por feature (nuevos contratos del handoff)
-- footer: impl ya conforme, faltan tests @s1–@s4.
-- layout_accesibilidad: skip-link/#contenido ya en Layout; faltan tests + verificar títulos exactos.
-- nav: casi hecho; contrato nuevo pide nombres accesibles "Menú"/"Cerrar" y @s1–@s8.
-- theme_selector: rework 2→3 estados (Claro/Oscuro/Sistema). EN CURSO.
-- hero/servicios/sectores/paquetes/contacto_seccion/contact_form: home es placeholder, construir por TDD.
->>>>>>> 2081c53 (feat(marca): logo Órbita + tokens Bosque&Limón/Noche&Oro por TDD (#12))
+Cada feature cerró con las tres puertas (TDD Rojo→Verde→Refactor · judge APROBADO
+· mutación Stryker 100%, break=100). Bitácoras en `progress/tdd_*`, veredictos en
+`progress/judge_*`, mutación en `progress/mutation_*`.
+
+1. **marca** (#12) — logo Órbita + tokens Bosque&Limón/Noche&Oro.
+2. **theme_selector** (#3) — selector 3 estados (Claro/Oscuro/Sistema), `cenit-theme`,
+   reacción en vivo a `prefers-color-scheme`, anti-FOUC. Lógica en `src/lib/theme.ts`.
+3. **nav** (#2) — cabecera sticky, enlaces + CTA "Hablamos", menú móvil Radix
+   ("Menú"/"Cerrar", cierre por enlace/fondo).
+4. **footer** (#4) — copyright con año, Aviso legal, mailto.
+5. **layout_accesibilidad** (#5) — skip-link con foco a `#contenido`, títulos por
+   ruta (`buildHomeTitle`), verificados en `dist`.
+6. **hero** (#6) — eyebrow, H1, subtítulo, 2 CTA, 4 stats.
+7. **servicios** (#7) — 6 tarjetas (copy 1:1), zigzag, mockups decorativos.
+8. **sectores** (#8) — 4 tarjetas (copy 1:1) + nota de selección.
+9. **paquetes** (#9) — 3 paquetes (copy 1:1), insignia "Más elegido", SIN precios.
+10. **contacto_seccion** (#10) — sección `#contacto`, formulario de 5 campos,
+    honeypot oculto.
+11. **contact_form** (#11) — validación + estados éxito/error + honeypot; envío por
+    `src/lib/contact.ts` → `POST /api/contact` (Vercel Function con Resend,
+    `api/contact.ts`). Envío mockeado en test.
+
+### Estado del árbol
+
+- `pnpm verify` (typecheck · lint 0 warnings · **140 tests**) VERDE. `pnpm build`
+  (SSG) VERDE con las 5 secciones prerenderizadas y títulos exactos. `format:check`
+  VERDE. Mutación por feature 100% en los 11 ficheros de `stryker.config.json`.
+- Home compone: `<Hero/> <Servicios/> <Sectores/> <Paquetes/> <Contacto/>`.
+- Infra de envío real: `api/contact.ts` (Resend, docs oficiales) + dep `resend`;
+  requiere `RESEND_API_KEY` (+ dominio verificado) en Vercel — ver README.
+- Limpieza: `ContactDialog` (scaffold muerto) eliminado; README actualizado
+  (paleta nueva + Resend). `design/system/` (zip "Listo") integrado como referencia.
+
+### Reconciliación con `main` (hecho en esta sesión)
+
+- ✅ Fusionado `main` en `feat/design-system` para desbloquear el PR #2 (tenía
+  conflictos). `main` solo tenía los cimientos (tooling/handoff/marca/theme)
+  rehechos por otro camino con SHAs distintos; `feat` es el superconjunto
+  completo (12/12 `done`). Todos los conflictos resueltos a la versión de `feat`
+  (feat ⊇ main, verificado): el árbol resultante es idéntico a feat HEAD, la
+  fusión solo reconcilia el historial. Eliminado `src/lib/theme.test.ts` de main
+  (redundante con `theme.test.tsx`). Reparados de paso los marcadores de conflicto
+  que `main` tenía commiteados en `.prettierignore` y `progress/current.md`.
+- Verificación 0/0/0: typecheck · lint 0 warnings · **147 tests** · build SSG ·
+  format:check · mutación **100%** (356/356, break=100).
+
+### Pendiente (no técnico)
+
+- Opcional (visual, no bloqueante): resaltar con `<em>` de color la palabra
+  destacada de las H2 de `hero`/`paquetes`/`contacto` para igualar el matiz del
+  diseño (mismo texto; `servicios`/`sectores` ya lo hacen).
