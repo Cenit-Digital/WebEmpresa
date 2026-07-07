@@ -1,13 +1,49 @@
-.mockup {
+/* Mockups decorativos de las filas de Servicios. Marco común 16/10 + una
+   variante por servicio. Colores SIEMPRE con var(--color-…). Animaciones sutiles
+   que se desactivan con prefers-reduced-motion. */
+
+.frame {
   position: relative;
   aspect-ratio: 16 / 10;
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--color-border);
-  background: linear-gradient(160deg, var(--color-bg-2), var(--color-surface));
   box-shadow: var(--shadow);
 }
 
+/* Fondos por variante */
+.browser,
+.chat,
+.erp {
+  background: linear-gradient(160deg, var(--color-bg-2), var(--color-surface));
+}
+
+.ig,
+.cal {
+  background: var(--color-card-bg);
+}
+
+.map {
+  background: var(--color-bg-2);
+}
+
+.chat,
+.ig {
+  display: flex;
+  flex-direction: column;
+}
+
+.cal {
+  padding: 16px 18px;
+}
+
+.erp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================ 0 · Navegador ============================ */
 .chrome {
   height: 36px;
   display: flex;
@@ -100,4 +136,410 @@
   border-radius: 11px;
   background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   opacity: 0.85;
+}
+
+/* ============================ 1 · Chat ============================ */
+.chatHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 15px;
+  background: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.chatAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.chatName {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.chatStatus {
+  font-size: 9px;
+  color: var(--color-accent);
+}
+
+.chatBody {
+  flex: 1;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  justify-content: center;
+}
+
+.bubbleIn,
+.bubbleOut {
+  padding: 9px 12px;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.bubbleIn {
+  align-self: flex-start;
+  max-width: 74%;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 13px 13px 13px 3px;
+  color: var(--color-text-soft);
+}
+
+.bubbleOut {
+  align-self: flex-end;
+  max-width: 78%;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-radius: 13px 13px 3px 13px;
+}
+
+.typing {
+  align-self: flex-start;
+  display: flex;
+  gap: 4px;
+  padding: 10px 13px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 13px;
+}
+
+.typeDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-text-faint);
+  animation: sdtype 1.2s infinite;
+}
+
+.typeDot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typeDot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* ============================ 2 · Instagram ============================ */
+.igHead {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 14px;
+}
+
+.igAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex: none;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+}
+
+.igMeta {
+  flex: 1;
+}
+
+.igName {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.igSub {
+  font-size: 8.5px;
+  color: var(--color-text-faint);
+}
+
+.igDots {
+  font-size: 15px;
+  color: var(--color-text-faint);
+}
+
+.igMedia {
+  flex: 1;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.igWord {
+  color: var(--color-on-primary);
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: 3px;
+  opacity: 0.9;
+}
+
+.igFoot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+}
+
+.igStat {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: var(--color-text-soft);
+}
+
+/* ============================ 3 · Mapa (SEO) ============================ */
+.mapGrid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mapSearch {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  right: 13px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 11px;
+  border-radius: 8px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  font-size: 9.5px;
+  color: var(--color-text-faint);
+}
+
+.mapPin {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  transform: translate(-50%, -50%);
+}
+
+.mapPulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  transform: translate(-50%, -50%);
+  animation: sdpulse 2s ease-out infinite;
+}
+
+.mapPinIcon {
+  position: relative;
+  display: block;
+}
+
+.mapBadge {
+  position: absolute;
+  right: 13px;
+  bottom: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 11px;
+  border-radius: 9px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+}
+
+.mapRank {
+  width: 19px;
+  height: 19px;
+  border-radius: 6px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mapZone {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ============================ 4 · Calendario ============================ */
+.calHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.calMonth {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.calLegend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  color: var(--color-text-faint);
+}
+
+.calDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+.calGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 7px;
+}
+
+.calDay {
+  font-size: 9px;
+  color: var(--color-text-faint);
+  text-align: center;
+}
+
+.calSlot,
+.calSlotOn {
+  height: 26px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8.5px;
+  font-weight: 600;
+}
+
+.calSlot {
+  background: var(--color-surface-2);
+}
+
+.calSlotOn {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+/* ============================ 5 · Flujo ERP ============================ */
+.erpNode {
+  position: relative;
+  z-index: 2;
+  width: 74px;
+  text-align: center;
+}
+
+.erpIcon,
+.erpIconPrimary {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.erpIcon {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+}
+
+.erpIconPrimary {
+  background: var(--color-primary);
+}
+
+.erpLabel {
+  font-size: 9.5px;
+  color: var(--color-text-soft);
+  margin-top: 7px;
+}
+
+.erpWire {
+  position: relative;
+  width: 90px;
+  height: 2px;
+  margin: 0 4px;
+  background: var(--color-border);
+}
+
+.erpDot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  transform: translateY(-50%);
+  animation: sdflow 2.4s linear infinite;
+}
+
+/* ============================ Animaciones ============================ */
+@keyframes sdtype {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes sdpulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes sdflow {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typeDot,
+  .mapPulse,
+  .erpDot {
+    animation: none;
+  }
 }

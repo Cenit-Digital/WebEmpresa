@@ -76,3 +76,36 @@ aplicó la mejora de `aria-hidden` en iconos por TDD). Mutación (`mutation_test
 **100%** (98/98) acotada a los 4 ficheros tocados (`theme.ts`, `ThemeToggle.tsx`,
 `HeaderNav.tsx`, `Hero.tsx`). Verificación final 0/0/0: typecheck · lint 0 warnings ·
 **159 tests** · build SSG (2 páginas). Estado: `done`.
+
+## 2026-07-07 · Refinamiento — fidelidad de detalle + responsive móvil (home)
+
+Sesión de refinamiento (no feature nueva; sin puerta Gherkin) sobre
+`feat/fidelidad-referencia`, tras importar el Design System de Claude Design
+(proyecto `5699b366`) por MCP y montar un banco de comparación headless (Chrome
+DevTools Protocol) autónomo. Decisiones aprobadas por Pablo: (1) objetivo =
+**home aprobada original** (`docs/reference/Cenit-Home-original.html`), no el
+showcase `ui_kits/web/index.html` simplificado —se mantienen las 4 secciones y
+las características de paquetes—; (2) móvil = **responsive pro con los tokens**;
+(3) proceso = **refinamiento SCSS directo** + tests verdes.
+
+Causa raíz corregida (`_base.scss`): la home iba envuelta en `<main>` con
+`max-width`+`padding`, lo que **duplicaba el gutter** (hero estrecho, títulos
+partidos en móvil) y **recortaba las bandas de color** en escritorio; `main`
+pasa a sangre completa y `.prose` a autónomo (páginas de texto). Tokens
+`--gutter`/`--section-y` fluidos con `clamp` (escritorio 26/84 intactos; móvil se
+ajusta). Hero responsive (padding/lead/statValue fluidos, stats 2×2 en móvil).
+Servicios: fidelidad de detalle (márgenes/tipografía de tarjeta, ratio de
+columnas alterno en filas pares) y `ServiceMockup` reconstruido con los **6
+mockups distintos** del diseño (navegador · chat · Instagram · mapa · calendario ·
+flujo ERP) en vez del genérico repetido, con animaciones y respeto a
+`prefers-reduced-motion`. Nav a `14px var(--gutter)`; paddings de tarjeta y
+formulario reducidos en móvil (Paquetes/Contacto; Contacto además a 2 columnas
+fiel al diseño).
+
+Verificación **0/0/0**: typecheck · lint 0 warnings · **159 tests** · build SSG
+(2 páginas) · `pnpm verify` OK. Mutación: **N/A** — ningún fichero de la lista
+`mutate` de Stryker fue tocado (los cambios son CSS + el componente decorativo
+`ServiceMockup`, excluido de mutación). Verificación visual headless a
+320/360/390/414/768/1280 px (0 desbordamiento horizontal) y comparación 1:1 con
+la referencia por sección. Sin cambio en `feature_list.json` (features ya
+`done`). Estado: refinamiento cerrado.

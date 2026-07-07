@@ -68,9 +68,20 @@
   border-radius: var(--radius);
   padding: 30px;
   box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
+  align-items: start;
+}
+
+/* Fidelidad al diseño: Nombre|Correo y Teléfono|Sector emparejados en dos
+   columnas; el mensaje (textarea), el botón y los avisos ocupan el ancho
+   completo. El honeypot va en position:absolute, fuera del flujo de la rejilla. */
+.form .field:has(textarea),
+.submit,
+.success,
+.formError {
+  grid-column: 1 / -1;
 }
 
 .field {
@@ -170,5 +181,12 @@ textarea.input {
   .inner {
     grid-template-columns: 1fr;
     gap: 30px;
+  }
+}
+
+@media (max-width: 560px) {
+  .form {
+    grid-template-columns: 1fr;
+    padding: 22px;
   }
 }

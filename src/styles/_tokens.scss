@@ -20,8 +20,11 @@
 
   /* ---- Layout / medidas (fieles al diseño) ------------------------------ */
   --maxw: 1180px; /* ancho máximo del contenido */
-  --gutter: 26px; /* padding horizontal de página */
-  --section-y: 84px; /* ritmo vertical entre secciones */
+  /* Gutter y ritmo vertical: FLUIDOS. En escritorio conservan los valores
+     exactos del diseño (26 / 84) porque el clamp los tapa por arriba; en móvil
+     se reducen para no apretar el contenido (responsive pro, no invención). */
+  --gutter: clamp(18px, 5vw, 26px); /* padding horizontal de página (26 a >=520px) */
+  --section-y: clamp(56px, 9vw, 84px); /* ritmo vertical de sección (84 a >=933px) */
 
   --radius: 20px; /* tarjetas grandes (servicios, paquetes, formulario) */
   --radius-md: 16px; /* mockups / media */
