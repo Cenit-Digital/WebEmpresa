@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import HeaderNav from './HeaderNav'
@@ -67,6 +69,17 @@ describe('HeaderNav', () => {
 
     expect(screen.getByRole('button', { name: 'Menú' })).toBeInTheDocument()
     expect(screen.queryByRole('navigation', { name: 'Principal' })).not.toBeInTheDocument()
+  })
+
+  it('@s4 en móvil el CSS oculta la nav de escritorio también en el HTML estático (prerender SSG)', () => {
+    // El prerender SSG no tiene viewport → hornea la nav de escritorio en el HTML.
+    // Antes de hidratar debe existir una red CSS que la oculte a <=767px
+    // (mismo breakpoint que MOBILE_QUERY en src/lib/useIsMobile.ts).
+    const scss = readFileSync(
+      resolve(process.cwd(), 'src/components/HeaderNav.module.scss'),
+      'utf8',
+    )
+    expect(scss).toMatch(/@media \(max-width: 767px\)[\s\S]*\.nav\s*\{[\s\S]*display:\s*none/)
   })
 
   it('@móvil conserva el botón de tema visible junto a "Menú" (anti-regresión)', async () => {

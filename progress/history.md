@@ -109,3 +109,45 @@ Verificación **0/0/0**: typecheck · lint 0 warnings · **159 tests** · build 
 320/360/390/414/768/1280 px (0 desbordamiento horizontal) y comparación 1:1 con
 la referencia por sección. Sin cambio en `feature_list.json` (features ya
 `done`). Estado: refinamiento cerrado.
+
+## 2026-07-08 · Fix de regresión — cabecera móvil (nav prerender SSG + apilado drawer)
+
+Corrección de regresión dentro de la feature #2 `nav` (contrato
+`features/nav.feature` **sin cambios**; sus 8 escenarios siguen ciertos). Sin
+puerta Gherkin: se endurece la implementación, no el contrato. Reportado por
+Pablo: en móvil (~390px) los enlaces "Servicios/Sectores/Paquetes/Contacto"
+aparecían "siempre visibles" superpuestos al hero.
+
+**Diagnóstico verificado EN VIVO por el lead (Chrome + build de producción), no
+por tests.** Causa raíz 1: la conmutación móvil/escritorio la decide solo JS
+(`useIsMobile` → `useSyncExternalStore`, `getServerSnapshot()=false`); en SSG
+(`vite-react-ssg`) el prerender **hornea la nav de ESCRITORIO** en el HTML
+estático (`aria-label="Principal"`, 5 enlaces). En móvil, **antes de hidratar**,
+esa nav se muestra y **desborda 324px** (medido: 607px de contenido en 283px)
+sobre el hero. Los tests no lo cazaban (mockean `matchMedia` → solo prueban el
+estado post-hidratación); la sesión responsive previa tampoco, porque midió por
+CDP el estado **ya hidratado**. Confirmado con `fetch` del HTML servido
+(`desktopNavPresent:true`, `hamburger:false`) y captura del estado pre-hidratación.
+Causa raíz 2 (hallada al verificar): con el drawer ABIERTO, `.overlay`/`.panel`
+tenían `z-index:auto` vs cabecera sticky `z-index:50` → la cabecera pintaba
+sobre el panel, ocultando el título "Menú" y el botón ✕. (Descartado el
+falso positivo "Dialog abierto por defecto": medido sin clic,
+`aria-expanded="false"`, `data-state="closed"`, panel ausente del DOM.)
+
+Fix por TDD estricto (`tdd_craftsman`), **solo CSS, aditivo**: (1)
+`HeaderNav.module.scss` `@media (max-width:767px){ .nav{ display:none } }`
+(breakpoint idéntico a `MOBILE_QUERY`); (2) `MobileMenu.module.scss`
+`z-index:100` en `.overlay` y `.panel` (>50). Tests de regresión no tautológicos
+(`@s4` lee el SCSS y aserta la media query; `@s5..@s8` compara los z-index
+numéricos contra el 50 real de la cabecera). Review `judge`: **APROBADO** (riesgo
+`.skip-link` z-index:100 analizado y no bloqueante: el portal de Radix vence por
+orden del DOM y el foco queda atrapado en el diálogo).
+
+Verificación final **0/0/0**: typecheck · lint 0 warnings · **161 tests** ·
+build SSG. Verificación en vivo del **estado prerender** a 375/390/414px
+(`display:none` de la nav de escritorio, 0 overflow) y 768px (escritorio intacto,
+nav visible), y del ciclo hidratado: hamburguesa abre; cierra por ✕ / fondo /
+enlace (navega a `#servicios`); drawer por encima de la cabecera (`elementFromPoint`
+sobre ✕ devuelve el botón "Cerrar"). Mutación acotada a los 2 componentes
+adyacentes como confirmación (no se tocó ningún `.tsx` de la lista `mutate`; el
+cambio es CSS). Sin cambio en `feature_list.json` (#2 ya `done`).
