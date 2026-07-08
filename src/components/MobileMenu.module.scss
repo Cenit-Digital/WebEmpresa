@@ -12,9 +12,12 @@
   line-height: 1;
 }
 
+/* z-index > 50 (Header.module.scss .header) para pintar el drawer SOBRE la
+   cabecera sticky; si no, la cabecera oculta el título "Menú" y el botón ✕. */
 .overlay {
   position: fixed;
   inset: 0;
+  z-index: 100;
   background: rgba(7, 33, 31, 0.55);
 }
 
@@ -23,6 +26,7 @@
   top: 0;
   right: 0;
   bottom: 0;
+  z-index: 100;
   width: min(80vw, 320px);
   padding: 1.5rem;
   display: flex;
