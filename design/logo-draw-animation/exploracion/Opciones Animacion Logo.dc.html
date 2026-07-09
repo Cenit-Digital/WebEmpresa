@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/c-nit-digital-design-system-5699b366-b2ee-4571-ba0b-e96c35e8947f/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/c-nit-digital-design-system-5699b366-b2ee-4571-ba0b-e96c35e8947f/tokens/colors.css">
+<link rel="stylesheet" href="_ds/c-nit-digital-design-system-5699b366-b2ee-4571-ba0b-e96c35e8947f/tokens/typography.css">
+<link rel="stylesheet" href="_ds/c-nit-digital-design-system-5699b366-b2ee-4571-ba0b-e96c35e8947f/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/c-nit-digital-design-system-5699b366-b2ee-4571-ba0b-e96c35e8947f/styles.css">
+<script src="_ds/c-nit-digital-design-system-5699b366-b2ee-4571-ba0b-e96c35e8947f/_ds_bundle.js"></script>
+<style>
+  body{margin:0;background:#eeece6;font-family:system-ui,sans-serif}
+  .dv-turn{padding:40px 44px 60px}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}
+  .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+  .dv-tname{font:600 15px/1.3 system-ui,sans-serif;color:#1a1a1a}
+  .dv-tsub{font:400 12.5px/1.6 system-ui,sans-serif;color:rgba(0,0,0,.55);margin:0 0 28px;max-width:64ch}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:11px;scroll-margin-top:16px;width:436px}
+  .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+  .dv-olabel{display:flex;align-items:baseline;gap:8px;font:600 13.5px/1.3 system-ui,sans-serif;color:#1a1a1a}
+  .dv-odesc{font:400 12px/1.55 system-ui,sans-serif;color:rgba(0,0,0,.55);margin:0}
+  .dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden}
+  .dv-replay{align-self:flex-start;font:600 11.5px system-ui,sans-serif;color:#1a1a1a;background:#fff;border:1px solid rgba(0,0,0,.15);padding:6px 13px;border-radius:999px;cursor:pointer}
+  .dv-replay:hover{background:#f3f3f1}
+  .dv-panelrow{display:flex}
+  .dv-panel{flex:1;display:flex;flex-direction:column;min-width:0}
+  .dv-navstrip{padding:11px 14px;display:flex;align-items:center}
+  .dv-herobox{position:relative;overflow:hidden;height:132px}
+  .dv-next{margin:26px 0 0;font:12px/1.6 system-ui,sans-serif;color:rgba(0,0,0,.5)}
+
+  /* ===== Variante A — Secuencial clásica (anillo → onda → punto → texto) ===== */
+  @keyframes ringA { 0%{stroke-dashoffset:300} 34%{stroke-dashoffset:0} }
+  @keyframes waveA { 0%,29%{stroke-dashoffset:300} 67%{stroke-dashoffset:0} }
+  @keyframes dotOutlineA { 0%,63%{stroke-dashoffset:30;stroke-opacity:1} 71%{stroke-dashoffset:0;stroke-opacity:1} 78%{stroke-opacity:0} }
+  @keyframes dotFillA { 0%,71%{fill-opacity:0;transform:scale(.3)} 78%{fill-opacity:1;transform:scale(1)} }
+  @keyframes cenitA { 0%,78%{clip-path:inset(0 100% 0 0)} 87%{clip-path:inset(0 0% 0 0)} }
+  @keyframes digitalA { 0%,88%{clip-path:inset(0 100% 0 0)} 98%{clip-path:inset(0 0% 0 0)} }
+
+  /* ===== Variante B — Onda primero (onda → anillo se funde detrás → punto pop → texto) ===== */
+  @keyframes waveB { 0%{stroke-dashoffset:300} 44%{stroke-dashoffset:0} }
+  @keyframes ringB { 0%,30%{opacity:0} 66%{opacity:1} }
+  @keyframes dotOutlineB { 0%,60%{stroke-dashoffset:30;stroke-opacity:1} 70%{stroke-dashoffset:0;stroke-opacity:1} 76%{stroke-opacity:0} }
+  @keyframes dotFillB { 0%,66%{fill-opacity:0;transform:scale(.3)} 74%{fill-opacity:1;transform:scale(1.1)} 80%{transform:scale(1)} }
+  @keyframes cenitB { 0%,80%{clip-path:inset(0 100% 0 0)} 89%{clip-path:inset(0 0% 0 0)} }
+  @keyframes digitalB { 0%,90%{clip-path:inset(0 100% 0 0)} 100%{clip-path:inset(0 0% 0 0)} }
+
+  /* ===== Variante C — Simultánea a distinto ritmo (anillo lento de fondo + onda/punto/texto rápidos) ===== */
+  @keyframes ringC { 0%{stroke-dashoffset:300} 88%{stroke-dashoffset:0} }
+  @keyframes waveC { 0%{stroke-dashoffset:300} 47%{stroke-dashoffset:0} }
+  @keyframes dotOutlineC { 0%,47%{stroke-dashoffset:30;stroke-opacity:1} 56%{stroke-dashoffset:0;stroke-opacity:1} 63%{stroke-opacity:0} }
+  @keyframes dotFillC { 0%,56%{fill-opacity:0;transform:scale(.3)} 63%{fill-opacity:1;transform:scale(1)} }
+  @keyframes cenitC { 0%,63%{clip-path:inset(0 100% 0 0)} 74%{clip-path:inset(0 0% 0 0)} }
+  @keyframes digitalC { 0%,76%{clip-path:inset(0 100% 0 0)} 87%{clip-path:inset(0 0% 0 0)} }
+</style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Animación de dibujado — icono Órbita + wordmark</span></div>
+  <p class="dv-tsub">3 ritmos/órdenes distintos para el mismo trazo (anillo, onda, punto cénit) + el texto "cénit digital" con efecto máquina de escribir. Pulsa "↻ Repetir" para volver a verla. En la versión final del nav/hero se reproducirá al cargar y repetirá en bucle con una pausa larga — aquí se reproduce una vez para comparar bien el ritmo.</p>
+  <div class="dv-opts">
+
+    <!-- ============ OPCIÓN 1a ============ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Secuencial clásica</div>
+      <p class="dv-odesc">Anillo → onda → punto, en ese orden, con solape suave entre cada uno. Ritmo continuo y calmado.</p>
+      <sc-if value="{{ showA }}" hint-placeholder-val="{{ true }}">
+        <div class="dv-card">
+          <div class="dv-panelrow">
+            <div class="dv-panel" style="border-right:1px solid rgba(0,0,0,.08)">
+              <div class="dv-navstrip" style="background:var(--color-band)">
+                <div style="display:inline-flex;align-items:center;gap:9px">
+                  <svg width="30" height="30" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+                    <defs><linearGradient id="gAlt" x1="12" y1="40" x2="68" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="var(--color-primary)"></stop><stop offset="100%" stop-color="var(--color-secondary)"></stop></linearGradient></defs>
+                    <circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-ring)" stroke-width="1.8" stroke-opacity=".5" stroke-dasharray="300" style="stroke-dashoffset:300;animation:ringA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></circle>
+                    <path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="url(#gAlt)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></path>
+                    <circle cx="40" cy="20" r="3.8" fill="none" stroke="var(--color-zenith)" stroke-width="1.6" stroke-dasharray="30" style="stroke-dashoffset:30;animation:dotOutlineA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></circle>
+                    <circle cx="40" cy="20" r="3.8" fill="var(--color-zenith)" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></circle>
+                  </svg>
+                  <span style="display:flex;flex-direction:column;line-height:1">
+                    <span style="display:inline-block;font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:1.2px;color:var(--color-logo-ink);clip-path:inset(0 100% 0 0);animation:cenitA 5.2s steps(5,end) 1 both">cénit</span>
+                    <span style="display:inline-block;font-size:6.5px;letter-spacing:3.5px;text-transform:lowercase;color:var(--color-logo-sub);margin-top:3px;clip-path:inset(0 100% 0 0);animation:digitalA 5.2s steps(7,end) 1 both">digital</span>
+                  </span>
+                </div>
+              </div>
+              <div class="dv-herobox" style="background:var(--color-bg)">
+                <svg width="104" height="104" viewBox="0 0 80 80" fill="none" style="position:absolute;top:-14px;right:-10px;opacity:.42" aria-hidden="true">
+                  <circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-accent)" stroke-width="1" stroke-opacity=".5" stroke-dasharray="300" style="stroke-dashoffset:300;animation:ringA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></circle>
+                  <path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="var(--color-accent)" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></path>
+                  <circle cx="40" cy="20" r="3" fill="none" stroke="var(--color-accent)" stroke-width="1.3" stroke-dasharray="30" style="stroke-dashoffset:30;animation:dotOutlineA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></circle>
+                  <circle cx="40" cy="20" r="3" fill="var(--color-accent)" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></circle>
+                </svg>
+              </div>
+            </div>
+            <div class="dv-panel">
+              <div class="dv-navstrip" style="background:#251c3b">
+                <div style="display:inline-flex;align-items:center;gap:9px">
+                  <svg width="30" height="30" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+                    <defs><linearGradient id="gAdk" x1="12" y1="40" x2="68" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#c9a84c"></stop><stop offset="100%" stop-color="#7c5cbf"></stop></linearGradient></defs>
+                    <circle cx="40" cy="40" r="30" fill="none" stroke="#c9a84c" stroke-width="1.8" stroke-opacity=".5" stroke-dasharray="300" style="stroke-dashoffset:300;animation:ringA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></circle>
+                    <path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="url(#gAdk)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></path>
+                    <circle cx="40" cy="20" r="3.8" fill="none" stroke="#c9a84c" stroke-width="1.6" stroke-dasharray="30" style="stroke-dashoffset:30;animation:dotOutlineA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></circle>
+                    <circle cx="40" cy="20" r="3.8" fill="#c9a84c" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></circle>
+                  </svg>
+                  <span style="display:flex;flex-direction:column;line-height:1">
+                    <span style="display:inline-block;font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:1.2px;color:#f7f4ee;clip-path:inset(0 100% 0 0);animation:cenitA 5.2s steps(5,end) 1 both">cénit</span>
+                    <span style="display:inline-block;font-size:6.5px;letter-spacing:3.5px;text-transform:lowercase;color:#7c5cbf;margin-top:3px;clip-path:inset(0 100% 0 0);animation:digitalA 5.2s steps(7,end) 1 both">digital</span>
+                  </span>
+                </div>
+              </div>
+              <div class="dv-herobox" style="background:#12082a">
+                <svg width="104" height="104" viewBox="0 0 80 80" fill="none" style="position:absolute;top:-14px;right:-10px;opacity:.42" aria-hidden="true">
+                  <circle cx="40" cy="40" r="30" fill="none" stroke="#7c5cbf" stroke-width="1" stroke-opacity=".5" stroke-dasharray="300" style="stroke-dashoffset:300;animation:ringA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></circle>
+                  <path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="#7c5cbf" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></path>
+                  <circle cx="40" cy="20" r="3" fill="none" stroke="#7c5cbf" stroke-width="1.3" stroke-dasharray="30" style="stroke-dashoffset:30;animation:dotOutlineA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></circle>
+                  <circle cx="40" cy="20" r="3" fill="#7c5cbf" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillA 5.2s cubic-bezier(.65,0,.35,1) 1 both"></circle>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <button class="dv-replay" onClick="{{ replayA }}">↻ Repetir</button>
+    </div>
+
+    <!-- ============ OPCIÓN 1b ============ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Onda primero</div>
+      <p class="dv-odesc">La onda (el trazo con color) se dibuja primero; el anillo se funde detrás; el punto hace un pequeño "pop". Más expresivo.</p>
+      <sc-if value="{{ showB }}" hint-placeholder-val="{{ true }}">
+        <div class="dv-card">
+          <div class="dv-panelrow">
+            <div class="dv-panel" style="border-right:1px solid rgba(0,0,0,.08)">
+              <div class="dv-navstrip" style="background:var(--color-band)">
+                <div style="display:inline-flex;align-items:center;gap:9px">
+                  <svg width="30" height="30" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+                    <defs><linearGradient id="gBlt" x1="12" y1="40" x2="68" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="var(--color-primary)"></stop><stop offset="100%" stop-color="var(--color-secondary)"></stop></linearGradient></defs>
+                    <circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-ring)" stroke-width="1.8" stroke-opacity=".5" style="opacity:0;animation:ringB 5.0s ease-out 1 both"></circle>
+                    <path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="url(#gBlt)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveB 5.0s cubic-bezier(.65,0,.35,1) 1 both"></path>
+                    <circle cx="40" cy="20" r="3.8" fill="none" stroke="var(--color-zenith)" stroke-width="1.6" stroke-dasharray="30" style="stroke-dashoffset:30;animation:dotOutlineB 5.0s cubic-bezier(.34,1.56,.64,1) 1 both"></circle>
+                    <circle cx="40" cy="20" r="3.8" fill="var(--color-zenith)" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillB 5.0s cubic-bezier(.34,1.56,.64,1) 1 both"></circle>
+                  </svg>
+                  <span style="display:flex;flex-direction:column;line-height:1">
+                    <span style="display:inline-block;font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:1.2px;color:var(--color-logo-ink);clip-path:inset(0 100% 0 0);animation:cenitB 5.0s steps(5,end) 1 both">cénit</span>
+                    <span style="display:inline-block;font-size:6.5px;letter-spacing:3.5px;text-transform:lowercase;color:var(--color-logo-sub);margin-top:3px;clip-path:inset(0 100% 0 0);animation:digitalB 5.0s steps(7,end) 1 both">digital</span>
+                  </span>
+                </div>
+              </div>
+              <div class="dv-herobox" style="background:var(--color-bg)">
+                <svg width="104" height="104" viewBox="0 0 80 80" fill="none" style="position:absolute;top:-14px;right:-10px;opacity:.42" aria-hidden="true">
+                  <circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-accent)" stroke-width="1" stroke-opacity=".5" style="opacity:0;animation:ringB 5.0s ease-out 1 both"></circle>
+                  <path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="var(--color-accent)" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveB 5.0s cubic-bezier(.65,0,.35,1) 1 both"></path>
+                  <circle cx="40" cy="20" r="3" fill="none" stroke="var(--color-accent)" stroke-width="1.3" stroke-dasharray="30" style="stroke-dashoffset:30;animation:dotOutlineB 5.0s cubic-bezier(.34,1.56,.64,1) 1 both"></circle>
+                  <circle cx="40" cy="20" r="3" fill="var(--color-accent)" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillB 5.0s cubic-bezier(.34,1.56,.64,1) 1 both"></circle>
+                </svg>
+              </div>
+            </div>
+            <div class="dv-panel">
+              <div class="dv-navstrip" style="background:#251c3b">
+                <div style="display:inline-flex;align-items:center;gap:9px">
+                  <svg width="30" height="30" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+                    <defs><linearGradient id="gBdk" x1="12" y1="40" x2="68" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#c9a84c"></stop><stop offset="100%" stop-color="#7c5cbf"></stop></linearGradient></defs>
+                    <circle cx="40" cy="40" r="30" fill="none" stroke="#c9a84c" stroke-width="1.8" stroke-opacity=".5" style="opacity:0;animation:ringB 5.0s ease-out 1 both"></circle>
+                    <path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="url(#gBdk)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveB 5.0s cubic-bezier(.65,0,.35,1) 1 both"></path>
+                    <circle cx="40" cy="20" r="3.8" fill="none" stroke="#c9a84c" stroke-width="1.6" stroke-dasharray="30" style="stroke-dashoffset:30;animation:dotOutlineB 5.0s cubic-bezier(.34,1.56,.64,1) 1 both"></circle>
+                    <circle cx="40" cy="20" r="3.8" fill="#c9a84c" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillB 5.0s cubic-bezier(.34,1.56,.64,1) 1 both"></circle>
+                  </svg>
+                  <span style="display:flex;flex-direction:column;line-height:1">
+                    <span style="display:inline-block;font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:1.2px;color:#f7f4ee;clip-path:inset(0 100% 0 0);animation:cenitB 5.0s steps(5,end) 1 both">cénit</span>
+                    <span style="display:inline-block;font-size:6.5px;letter-spacing:3.5px;text-transform:lowercase;color:#7c5cbf;margin-top:3px;clip-path:inset(0 100% 0 0);animation:digitalB 5.0s steps(7,end) 1 both">digital</span>
+                  </span>
+                </div>
+              </div>
+              <div class="dv-herobox" style="background:#12082a">
+                <svg width="104" height="104" viewBox="0 0 80 80" fill="none" style="position:absolute;top:-14px;right:-10px;opacity:.42" aria-hidden="true">
+                  <circle cx="40" cy="40" r="30" fill="none" stroke="#7c5cbf" stroke-width="1" stroke-opacity=".5" style="opacity:0;animation:ringB 5.0s ease-out 1 both"></circle>
+                  <path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="#7c5cbf" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveB 5.0s cubic-bezier(.65,0,.35,1) 1 both"></path>
+                  <circle cx="40" cy="20" r="3" fill="none" stroke="#7c5cbf" stroke-width="1.3" stroke-dasharray="30" style="stroke-dashoffset:30;animation:dotOutlineB 5.0s cubic-bezier(.34,1.56,.64,1) 1 both"></circle>
+                  <circle cx="40" cy="20" r="3" fill="#7c5cbf" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillB 5.0s cubic-bezier(.34,1.56,.64,1) 1 both"></circle>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <button class="dv-replay" onClick="{{ replayB }}">↻ Repetir</button>
+    </div>
+
+    <!-- ============ OPCIÓN 1c ============ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Simultánea a distinto ritmo</div>
+      <p class="dv-odesc">Anillo lento de fondo (todo el recorrido) mientras onda, punto y texto van más rápido en primer plano. Más dinámico.</p>
+      <sc-if value="{{ showC }}" hint-placeholder-val="{{ true }}">
+        <div class="dv-card">
+          <div class="dv-panelrow">
+            <div class="dv-panel" style="border-right:1px solid rgba(0,0,0,.08)">
+              <div class="dv-navstrip" style="background:var(--color-band)">
+                <div style="display:inline-flex;align-items:center;gap:9px">
+                  <svg width="30" height="30" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+                    <defs><linearGradient id="gClt" x1="12" y1="40" x2="68" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="var(--color-primary)"></stop><stop offset="100%" stop-color="var(--color-secondary)"></stop></linearGradient></defs>
+                    <circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-ring)" stroke-width="1.8" stroke-opacity=".5" stroke-dasharray="300" style="stroke-dashoffset:300;animation:ringC 4.3s cubic-bezier(.25,.46,.45,.94) 1 both"></circle>
+                    <path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="url(#gClt)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveC 4.3s cubic-bezier(.4,0,.2,1) 1 both"></path>
+                    <circle cx="40" cy="20" r="3.8" fill="none" stroke="var(--color-zenith)" stroke-width="1.6" stroke-dasharray="30" style="stroke-dashoffset:30;animation:dotOutlineC 4.3s cubic-bezier(.4,0,.2,1) 1 both"></circle>
+                    <circle cx="40" cy="20" r="3.8" fill="var(--color-zenith)" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillC 4.3s cubic-bezier(.4,0,.2,1) 1 both"></circle>
+                  </svg>
+                  <span style="display:flex;flex-direction:column;line-height:1">
+                    <span style="display:inline-block;font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:1.2px;color:var(--color-logo-ink);clip-path:inset(0 100% 0 0);animation:cenitC 4.3s steps(5,end) 1 both">cénit</span>
+                    <span style="display:inline-block;font-size:6.5px;letter-spacing:3.5px;text-transform:lowercase;color:var(--color-logo-sub);margin-top:3px;clip-path:inset(0 100% 0 0);animation:digitalC 4.3s steps(7,end) 1 both">digital</span>
+                  </span>
+                </div>
+              </div>
+              <div class="dv-herobox" style="background:var(--color-bg)">
+                <svg width="104" height="104" viewBox="0 0 80 80" fill="none" style="position:absolute;top:-14px;right:-10px;opacity:.42" aria-hidden="true">
+                  <circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-accent)" stroke-width="1" stroke-opacity=".5" stroke-dasharray="300" style="stroke-dashoffset:300;animation:ringC 4.3s cubic-bezier(.25,.46,.45,.94) 1 both"></circle>
+                  <path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="var(--color-accent)" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveC 4.3s cubic-bezier(.4,0,.2,1) 1 both"></path>
+                  <circle cx="40" cy="20" r="3" fill="none" stroke="var(--color-accent)" stroke-width="1.3" stroke-dasharray="30" style="stroke-dashoffset:30;animation:dotOutlineC 4.3s cubic-bezier(.4,0,.2,1) 1 both"></circle>
+                  <circle cx="40" cy="20" r="3" fill="var(--color-accent)" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillC 4.3s cubic-bezier(.4,0,.2,1) 1 both"></circle>
+                </svg>
+              </div>
+            </div>
+            <div class="dv-panel">
+              <div class="dv-navstrip" style="background:#251c3b">
+                <div style="display:inline-flex;align-items:center;gap:9px">
+                  <svg width="30" height="30" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+                    <defs><linearGradient id="gCdk" x1="12" y1="40" x2="68" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#c9a84c"></stop><stop offset="100%" stop-color="#7c5cbf"></stop></linearGradient></defs>
+                    <circle cx="40" cy="40" r="30" fill="none" stroke="#c9a84c" stroke-width="1.8" stroke-opacity=".5" stroke-dasharray="300" style="stroke-dashoffset:300;animation:ringC 4.3s cubic-bezier(.25,.46,.45,.94) 1 both"></circle>
+                    <path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="url(#gCdk)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveC 4.3s cubic-bezier(.4,0,.2,1) 1 both"></path>
+                    <circle cx="40" cy="20" r="3.8" fill="none" stroke="#c9a84c" stroke-width="1.6" stroke-dasharray="30" style="stroke-dashoffset:30;animation:dotOutlineC 4.3s cubic-bezier(.4,0,.2,1) 1 both"></circle>
+                    <circle cx="40" cy="20" r="3.8" fill="#c9a84c" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillC 4.3s cubic-bezier(.4,0,.2,1) 1 both"></circle>
+                  </svg>
+                  <span style="display:flex;flex-direction:column;line-height:1">
+                    <span style="display:inline-block;font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:1.2px;color:#f7f4ee;clip-path:inset(0 100% 0 0);animation:cenitC 4.3s steps(5,end) 1 both">cénit</span>
+                    <span style="display:inline-block;font-size:6.5px;letter-spacing:3.5px;text-transform:lowercase;color:#7c5cbf;margin-top:3px;clip-path:inset(0 100% 0 0);animation:digitalC 4.3s steps(7,end) 1 both">digital</span>
+                  </span>
+                </div>
+              </div>
+              <div class="dv-herobox" style="background:#12082a">
+                <svg width="104" height="104" viewBox="0 0 80 80" fill="none" style="position:absolute;top:-14px;right:-10px;opacity:.42" aria-hidden="true">
+                  <circle cx="40" cy="40" r="30" fill="none" stroke="#7c5cbf" stroke-width="1" stroke-opacity=".5" stroke-dasharray="300" style="stroke-dashoffset:300;animation:ringC 4.3s cubic-bezier(.25,.46,.45,.94) 1 both"></circle>
+                  <path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="#7c5cbf" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveC 4.3s cubic-bezier(.4,0,.2,1) 1 both"></path>
+                  <circle cx="40" cy="20" r="3" fill="none" stroke="#7c5cbf" stroke-width="1.3" stroke-dasharray="30" style="stroke-dashoffset:30;animation:dotOutlineC 4.3s cubic-bezier(.4,0,.2,1) 1 both"></circle>
+                  <circle cx="40" cy="20" r="3" fill="#7c5cbf" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillC 4.3s cubic-bezier(.4,0,.2,1) 1 both"></circle>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <button class="dv-replay" onClick="{{ replayC }}">↻ Repetir</button>
+    </div>
+
+  </div>
+  <p class="dv-next">Prueba: "combina el orden de <a class="dv-oid" href="#1b">1b</a> con el pop de <a class="dv-oid" href="#1a">1a</a>" · "más lento/rápido en <a class="dv-oid" href="#1c">1c</a>" · "aplica 1a al nav y hero reales"</p>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { showA: true, showB: true, showC: true };
+
+  replay(key) {
+    this.setState({ [key]: false });
+    setTimeout(() => this.setState({ [key]: true }), 60);
+  }
+
+  renderVals() {
+    return {
+      showA: this.state.showA,
+      showB: this.state.showB,
+      showC: this.state.showC,
+      replayA: () => this.replay('showA'),
+      replayB: () => this.replay('showB'),
+      replayC: () => this.replay('showC'),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

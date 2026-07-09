@@ -465,3 +465,273 @@ izquierda, todo lo demás agrupado a la derecha.
   presentación.
 
 **Estado.** `pending`.
+
+---
+
+## #14 · logo_draw_animation — Animación de dibujado del logo Órbita (nav + hero)
+
+**Propósito.** Dar vida a la marca con una animación CSS pura de "dibujado"
+(self-drawing) del icono Órbita (anillo + onda + punto cénit), que se traza
+sola al cargar la página y se repite en bucle infinito con una pausa larga.
+Refuerza la identidad sin coste de JS ni estado. Fuente de verdad:
+`design/logo-draw-animation/README.md` (handoff) + `CenitLanding.dc.html`
+(keyframes verbatim). Aprobado como "alta fidelidad, todos los valores
+cerrados": aquí se **sintetiza** el handoff; lo que quede sin cerrar se marca
+como decisión para la puerta humana.
+
+**Alcance.** Se anima en **dos** sitios:
+
+1. **Cabecera** — `Logo` animado: icono 40px (`viewBox="0 0 80 80"`) +
+   wordmark "cénit / digital" con efecto **máquina de escribir**. Usa gradiente
+   de marca en la onda (`--color-primary → --color-secondary`), `--color-ring`
+   en el anillo y `--color-zenith` en el punto.
+2. **Hero** — el arco decorativo (`data-hero-arc` en `Hero.tsx`, 540px, esquina
+   superior derecha, detrás del texto, `aria-hidden`), **sin wordmark**, en un
+   **único color** `--color-accent` (sin gradiente) y opacidad de reposo `.42`.
+
+**Fuera de alcance.** El logo del **Footer permanece estático** (no se anima).
+No se crean tokens nuevos. No se introduce estado React ni JS.
+
+---
+
+### Comportamiento
+
+Un ciclo dura **18.3s** y se repite con `animation-iteration-count: infinite`.
+Variante aprobada: **"simultánea a distinto ritmo"** — el anillo se dibuja lento
+de fondo durante casi todo el trazo (0→41%), mientras onda, punto y texto van
+más rápidos en primer plano; anillo y "digital" llegan juntos al 41%
+(sensación de llegada conjunta). Tras el trazo hay una **pausa (hold) ~9.5s**
+con el logo ya dibujado, y un **rebobinado invisible** entre 96–97% que reinicia
+todos los trazos a su estado oculto sin que el usuario lo vea.
+
+Todos los `@keyframes` van **en porcentaje** (nunca en segundos) y todos los
+elementos comparten `animation-duration: 18.3s`, de modo que quedan sincronizados
+sin JS. Funciona igual en claro/oscuro porque todo el color sale de
+`var(--color-…)`.
+
+---
+
+### Contrato observable
+
+> Nota para `gherkin_author`/`tdd_craftsman`: la animación en sí (interpolación
+> de keyframes) **no es verificable en jsdom**. El contrato *testeable* es la
+> **estructura DOM + atributos**: presencia de los `data-attributes` de destino,
+> `stroke-dasharray` correctos, existencia del círculo de contorno del punto, el
+> efecto de la prop `animated` de `Logo`, la regla `prefers-reduced-motion`, y
+> que el Footer siga estático. Los valores de keyframe/timing se documentan aquí
+> **verbatim** para fidelidad, no para aserción numérica en test unitario.
+
+**CO1 · Timing (un ciclo = 18.3s, en %).** Tabla del handoff (elemento · %
+inicio · % fin de dibujo · segundos equiv. · easing). El easing es la
+`animation-timing-function` del *shorthand* de cada elemento (no vive dentro del
+`@keyframes`):
+
+| Elemento (keyframe) | % inicio | % fin dibujo | Seg. equiv. | Easing (timing-function del shorthand) |
+|---|---|---|---|---|
+| Anillo (`ringLoop`) | 0% | 41% | 0 → 7.5s | `cubic-bezier(.25,.46,.45,.94)` (lento, de fondo) |
+| Onda (`waveLoop`) | 0% | 22% | 0 → 4.0s | `cubic-bezier(.4,0,.2,1)` (rápido, en paralelo) |
+| Punto — contorno (`dotOutlineLoop`) | 22% | 27% | 4.0 → 4.9s | `cubic-bezier(.4,0,.2,1)` |
+| Punto — relleno (`dotFillLoop`) | 27% | 30% | 4.9 → 5.5s | `cubic-bezier(.4,0,.2,1)` |
+| "cénit" (`cenitLoop`) | 30% | 35% | 5.5 → 6.4s | `steps(5,end)` |
+| "digital" (`digitalLoop`) | 36% | 41% | 6.6 → 7.5s | `steps(7,end)` |
+| Pausa (hold) | 41% | 93% | 7.5 → 17.0s (~9.5s quieto) | — |
+| Fundido de reset (contenedor) | 93% | 96% | 17.0 → 17.6s | `ease-in-out` |
+| Vacío / reset invisible | 96% | 97% | 17.6 → 17.75s | — |
+| Blank final | 97% | 100% | 17.75 → 18.3s | — |
+
+Shorthands por elemento: contenedores `…CycleOpacity 18.3s ease-in-out infinite`;
+resto `…Loop 18.3s <easing de la tabla> infinite`.
+
+**CO2 · Los 8 `@keyframes` (verbatim de `CenitLanding.dc.html`).** Reprodúcelos
+al carácter:
+
+```css
+@keyframes logoCycleOpacity { 0%{opacity:1} 93%{opacity:1} 96%{opacity:0} 97%{opacity:0} 100%{opacity:1} }
+@keyframes heroCycleOpacity { 0%{opacity:.42} 93%{opacity:.42} 96%{opacity:0} 97%{opacity:0} 100%{opacity:.42} }
+@keyframes ringLoop { 0%{stroke-dashoffset:300} 41%{stroke-dashoffset:0} 96%{stroke-dashoffset:0} 97%{stroke-dashoffset:300} 100%{stroke-dashoffset:300} }
+@keyframes waveLoop { 0%{stroke-dashoffset:300} 22%{stroke-dashoffset:0} 96%{stroke-dashoffset:0} 97%{stroke-dashoffset:300} 100%{stroke-dashoffset:300} }
+@keyframes dotOutlineLoop { 0%,22%{stroke-dashoffset:30;stroke-opacity:1} 27%{stroke-dashoffset:0;stroke-opacity:1} 30%{stroke-opacity:0} 96%{stroke-opacity:0} 97%{stroke-opacity:1;stroke-dashoffset:30} 100%{stroke-opacity:1;stroke-dashoffset:30} }
+@keyframes dotFillLoop { 0%,27%{fill-opacity:0;transform:scale(.3)} 30%{fill-opacity:1;transform:scale(1)} 96%{fill-opacity:1;transform:scale(1)} 97%{fill-opacity:0;transform:scale(.3)} 100%{fill-opacity:0;transform:scale(.3)} }
+@keyframes cenitLoop { 0%,30%{clip-path:inset(0 100% 0 0)} 35%{clip-path:inset(0 0% 0 0)} 96%{clip-path:inset(0 0% 0 0)} 97%{clip-path:inset(0 100% 0 0)} 100%{clip-path:inset(0 100% 0 0)} }
+@keyframes digitalLoop { 0%,36%{clip-path:inset(0 100% 0 0)} 41%{clip-path:inset(0 0% 0 0)} 96%{clip-path:inset(0 0% 0 0)} 97%{clip-path:inset(0 100% 0 0)} 100%{clip-path:inset(0 100% 0 0)} }
+```
+
+**CO3 · Estructura del trazo (SVG dasharray/dashoffset + clip-path).**
+
+- **Anillo** (`circle r=30`, `stroke-opacity:.5`): `stroke-dasharray:300`
+  (circunferencia real ≈188.5; 300 = margen seguro). Se traza vía
+  `stroke-dashoffset` 300→0.
+- **Onda** (`path M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41`,
+  `stroke-linecap:round`): `stroke-dasharray:300`, dashoffset 300→0.
+- **Punto cénit = DOS círculos** superpuestos (mismo `cx=40 cy=20`):
+  1. **Círculo A** (contorno): `fill:none`, `stroke:var(--color-zenith)`
+     (nav) / `var(--color-accent)` (hero), `stroke-width:1.6` (nav) / `1.3`
+     (hero), `stroke-dasharray:30`. Se traza vía `stroke-dashoffset` 30→0
+     (`dotOutlineLoop`) y luego desvanece su `stroke-opacity` 1→0 en 30%.
+  2. **Círculo B** (relleno): mismo cx/cy/r, `fill:var(--color-zenith|accent)`.
+     Crossfade `fill-opacity` 0→1 + "pop" `transform:scale(.3)→scale(1)`
+     (`dotFillLoop`). **Requiere `transform-box:fill-box; transform-origin:center`**
+     en su `style` para que el `scale()` gire alrededor de su propio centro
+     (verificado en MDN por el lead). Sin esto, el pop se descoloca.
+  - Estado final: A invisible (stroke-opacity 0), B relleno → punto idéntico al
+    original, sin resto de contorno.
+- **Wordmark** (efecto máquina de escribir, no se traza letra a letra):
+  `clip-path: inset(0 100% 0 0)` (oculto) → `inset(0 0% 0 0)` (visible), con
+  `steps(5,end)` para "cénit" (5 caracteres) y `steps(7,end)` para "digital"
+  (7 caracteres) — revelación carácter a carácter, no deslizamiento suave.
+
+**CO4 · Radios y grosores (ya existentes en el logo, no cambian).** Anillo `r=30`
+`stroke-width` 1.8 (nav) / 1 (hero); onda `stroke-width` 3.2 (nav) / 1.4 (hero);
+punto `r` 3.8 (nav) / 3 (hero); contorno del punto `stroke-width` 1.6 (nav) /
+1.3 (hero).
+
+**CO5 · Truco del bucle sin salto visual.** Un `@keyframes infinite` NO interpola
+entre 100% y 0%; si difieren, hay salto. Por eso:
+
+- Cada propiedad de dibujo (dashoffset / clip-path / fill-opacity) tiene **el
+  mismo valor en 0% y en 100%** (el estado oculto), y el "rebobinado" ocurre de
+  golpe entre 96→97%.
+- El **contenedor** (el enlace del logo en nav; el `div[data-hero-arc]` en hero)
+  anima su `opacity` (`logoCycleOpacity` / `heroCycleOpacity`): visible durante
+  dibujo+pausa, **cae a 0 entre 96–97%** (oculta el rebobinado, ~0.2s), y vuelve
+  a su opacidad visible antes del 100%.
+- **El contenedor NO empieza en opacity:0 en 0%** (aunque parezca simétrico):
+  el primer pintado podría caer ahí y verse el nav sin logo. El contenedor
+  arranca visible en 0%; lo oculto al inicio es el trazo (dashoffset máximo), no
+  el contenedor.
+
+**CO6 · Colores.** SOLO tokens existentes, sin crear ninguno:
+`--color-primary`/`--color-secondary` (gradiente de la onda del nav),
+`--color-ring`, `--color-zenith` (nav), `--color-accent` (color único del hero),
+`--color-logo-ink`/`--color-logo-sub` (wordmark). Funciona en ambos temas sin
+que la animación sepa el tema (todo vía `var(--color-…)`; el tema lo conmuta
+`data-theme` en `<html>`, mecanismo ya existente).
+
+**CO7 · Sin estado nuevo.** Animación CSS pura. Sin JS, sin estado React, sin
+`ClientOnly`. Arranca sola al montar. La prerenderización SSG emite el SVG en su
+estado base (dibujado, ver Restricción R1), y la animación corre en cliente.
+
+---
+
+### Casos límite
+
+- **`prefers-reduced-motion: reduce`** → todas las animaciones `animation: none`;
+  el logo se muestra **estático, completamente dibujado** (anillo/onda con
+  dashoffset 0, punto relleno, contorno invisible, wordmark visible, contenedor
+  a su opacidad de reposo). Ver Decisión D1 (recomendado: sí) y Restricción R1.
+- **Primer frame / FOUC.** El contenedor arranca visible (0% = opacity 1/.42);
+  nunca se ve "nav sin logo". Ver CO5.
+- **Bucle infinito sin salto.** Cubierto por CO5 (valores iguales 0%↔100% +
+  parpadeo de opacidad 96–97%).
+- **Footer estático.** El `Logo` del Footer NO recibe animación (prop `animated`
+  ausente → `false`). Debe seguir renderizando el icono relleno estático.
+- **Móvil.** El arco del hero hoy se atenúa a `.1` en `≤820px`. La animación fija
+  la opacidad de reposo del contenedor vía keyframe (.42), que **gana** sobre la
+  propiedad `opacity` durante la animación → una media query sobre `opacity` NO
+  surtiría efecto mientras la animación corre. Ver Decisión D2 (implica keyframe
+  móvil aparte si se preserva el `.1`).
+
+---
+
+### Decisiones para la puerta humana
+
+> El handoff está cerrado en valores, pero deja abiertos estos cuatro puntos
+> (accesibilidad + reconciliación con el código actual + estrategia técnica).
+> Ninguno se resuelve por cuenta propia: van a la puerta humana.
+
+**D1 · `prefers-reduced-motion` (accesibilidad).** No está en el handoff, pero es
+base de accesibilidad y el repo **ya lo respeta** (`ServiceMockup.module.scss`
+usa `@media (prefers-reduced-motion: reduce){ … animation: none }`). El
+`feature_list.json` de #14 ya lo exige en su acceptance.
+**Propuesta (recomendada: SÍ):** con `reduce`, desactivar la animación y mostrar
+el logo estático completamente dibujado. **Alternativa descartada:** dejar la
+animación siempre activa — descartada porque incumple accesibilidad y el propio
+criterio de aceptación de la feature. **A confirmar por el humano.**
+
+**D2 · Opacidad del arco del hero en móvil.** Discrepancia entre el estado actual
+y el handoff:
+- Hoy `Hero.module.scss` fija `.arc { opacity: .45 }` y la reduce a `.1` en
+  `≤820px` (decisión previa de #13, verificada).
+- El handoff usa `.42` de reposo (keyframe `heroCycleOpacity`) y **no menciona
+  móvil**.
+
+Dos sub-decisiones:
+1. **Reposo desktop `.45 → .42`.** La animación fija `.42` en el keyframe, que
+   supersede el `.45` estático actual. Recomendado: adoptar `.42` (literal del
+   handoff) como opacidad de reposo del contenedor animado.
+2. **Reducción móvil `.1`.** **Propuesta (recomendada): PRESERVAR** la atenuación
+   a `.1` en `≤820px` (no regresa una mejora responsive ya tomada). Como el
+   keyframe gana sobre la propiedad `opacity`, preservarla exige un **keyframe
+   móvil aparte** (p. ej. `heroCycleOpacityMobile` con `.1` en reposo) activado
+   por media query, o no animar la opacidad en móvil. **Alternativa descartada:**
+   usar `.42` en todos los anchos (literal del handoff) — descartada porque
+   regresaría la atenuación móvil de #13 y el arco pesaría demasiado en pantallas
+   pequeñas. **A confirmar por el humano.**
+
+**D3 · Estrategia de keyframes compartidos (decisión de implementación).** Logo y
+Hero comparten `ringLoop`/`waveLoop`/`dotOutlineLoop`/`dotFillLoop`. Como
+**CSS Modules hashea los nombres de `@keyframes`**, definirlos por separado en
+`Logo.module.scss` y `Hero.module.scss` los renombraría distinto y romperían al
+cruzarse. **Propuesta:** definir los 8 keyframes + las clases/atributos de
+animación en un **parcial global** `src/styles/_logo-draw.scss`, incluido vía
+`@use` en `src/styles/main.scss`, y aplicarlos por **`data-attributes`** (p. ej.
+`data-orbit-ring`, `data-orbit-wave`, `data-orbit-dot-outline`,
+`data-orbit-dot-fill`, `data-orbit-cenit`, `data-orbit-digital`, y a nivel de
+contenedor `data-logo-anim` / `data-hero-arc`), de modo que ambos componentes
+los usen sin duplicar y sin depender del hashing de Modules. **Alternativa
+descartada:** keyframes `:global(...)` dentro de cada módulo — funciona pero
+duplica definiciones y dispersa la fuente de verdad; el parcial global es más
+DRY y encaja con `docs/conventions.md` (tokens/base globales en `src/styles/`
+vía `@use`). **A confirmar por el humano.**
+
+**D4 · API de `Logo` (decisión de implementación).** Añadir prop
+**`animated?: boolean` (default `false`)**. Header renderiza `<Logo animated />`;
+Footer sigue con `<Logo size={38} />` estático **sin cambios**. Cuando `animated`
+es `true`, el componente aplica los `data-attributes` de animación (D3) y añade
+el círculo de contorno del punto (círculo A de CO3); cuando es `false`, el SVG
+actual se mantiene intacto (icono relleno estático). **Alternativa descartada:**
+un componente `LogoAnimated` separado — descartada porque duplicaría el SVG y su
+`gradId` único; una prop es el diff mínimo y mantiene una sola fuente del icono.
+**A confirmar por el humano.**
+
+---
+
+### Restricciones de implementación (para gherkin_author / tdd_craftsman)
+
+- **R1 · Estado base = DIBUJADO, no oculto.** El estado oculto vive en el
+  keyframe `0%` (dashoffset 300/30, `fill-opacity:0`, `clip-path:inset(0 100% 0 0)`,
+  `stroke-opacity` del contorno). El **CSS base** de los elementos debe ser el
+  **estado dibujado** (dashoffset 0, punto relleno, contorno invisible, wordmark
+  visible, contenedor a opacidad de reposo). Así, con `animation: none`
+  (reduced-motion o sin soporte), el logo se ve **completo** y la SSG prerenderiza
+  un logo válido. ⚠️ NO hornear `stroke-dashoffset:300` como valor base (como hace
+  el prototipo HTML con `style` inline): rompería reduced-motion y el fallback SSG.
+- **R2 · El arco del hero necesita el círculo de contorno.** Hoy `Hero.tsx` tiene
+  un único `<circle … fill="var(--color-accent)" />`. Para el trazo+relleno del
+  punto hay que **añadir el círculo A** (contorno con `stroke-dasharray:30`) además
+  del B (relleno con `transform-box:fill-box; transform-origin:center`).
+- **R3 · Sin tokens nuevos.** `stroke-dasharray:300/30`, `18.3s`, y los radios/
+  grosores son constantes de la animación, no tokens de marca — van en el
+  SCSS/SVG, no en `_tokens.scss`.
+- **R4 · Sin JS ni estado.** Nada de `useEffect`/`useState`/timers para la
+  animación. No requiere `ClientOnly`.
+- **R5 · Lista de mutación** (acceptance de #14): superficie TS a mutar =
+  `Logo.tsx` (rama de la prop `animated`) y `Hero.tsx` (el círculo A añadido). Los
+  escenarios deben aserir DOM observable: presencia de `data-attributes`, del
+  círculo de contorno, del efecto de `animated`, de la regla reduced-motion y de
+  que el Footer no anima.
+
+---
+
+### Qué NO cambia (garantías de no-regresión)
+
+- **Footer:** su `Logo size={38}` permanece estático (sin `animated`).
+- **Icono Órbita / `gradId` único por instancia** (`Logo.tsx`): la forma, paths y
+  el degradado único por instancia se conservan.
+- **Copy y estructura del hero** (#6 / #13): eyebrow, titular, subtítulo, CTAs,
+  estadísticas y el resto del arco (posición, `aria-hidden`, `overflow:hidden`)
+  intactos; solo se le añade la animación y el círculo A.
+- **Tokens de color** (`_tokens.scss`): sin cambios, sin adiciones.
+- **Tema claro/oscuro:** el logo sigue adaptándose solo vía `var(--color-…)`.
+
+**Estado.** `pending`.

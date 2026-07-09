@@ -72,4 +72,15 @@ describe('Header', () => {
     expect(scss).toMatch(/position:\s*sticky/)
     expect(scss).toMatch(/top:\s*0/)
   })
+
+  // Feature #14 · la cabecera monta `<Logo animated />` (D4): el lockup activa
+  // la animación de dibujado vía el atributo `data-logo-anim`.
+  it('@s1 la cabecera monta el Logo en modo animado (data-logo-anim en el lockup)', () => {
+    renderHeader()
+
+    const brand = screen.getByRole('link', { name: /inicio/i })
+    const lockup = brand.querySelector('[data-logo-anim]')
+    expect(lockup).not.toBeNull()
+    expect(lockup).toHaveAttribute('data-logo-anim', '')
+  })
 })
