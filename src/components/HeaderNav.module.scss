@@ -1,13 +1,12 @@
+.cluster {
+  display: flex;
+  align-items: center;
+}
+
 .nav {
   display: flex;
   align-items: center;
   gap: 1.25rem;
-}
-
-.mobile {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 .nav a {
@@ -26,14 +25,20 @@
   text-decoration: none;
 }
 
-/**
- * El prerender SSG (vite-react-ssg) no tiene viewport y hornea la nav de
- * escritorio en el HTML estático. Esta red CSS la oculta en móvil para que el
- * HTML pre-hidratación no desborde sobre el hero. Breakpoint idéntico a
- * MOBILE_QUERY ('(max-width: 767px)') de src/lib/useIsMobile.ts.
- */
+.mobile {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Responsive por CSS: el SSG hornea ambos clústeres; @media decide cuál se ve
+   desde el primer pintado, sin JS. Breakpoint 767px. Ver docs/conventions.md. */
 @media (max-width: 767px) {
   .nav {
     display: none;
+  }
+
+  .mobile {
+    display: flex;
   }
 }

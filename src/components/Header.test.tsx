@@ -36,7 +36,8 @@ describe('Header', () => {
   it('@s5 la cabecera tiene dos grupos (logo + clúster) y el tema vive dentro del clúster', async () => {
     renderHeader()
 
-    // El botón de tema es client-only: esperamos su montaje antes de contar hijos.
+    // Los botones de tema son client-only: esperamos su montaje antes de contar
+    // hijos. Ahora hay dos (uno por clúster: nav de escritorio y barra móvil).
     await screen.findAllByRole('button', { name: /Cambiar tema/ })
 
     const inner = screen.getByRole('banner').firstElementChild
@@ -48,9 +49,11 @@ describe('Header', () => {
     expect(brand?.tagName).toBe('A')
     expect(brand).toHaveAttribute('href', '/')
 
+    // El segundo hijo es el clúster; la nav de escritorio vive DENTRO de él.
+    const cluster = inner?.children[1]
     const nav = screen.getByRole('navigation', { name: 'Principal' })
-    expect(inner?.children[1]).toBe(nav)
-    // El botón de tema está DENTRO del clúster, no suelto como tercer hijo.
+    expect(cluster?.contains(nav)).toBe(true)
+    // El botón de tema (escritorio) está dentro de la nav, no suelto en el clúster.
     expect(within(nav).getByRole('button', { name: /Cambiar tema/ })).toBeInTheDocument()
   })
   it('@s1 el logotipo enlaza a "/" (inicio)', () => {

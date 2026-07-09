@@ -188,3 +188,41 @@ overflow horizontal; SSG: HTML prerenderizado con `data-logo-anim` (solo nav,
 Footer sin hooks) + arco, CSS construido con keyframes + reduced-motion +
 `transform-box:fill-box`. Verificación final **0/0/0**: typecheck · lint 0
 warnings · **180 tests** · build SSG (2 páginas). Estado: `done`.
+
+## 2026-07-09 · #2 nav (WEB-4) — HARDENING responsive: cabecera 100% por CSS (no por JS)
+
+Segunda vuelta al responsive de la cabecera (la de #2 solo añadía la red CSS
+`@media{.nav{display:none}}` sobre la ramificación por JS, que seguía frágil).
+El usuario reportó que en móvil (DevTools iPhone 14 Pro Max) la web **desbordaba
+al primer CTRL+F5 y se arreglaba al cambiar de dispositivo** (firma de resize).
+
+**Diagnóstico verificado EN NAVEGADOR por el lead** (Chrome headless + build SSG,
+`puppeteer-core`): el header decidía móvil/escritorio por JS (`useIsMobile` →
+`matchMedia`/`useSyncExternalStore`). En SSG el HTML hornea la nav de escritorio
+(`getServerSnapshot()=false`); hasta que React corrige tras hidratar el árbol
+queda "pegado" a escritorio, y la corrección solo llega con un `resize`. Matriz
+baseline (28 anchos × 2 temas × js/sin-JS/estado-pegado): **76/168 FAIL** — sin
+hamburguesa en móvil sin-JS y en estado pegado. Causa raíz documentada
+(react.dev): `matchMedia` en la lógica de render = error de hidratación.
+
+**Fix** (fundamentado en investigación de documentación oficial — React/MDN/W3C/
+Radix, 5 agentes en paralelo): `HeaderNav` renderiza SIEMPRE los dos clústeres
+(`.nav` escritorio + `.mobile` móvil) y CSS `@media (max-width:767px)` decide
+cuál se ve; se elimina `useIsMobile.ts` (+test) como código muerto. Guard
+anti-desbordamiento `#root { overflow-x: clip }` en `_reset.scss` (**`#root`**,
+no html/body: ahí el overflow se propaga al viewport y `clip` no frena el
+scroll; `clip` no `hidden` → preserva `position: sticky`; ambos verificados en
+Chrome). Nueva convención en `docs/conventions.md §Responsive`.
+
+Implementación por `tdd_craftsman` (TDD; tres iteraciones del guard html→body→
+`#root` guiadas por medición empírica del lead). Tests actualizados a la realidad
+CSS-driven (no debilitados: @s2/@s6 orden exacto, @s4 CSS-como-texto base+media,
+@s10 guard); nuevo `overflow-guard.test.ts`. Puertas: `judge` **APROBADO**
+(contrato @s1–@s8 preservado, tests muerden); `a11y_seo_auditor` **OK** (doble
+ThemeToggle sin duplicado en árbol a11y, hamburguesa Radix correcta, reflow/zoom
+1.4.10/1.4.4 preservados); `mutation_tester` **100%** (HeaderNav.tsx, 4/4).
+
+Verificación final **0/0/0**: typecheck · lint 0 warnings · **175 tests** · build
+SSG. **Matriz de navegador definitiva: 168/168 sin desbordamiento** (320→1440px ×
+claro/oscuro × js/sin-JS/estado-pegado), sticky y menú móvil intactos, guard
+`#root` recorta de verdad. Sin cambio de estado (#2 ya `done`; hardening).

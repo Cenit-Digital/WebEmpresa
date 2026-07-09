@@ -36,3 +36,13 @@ ul {
   list-style: none;
   padding: 0;
 }
+
+/* Guard anti-desbordamiento horizontal en el punto de montaje de la app.
+   Va en #root (no en html/body): en html/body el overflow se propaga al
+   viewport y `clip` no frena el scroll; #root es un div normal que recorta de
+   verdad su contenido desbordado. `clip` (no `hidden`) no crea scroll container,
+   así preserva el position: sticky del header. Verificado en Chrome. W3C
+   css-overflow-3; iOS Safari 16+/Chrome 90+/FF 81+. Ver docs/conventions.md §Responsive. */
+#root {
+  overflow-x: clip;
+}
