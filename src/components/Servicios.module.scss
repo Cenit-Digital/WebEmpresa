@@ -1,5 +1,7 @@
 .services {
   background: var(--color-bg);
+  /* Blinda el 0-scroll-horizontal ante los transforms transitorios del reveal. */
+  overflow-x: clip;
 }
 
 .inner {
@@ -168,5 +170,74 @@
 
   .cardTitle {
     font-size: 26px;
+  }
+}
+
+/* Revelado en scroll (#15). Estado base = final visible (R1): el estado oculto
+   solo aplica cuando el hook arma `data-reveal` en cliente Y el usuario no pidió
+   menos movimiento. Sin JS / SSG / reduced-motion → contenido completo. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Solo opacity + transform (compositables, 60fps, sin reflow). ~1,2 s por
+     pieza (>1 s: que dé tiempo a percibir la entrada) con easing suave. */
+  .row .card,
+  .row .mockup,
+  .row .example {
+    transition:
+      opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Stagger ~0,18 s: la entrada escalona .card -> mockup -> .example. */
+  .row .card {
+    transition-delay: 0s;
+  }
+
+  .row .mockup {
+    transition-delay: 0.18s;
+  }
+
+  .row .example {
+    transition-delay: 0.36s;
+  }
+
+  /* Estado OCULTO: contenedor armado + fila fuera de la banda central.
+     .card entra desde su lado exterior, el mockup desde el opuesto y
+     .example sube desde abajo. Solo opacity + transform (sin reflow). */
+  [data-reveal] .row:not([data-in-view]) .card {
+    opacity: 0;
+    transform: translateX(-44px);
+  }
+
+  [data-reveal] .row:not([data-in-view]) .mockup {
+    opacity: 0;
+    transform: translateX(44px);
+  }
+
+  [data-reveal] .row:not([data-in-view]) .example {
+    opacity: 0;
+    transform: translateY(34px);
+  }
+
+  /* Zig-zag GRATIS: las filas pares ya invierten columnas en el layout, así que
+     invertimos también su dirección horizontal apoyándonos en el mismo
+     :nth-child(even) -> cada fila difiere de la de arriba sin código extra. */
+  [data-reveal] .row:nth-child(even):not([data-in-view]) .card {
+    transform: translateX(44px);
+  }
+
+  [data-reveal] .row:nth-child(even):not([data-in-view]) .mockup {
+    transform: translateX(-44px);
+  }
+}
+
+/* Fallback móvil (alineado con el ≤880px que ya colapsa a 1 columna): sin
+   izquierda/derecha, las tres piezas suben (vertical) -> 0 riesgo de scroll
+   horizontal. Reemplaza el translateX de la coreografía por translateY. */
+@media (prefers-reduced-motion: no-preference) and (max-width: 880px) {
+  [data-reveal] .row:not([data-in-view]) .card,
+  [data-reveal] .row:not([data-in-view]) .mockup,
+  [data-reveal] .row:nth-child(even):not([data-in-view]) .card,
+  [data-reveal] .row:nth-child(even):not([data-in-view]) .mockup {
+    transform: translateY(34px);
   }
 }

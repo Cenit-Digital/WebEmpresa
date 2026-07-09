@@ -188,3 +188,50 @@ overflow horizontal; SSG: HTML prerenderizado con `data-logo-anim` (solo nav,
 Footer sin hooks) + arco, CSS construido con keyframes + reduced-motion +
 `transform-box:fill-box`. Verificación final **0/0/0**: typecheck · lint 0
 warnings · **180 tests** · build SSG (2 páginas). Estado: `done`.
+
+## 2026-07-09 · #15 servicios_scroll_reveal (WEB-5) — Revelado en scroll de la sección Servicios
+
+Pipeline SDD completo sobre `feat/servicios-scroll-reveal` (creada desde `main`
+@ ad84eaa, actualizada por Pablo). Conversación/spec (`spec_partner` →
+`project-spec.md` #15) tras fijar 3 decisiones con Pablo a puerta humana (vía
+preguntas del lead): **(1) coreografía "convergencia zig-zag"** (cada una de las
+3 piezas de la fila —`.card`, mockup, `.example`— entra desde su lado exterior
+apoyándose en el `:nth-child(even)` que ya invierte columnas → cada fila difiere
+sola); **(2) disparo centrado** (banda central `-40% 0px -40% 0px`, ni antes ni
+después); **(3) bidireccional** (se re-anima al bajar y subir, no `triggerOnce`).
+Contrato (`gherkin_author` → `features/servicios_scroll_reveal.feature`, 14
+escenarios). **Puerta humana:** Pablo APROBÓ el contrato tal cual.
+
+Implementación (`tdd_craftsman`, TDD estricto Rojo→Verde→Refactor): hook
+reutilizable `src/lib/useReveal.ts` (IntersectionObserver mínimo, genérico vía
+`data-*`: arma `data-reveal` en el contenedor en `useEffect` y conmuta
+`data-in-view` por hijo; guard SSR `typeof IntersectionObserver === 'undefined'`;
+`disconnect()` en cleanup; guard defensivo `if (!root)` con `// Stryker disable`).
+`Servicios.tsx` cablea el `ref` en `.rows` y envuelve el mockup en `.mockup`.
+`Servicios.module.scss`: **R1** (estado base = final visible; el oculto —`opacity:0`
++ `translateX(±44px)`/`translateY(34px)`— vive SOLO bajo `[data-reveal] .row:not(
+[data-in-view])` dentro de `@media (prefers-reduced-motion: no-preference)`),
+transición **1.2 s** (>1 s) `opacity`+`transform`, stagger 0/0.18/0.36 s
+(card→mockup→example), inversión zig-zag por `:nth-child(even)`, **`overflow-x:
+clip`** en `.services` y **fallback vertical (`translateY`) en ≤880px** (0 scroll
+horizontal). Sin dependencias ni tokens nuevos; contenido intacto.
+
+Review: `judge` **APROBADO** (14/14 `@s` no tautológicos; el fake de
+`IntersectionObserver` fija `rootMargin` contra el símbolo importado y el literal;
+`@s5` triangula el toggle bidireccional; R1/SSG/responsive/a11y/convenciones OK).
+`a11y_seo_auditor` **0 bloqueantes** (reduced-motion gateado, contenido siempre en
+DOM/HTML estático, foco/orden intactos, transforms ≤44px sin parpadeos; observó una
+animación decorativa infinita PREEXISTENTE en `ServiceMockup` de #2, fuera de
+alcance). Mutación (`mutation_tester`, Stryker acotado a `useReveal.ts`+
+`Servicios.tsx`): **100%** (63 killed + 4 timeout / 67; 0 supervivientes).
+
+Verificación EN VIVO (Chrome, dev server): revelado real confirmado con scroll
+físico (`data-in-view` + `opacity 0→1` en la fila centrada, resto oculto),
+**zig-zag** visible (fila 0 texto-izq/mockup-der, fila 1 invertida), transición de
+1.2 s capturada a medio fundido; móvil 390px en 1 columna con revelado `translateY`
+y cabecera hamburguesa OK. Barrido de **0 scroll horizontal en 11 anchos
+(320→1920px)** vía iframe same-origin; **0 errores/0 warnings de consola**. (Nota de
+banco: `window.scrollTo` es no-op en este contexto de automatización; el scroll
+físico —el del usuario— dispara el observer correctamente.) Verificación final
+**0/0/0**: typecheck · lint 0 warnings · **194 tests** (+14) · `pnpm verify` OK.
+Estado: `done`.

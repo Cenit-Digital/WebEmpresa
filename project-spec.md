@@ -735,3 +735,295 @@ un componente `LogoAnimated` separado — descartada porque duplicaría el SVG y
 - **Tema claro/oscuro:** el logo sigue adaptándose solo vía `var(--color-…)`.
 
 **Estado.** `pending`.
+
+---
+
+## Feature: servicios_scroll_reveal
+
+**#15 · servicios_scroll_reveal — Animación de revelado en scroll de la sección
+Servicios (WEB-5).**
+
+**Propósito.** Dar vida a la sección `#servicios` con un revelado en scroll:
+cada fila de servicio compone sus 3 piezas (texto `.card`, imagen
+`ServiceMockup`, nota `.example`) con una entrada escalonada y perceptible
+cuando la fila queda **centrada** en el viewport. Refuerza la lectura fila a
+fila sin coste de dependencias (IntersectionObserver nativo + SCSS, bundle ~0),
+manteniendo la web **SSG-safe** (contenido siempre visible sin JS) y accesible
+(respeta `prefers-reduced-motion`). El disparo lo hace un hook cliente mínimo y
+**reutilizable** (`useReveal`), que hoy solo se cablea a Servicios pero queda
+disponible para futuras secciones.
+
+**Alcance.** Se anima **solo** `#servicios`. Cada uno de sus 6 `<article
+class=".row">` tiene DOS columnas: `.card` (texto) y `.aside` (que **apila** el
+`ServiceMockup` (imagen, decorativo, `aria-hidden`) y `.example` (nota
+"Ejemplo")). Los 3 elementos animables por fila son: `.card`, el mockup y
+`.example`. El layout YA hace zig-zag: `.row:nth-child(even)` invierte el ratio
+de columnas y pone `.card` con `order: 2`; en ≤880px colapsa a 1 columna
+(`grid-template-columns: 1fr`) y `.row:nth-child(even) .card { order: 0 }`.
+
+**Fuera de alcance.**
+
+- **Otras secciones** (Hero, Sectores, Paquetes, Contacto): el hook `useReveal`
+  queda disponible pero **NO se cablea** ahora.
+- **Sin nuevas dependencias:** nada de GSAP/Motion/AOS. Solo
+  `IntersectionObserver` nativo + SCSS, coherente con ponytail y con la
+  investigación previa.
+- **Sin tokens ni colores nuevos.** El contenido, los textos, los ejemplos y
+  las características **no cambian**: la animación es puramente visual.
+
+---
+
+### Comportamiento
+
+Al hacer scroll por `#servicios`, un `IntersectionObserver` (armado en cliente
+tras la hidratación) observa cada `.row`. Cuando la fila cruza la **franja
+central** del viewport, sus 3 piezas entran en **cascada escalonada**
+("convergencia zig-zag"): `.card` desde su lado exterior horizontal, el mockup
+desde el lado exterior **opuesto**, y `.example` sube desde abajo. Como
+`.row:nth-child(even)` ya invierte las columnas, las direcciones horizontales se
+invierten **solas** en filas alternas → cada fila difiere de la de arriba **sin
+código extra**. La entrada dura ~1,2 s por pieza (>1 s, requisito explícito: que
+dé tiempo a percibirla) con un stagger de ~180 ms (`.card` → mockup →
+`.example`) y un easing `cubic-bezier` suave. Se anima **solo `opacity` y
+`transform`** (60 fps, sin reflow). Es **bidireccional**: al salir de la banda
+las piezas vuelven a su estado oculto y se re-animan al volver a entrar (no
+`triggerOnce`).
+
+El estado **BASE** (fuera de animación) es el estado **FINAL**: contenido
+visible, sin `transform`. El estado oculto inicial solo aplica cuando el hook
+"arma" el contenedor en cliente (atributo `data-reveal`) **y** bajo
+`@media (prefers-reduced-motion: no-preference)`. Sin JS, en el prerender SSG, o
+con `prefers-reduced-motion: reduce`, el contenido se ve **completo**.
+
+---
+
+### Contrato observable
+
+> Nota para `gherkin_author`/`tdd_craftsman`: la interpolación de la animación
+> **no es verificable en jsdom** (ni `IntersectionObserver` ni `transition`
+> existen ahí). El contrato *testeable* se parte en dos: (a) la **lógica del
+> hook** `useReveal`, con `IntersectionObserver` **mockeado** al estilo del
+> `fakeMatchMedia` de `useIsMobile.test.tsx`; y (b) el **contenido del SCSS
+> module**, leyendo `Servicios.module.scss` y aseverando reglas, al estilo de
+> `logo-draw.test.ts`. Los valores de timing/rootMargin se documentan aquí para
+> fidelidad; el ajuste fino visual lo hace el lead en navegador.
+
+**CO1 · Disparo por fila, centrado.** El hook observa cada `.row` con un
+`rootMargin` de banda central (aprox. `-40% 0px -40% 0px`, `threshold: 0`), de
+modo que `isIntersecting` solo es `true` cuando la fila cruza la franja central
+del viewport → "centrada, ni antes ni después". El valor exacto es un **botón de
+calibración** que se afina en navegador (el lead), no una constante mágica
+cerrada. En móvil (fila más alta que la pantalla) la banda hace que dispare al
+entrar ~35% de la fila.
+
+**CO2 · Bidireccional (no `triggerOnce`).** Al entrar/salir de la banda, el hook
+conmuta un marcador `data-in-view` por fila (`true`/ausente según
+`isIntersecting`). El contenido se re-anima bajando **y** subiendo.
+
+**CO3 · Coreografía "convergencia zig-zag".** Con `data-in-view`, las 3 piezas
+entran escalonadas: `.card` desde su lado exterior horizontal, el mockup desde
+el lado **opuesto**, y `.example` sube desde abajo (`translateY`). La inversión
+por fila es **gratis**: `.row:nth-child(even)` ya invierte columnas, así que la
+regla de dirección horizontal se apoya en el mismo `:nth-child(even)` y alterna
+sola. Duración ~1,2 s/pieza, stagger ~180 ms (`.card` → mockup → `.example`),
+easing `cubic-bezier` suave. **Solo `opacity` + `transform`.**
+
+**CO4 · SSG-safe (patrón R1 de #14).** El **CSS base** de `.card`, mockup y
+`.example` es el estado **final** (opacidad 1, `transform: none`). El estado
+oculto (opacidad 0 + `transform` de desplazamiento) vive **exclusivamente** bajo
+`[data-reveal] …:not([data-in-view])` (o equivalente) **dentro** de
+`@media (prefers-reduced-motion: no-preference)`. Nunca se hornea el estado
+oculto en el CSS base: si se hiciera, sin JS o en el prerender el contenido
+quedaría invisible. Como `#servicios` está **muy por debajo del pliegue**, armar
+`data-reveal` en `useEffect` no produce parpadeo (FOUC).
+
+**CO5 · `prefers-reduced-motion: reduce`.** Sin animación, contenido totalmente
+visible. Como el estado oculto se **gatea** tras `no-preference`, con `reduce`
+ese estado **no existe** siquiera: no hay `transition` que apagar ni riesgo de
+"aparición" tardía.
+
+**CO6 · Hook `useReveal` (mínimo, ~15-20 líneas, reutilizable).** Genérico vía
+atributos `data-*` (no conoce clases de estilo):
+
+- Recibe un `ref` al contenedor (`.rows`) y observa sus hijos objetivo (las
+  `.row`).
+- Pone `data-reveal` en el contenedor (imperativo, en `useEffect`) y conmuta
+  `data-in-view` en cada hijo observado según `isIntersecting`.
+- **Guarda de soporte:** `typeof IntersectionObserver === 'undefined'`
+  (SSR/prerender o navegador sin soporte) → **no hace nada**, no arma
+  `data-reveal`, el contenido queda visible.
+- Limpia con `observer.disconnect()` en el retorno del `useEffect`.
+- Se aplica **solo** a Servicios ahora; queda disponible para futuras secciones
+  (pedido explícito).
+
+---
+
+### Decisiones (con porqué)
+
+**D1 · IntersectionObserver nativo, sin librería.** **Razón:** el revelado en
+scroll es un caso resuelto de origen por la plataforma; una lib (AOS/Motion)
+añadiría bundle y una dependencia para lo que son ~15-20 líneas.
+**Alternativa descartada:** AOS/Framer-Motion — descartada por peso y por
+contradecir "sin nuevas dependencias" y la disciplina ponytail.
+**Segunda alternativa descartada:** disparar por `scroll` + `getBoundingClientRect`
+en cada evento — descartada porque fuerza reflow por frame y es peor que el
+observer nativo (que es asíncrono y off-main-thread).
+
+**D2 · Disparo centrado (banda `-40%/-40%`), no al primer píxel.** **Razón:** el
+requisito es que la fila se revele "cuando está centrada, ni antes ni después";
+una banda central estrecha lo consigue con `threshold: 0`. **Alternativa
+descartada:** `threshold: 0.5` sobre toda la fila — descartada porque en filas
+más altas que el viewport (móvil) el 50% puede no alcanzarse nunca y no
+dispararía; la banda por `rootMargin` es robusta a filas de cualquier alto.
+
+**D3 · Bidireccional, no `triggerOnce`.** **Razón:** pedido explícito — el
+revelado debe re-animarse bajando y subiendo, no "gastarse" a la primera.
+**Alternativa descartada:** `triggerOnce` + `unobserve` tras la primera entrada
+(patrón habitual) — descartada por contradecir el requisito.
+
+**D4 · Zig-zag gratis apoyado en `:nth-child(even)`.** **Razón:** el layout ya
+alterna columnas; hacer que la dirección de entrada dependa del mismo selector
+`:nth-child(even)` da variedad fila-a-fila **sin** clases ni props extra (diff
+mínimo, cero estado). **Alternativa descartada:** calcular la dirección en JS y
+escribir `data-dir="left|right"` por fila — descartada porque duplica en JS lo
+que el CSS ya sabe por su posición.
+
+**D5 · Estado base = final (R1), armado del oculto en cliente.** **Razón:**
+misma lógica que la feature #14: hornear el estado oculto en el CSS base dejaría
+el contenido invisible sin JS y en el prerender SSG (regresión de contenido y de
+SEO). Gatearlo tras `data-reveal` + `no-preference` garantiza que solo se oculte
+cuando hay JS **y** el usuario no pidió menos movimiento. **Alternativa
+descartada:** `.row { opacity: 0 }` en base + revelar con JS — descartada por
+romper SSG/no-JS/reduced-motion.
+
+**D6 · Solo `opacity` + `transform`.** **Razón:** son las dos propiedades
+compositables (GPU, sin reflow) → 60 fps garantizados. **Alternativa
+descartada:** animar `top`/`margin`/`height` — descartada por provocar reflow y
+jank.
+
+**D7 · Hook genérico por `data-*`, no acoplado a Servicios.** **Razón:** el
+humano lo pidió reutilizable para secciones futuras; separar "quién observa"
+(hook, `data-reveal`/`data-in-view`) de "cómo se ve" (SCSS module de cada
+sección) mantiene el hook de ~15 líneas sin conocer clases de estilo.
+**Alternativa descartada:** meter la lógica dentro de `Servicios.tsx` — descartada
+porque no se podría reutilizar y mezclaría observación con presentación.
+
+---
+
+### Casos límite
+
+- **Responsive / overflow (CRÍTICO).** En móvil (1 columna) no hay
+  izquierda/derecha; un slide horizontal amplio podría provocar **scroll
+  horizontal**. **Decisión:** en el/los breakpoints móviles la coreografía usa
+  desplazamiento **VERTICAL** (todas las piezas suben) en vez de horizontal; y
+  la sección lleva **`overflow-x: clip`** para que ninguna `transform`
+  transitoria genere scroll lateral. Requisito del humano: responsive perfecto
+  en el **100%** de tamaños, **0 scroll horizontal, 0 warnings**.
+- **Scroll rápido.** El observer conmuta `data-in-view` de forma asíncrona pero
+  fiable: no se pierde el disparo aunque se cruce la banda deprisa.
+- **Sin JS / prerender SSG.** El contenido se ve **completo** (R1): el estado
+  oculto solo existe tras `data-reveal`, que solo se pone con JS en cliente.
+- **Hidratación sin mismatch.** `data-reveal` se añade **imperativamente** en
+  `useEffect` (no en el render), de modo que el HTML del servidor y el del
+  primer render cliente coinciden → no hay hydration mismatch.
+- **Contenido siempre en el DOM.** Textos, características y ejemplos permanecen
+  **siempre** renderizados: la animación no monta/desmonta nada. Los tests de
+  contenido existentes de `Servicios.test.tsx` deben **seguir verdes**.
+- **Sin soporte de `IntersectionObserver`.** El guard del hook no arma nada →
+  contenido visible (degradación elegante, mismo efecto que sin JS).
+
+---
+
+### Restricciones de implementación (para gherkin_author / tdd_craftsman)
+
+- **R1 · Estado base = FINAL (visible).** El estado oculto (`opacity: 0` +
+  `transform`) vive **solo** bajo `[data-reveal] … :not([data-in-view])` dentro
+  de `@media (prefers-reduced-motion: no-preference)`. Nunca en el CSS base.
+- **R2 · `overflow-x: clip` en `.services`** (o el contenedor de scroll de la
+  sección) para blindar el 0-scroll-horizontal ante transforms transitorias.
+- **R3 · Fallback móvil vertical.** En el breakpoint móvil (alinear con el
+  `≤880px` que ya colapsa a 1 columna) la coreografía usa `translateY` para las
+  3 piezas; nada de `translateX` amplio.
+- **R4 · Hook `useReveal` en `src/lib/`**, SSR-safe (guard
+  `typeof IntersectionObserver === 'undefined'`), imperativo en `useEffect`,
+  `observer.disconnect()` en cleanup. Sin estado React nuevo salvo el `ref`.
+- **R5 · Lista de mutación.** Añadir `src/lib/useReveal.ts` a la lista `mutate`
+  de `stryker.config.json`. `Servicios.tsx` ya está en la lista. Objetivo
+  **100%** sobre lo tocado.
+- **R6 · Sin tokens nuevos.** Duraciones, stagger, easing y desplazamientos son
+  constantes de la animación (van en el SCSS module), no tokens de marca; no se
+  toca `_tokens.scss`.
+
+---
+
+### Verificación
+
+- **Hook `useReveal` (tests de componente).** `IntersectionObserver` mockeado
+  al estilo de `fakeMatchMedia` (`useIsMobile.test.tsx`): un fake controlable que
+  captura los `elements` observados y permite **emitir** entradas
+  `{ isIntersecting }`. Se asevera que: observa cada hijo, pone `data-reveal` en
+  el contenedor, conmuta `data-in-view` según `isIntersecting`
+  (entra→presente, sale→ausente, y de vuelta), **respeta el guard SSR** (sin
+  `IntersectionObserver` no arma nada y el contenido queda visible), y
+  **desconecta** en el desmontaje. Para matar mutantes, el fake **no** debe
+  depender de constantes de producción (evitar tautologías, como el literal
+  `'(max-width: 767px)'` del fake de `useIsMobile`).
+- **SCSS module (tests de contenido, leyendo `Servicios.module.scss`).**
+  Existen las transiciones; el estado oculto está **gateado** tras `data-reveal`
+  + `prefers-reduced-motion: no-preference`; se animan **solo** `opacity` y
+  `transform`; hay stagger (`.card` → mockup → `.example`); la **inversión
+  zig-zag** cuelga de `:nth-child(even)`; existe `overflow-x: clip`; y el
+  **fallback vertical** en el breakpoint móvil.
+- **No-regresión.** Los tests existentes de `Servicios.test.tsx` (contenido: 6
+  servicios, tags, títulos, ejemplos, características) **siguen verdes**.
+- **Puerta de calidad.** `pnpm verify` 0/0/0 (typecheck · lint 0 warnings ·
+  test) + `pnpm mutation` **100%** sobre lo tocado (`useReveal` + `Servicios`).
+  Verificación en **navegador a todos los tamaños** (0 scroll horizontal, 0
+  warnings de consola) — la hace el lead.
+
+---
+
+### Comportamientos numerados (candidatos a escenarios `@s1..@sn` para gherkin_author)
+
+Lógica del hook `useReveal` (tests de componente, `IntersectionObserver`
+mockeado):
+
+1. **@s1 · Guard SSR/sin soporte.** Sin `IntersectionObserver`, el hook no arma
+   `data-reveal` y el contenido queda visible (no lanza).
+2. **@s2 · Arma el contenedor.** Con soporte, `useReveal` pone `data-reveal` en
+   el contenedor tras el montaje (en `useEffect`, no en el render).
+3. **@s3 · Observa cada hijo objetivo.** El observer registra las N `.row` (una
+   observación por fila).
+4. **@s4 · Conmuta `data-in-view` al entrar.** Al emitir
+   `isIntersecting: true`, la fila gana `data-in-view`.
+5. **@s5 · Bidireccional.** Al emitir `isIntersecting: false`, la fila **pierde**
+   `data-in-view`; al re-entrar, lo recupera (no `triggerOnce`).
+6. **@s6 · Limpieza.** Al desmontar, el hook llama `observer.disconnect()` (no
+   quedan observaciones vivas).
+
+Contenido del SCSS module (`Servicios.module.scss`, leyendo el fichero):
+
+7. **@s7 · R1: base visible.** El CSS base de `.card`, mockup y `.example` es el
+   estado final (`opacity: 1`, sin `transform`); el estado oculto **no** se
+   hornea en base.
+8. **@s8 · Oculto gateado.** El estado oculto (`opacity: 0` + `transform`) vive
+   solo bajo `data-reveal` + `:not([data-in-view])` dentro de
+   `@media (prefers-reduced-motion: no-preference)`.
+9. **@s9 · Solo `opacity` + `transform`.** Las transiciones/reglas animadas no
+   tocan otras propiedades (sin reflow).
+10. **@s10 · Stagger.** El orden de entrada escalona `.card` → mockup →
+    `.example` (delays crecientes ~180 ms).
+11. **@s11 · Zig-zag por `:nth-child(even)`.** La dirección horizontal de entrada
+    se invierte en las filas pares apoyándose en `:nth-child(even)`.
+12. **@s12 · `prefers-reduced-motion: reduce`.** Con `reduce`, no hay estado
+    oculto ni animación: contenido completamente visible.
+13. **@s13 · 0 scroll horizontal.** `.services` lleva `overflow-x: clip` y el
+    breakpoint móvil usa desplazamiento **vertical** (sin `translateX` amplio).
+
+No-regresión (integración, `Servicios.test.tsx` existente):
+
+14. **@s14 · Contenido intacto.** Los 6 servicios, tags, títulos, ejemplos y
+    características siguen renderizados y verdes (la animación es puramente
+    visual).
+
+**Estado.** `pending`.
