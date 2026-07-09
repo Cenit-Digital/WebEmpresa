@@ -1,0 +1,67 @@
+/* ============================================================================
+   Animación de "dibujado" del logo Órbita — feature #14 (nav + hero).
+   Keyframes compartidos por Logo (cabecera) y el arco del Hero.
+   Fuente de verdad: design/logo-draw-animation/ (README + CenitLanding.dc.html).
+   R1 · Estado BASE = DIBUJADO. El estado OCULTO vive en el 0% de cada keyframe,
+   nunca en el CSS base: con `animation: none` (prefers-reduced-motion o sin
+   soporte) y en el prerender SSG, el logo se ve COMPLETO. Colores desde tokens
+   existentes (var(--color-…)); no se crea ningún token.
+   ========================================================================== */
+
+@keyframes logoCycleOpacity { 0% { opacity: 1 } 93% { opacity: 1 } 96% { opacity: 0 } 97% { opacity: 0 } 100% { opacity: 1 } }
+@keyframes heroCycleOpacity { 0% { opacity: 0.42 } 93% { opacity: 0.42 } 96% { opacity: 0 } 97% { opacity: 0 } 100% { opacity: 0.42 } }
+@keyframes heroCycleOpacityMobile { 0% { opacity: 0.1 } 93% { opacity: 0.1 } 96% { opacity: 0 } 97% { opacity: 0 } 100% { opacity: 0.1 } }
+@keyframes ringLoop { 0% { stroke-dashoffset: 300 } 41% { stroke-dashoffset: 0 } 96% { stroke-dashoffset: 0 } 97% { stroke-dashoffset: 300 } 100% { stroke-dashoffset: 300 } }
+@keyframes waveLoop { 0% { stroke-dashoffset: 300 } 22% { stroke-dashoffset: 0 } 96% { stroke-dashoffset: 0 } 97% { stroke-dashoffset: 300 } 100% { stroke-dashoffset: 300 } }
+@keyframes dotOutlineLoop { 0%, 22% { stroke-dashoffset: 30; stroke-opacity: 1 } 27% { stroke-dashoffset: 0; stroke-opacity: 1 } 30% { stroke-opacity: 0 } 96% { stroke-opacity: 0 } 97% { stroke-opacity: 1; stroke-dashoffset: 30 } 100% { stroke-opacity: 1; stroke-dashoffset: 30 } }
+@keyframes dotFillLoop { 0%, 27% { fill-opacity: 0; transform: scale(0.3) } 30% { fill-opacity: 1; transform: scale(1) } 96% { fill-opacity: 1; transform: scale(1) } 97% { fill-opacity: 0; transform: scale(0.3) } 100% { fill-opacity: 0; transform: scale(0.3) } }
+@keyframes cenitLoop { 0%, 30% { clip-path: inset(0 100% 0 0) } 35% { clip-path: inset(0 0% 0 0) } 96% { clip-path: inset(0 0% 0 0) } 97% { clip-path: inset(0 100% 0 0) } 100% { clip-path: inset(0 100% 0 0) } }
+@keyframes digitalLoop { 0%, 36% { clip-path: inset(0 100% 0 0) } 41% { clip-path: inset(0 0% 0 0) } 96% { clip-path: inset(0 0% 0 0) } 97% { clip-path: inset(0 100% 0 0) } 100% { clip-path: inset(0 100% 0 0) } }
+
+[data-logo-anim] { animation: logoCycleOpacity 18.3s ease-in-out infinite; }
+[data-hero-arc] { animation: heroCycleOpacity 18.3s ease-in-out infinite; }
+@media (max-width: 820px) {
+  [data-hero-arc] { animation-name: heroCycleOpacityMobile; }
+}
+
+[data-orbit-ring],
+[data-orbit-wave] {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 0;
+}
+[data-orbit-ring] { animation: ringLoop 18.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite; }
+[data-orbit-wave] { animation: waveLoop 18.3s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+
+[data-orbit-dot-outline] {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 0;
+  stroke-opacity: 0;
+  animation: dotOutlineLoop 18.3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+[data-orbit-dot-fill] {
+  fill-opacity: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dotFillLoop 18.3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+[data-orbit-cenit],
+[data-orbit-digital] {
+  display: inline-block;
+  clip-path: inset(0 0% 0 0);
+}
+[data-orbit-cenit] { animation: cenitLoop 18.3s steps(5, end) infinite; }
+[data-orbit-digital] { animation: digitalLoop 18.3s steps(7, end) infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-logo-anim],
+  [data-hero-arc],
+  [data-orbit-ring],
+  [data-orbit-wave],
+  [data-orbit-dot-outline],
+  [data-orbit-dot-fill],
+  [data-orbit-cenit],
+  [data-orbit-digital] {
+    animation: none;
+  }
+}

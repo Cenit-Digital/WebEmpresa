@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Landing corporativa" description="Landing de Cénit Digital: nav · hero · servicios en zigzag · paquetes · contacto · footer." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<style>
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: var(--color-primary); }
+  ::selection { background: var(--color-secondary); color: var(--color-text); }
+
+  /* Animación de dibujado del logo — icono Órbita + wordmark (anillo lento de fondo, onda/punto/texto más rápidos) */
+  @keyframes logoCycleOpacity { 0%{opacity:1} 93%{opacity:1} 96%{opacity:0} 97%{opacity:0} 100%{opacity:1} }
+  @keyframes heroCycleOpacity { 0%{opacity:.42} 93%{opacity:.42} 96%{opacity:0} 97%{opacity:0} 100%{opacity:.42} }
+  @keyframes ringLoop { 0%{stroke-dashoffset:300} 41%{stroke-dashoffset:0} 96%{stroke-dashoffset:0} 97%{stroke-dashoffset:300} 100%{stroke-dashoffset:300} }
+  @keyframes waveLoop { 0%{stroke-dashoffset:300} 22%{stroke-dashoffset:0} 96%{stroke-dashoffset:0} 97%{stroke-dashoffset:300} 100%{stroke-dashoffset:300} }
+  @keyframes dotOutlineLoop { 0%,22%{stroke-dashoffset:30;stroke-opacity:1} 27%{stroke-dashoffset:0;stroke-opacity:1} 30%{stroke-opacity:0} 96%{stroke-opacity:0} 97%{stroke-opacity:1;stroke-dashoffset:30} 100%{stroke-opacity:1;stroke-dashoffset:30} }
+  @keyframes dotFillLoop { 0%,27%{fill-opacity:0;transform:scale(.3)} 30%{fill-opacity:1;transform:scale(1)} 96%{fill-opacity:1;transform:scale(1)} 97%{fill-opacity:0;transform:scale(.3)} 100%{fill-opacity:0;transform:scale(.3)} }
+  @keyframes cenitLoop { 0%,30%{clip-path:inset(0 100% 0 0)} 35%{clip-path:inset(0 0% 0 0)} 96%{clip-path:inset(0 0% 0 0)} 97%{clip-path:inset(0 100% 0 0)} 100%{clip-path:inset(0 100% 0 0)} }
+  @keyframes digitalLoop { 0%,36%{clip-path:inset(0 100% 0 0)} 41%{clip-path:inset(0 0% 0 0)} 96%{clip-path:inset(0 0% 0 0)} 97%{clip-path:inset(0 100% 0 0)} 100%{clip-path:inset(0 100% 0 0)} }
+</style>
+</helmet>
+<div style="font-family:var(--font-sans);background:var(--color-bg);color:var(--color-text);min-height:100vh;-webkit-font-smoothing:antialiased">
+
+  <!-- NAV -->
+  <nav style="position:sticky;top:0;z-index:50;background:var(--color-band);border-bottom:1px solid var(--color-band-border)">
+    <div style="max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:14px var(--gutter)">
+      <a href="#top" style="display:inline-flex;align-items:center;gap:11px;animation:logoCycleOpacity 18.3s ease-in-out infinite">
+        <svg width="40" height="40" viewBox="0 0 80 80" fill="none" aria-hidden="true"><defs><linearGradient id="navOrbit" x1="12" y1="40" x2="68" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="var(--color-primary)"></stop><stop offset="100%" stop-color="var(--color-secondary)"></stop></linearGradient></defs><circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-ring)" stroke-width="1.8" stroke-opacity=".5" stroke-dasharray="300" style="stroke-dashoffset:300;animation:ringLoop 18.3s cubic-bezier(.25,.46,.45,.94) infinite"></circle><path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="url(#navOrbit)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveLoop 18.3s cubic-bezier(.4,0,.2,1) infinite"></path><circle cx="40" cy="20" r="3.8" fill="none" stroke="var(--color-zenith)" stroke-width="1.6" stroke-dasharray="30" style="stroke-dashoffset:30;stroke-opacity:1;animation:dotOutlineLoop 18.3s cubic-bezier(.4,0,.2,1) infinite"></circle><circle cx="40" cy="20" r="3.8" fill="var(--color-zenith)" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillLoop 18.3s cubic-bezier(.4,0,.2,1) infinite"></circle></svg>
+        <span style="display:flex;flex-direction:column;line-height:1"><span style="display:inline-block;font-family:var(--font-display);font-weight:600;font-size:23px;letter-spacing:1.5px;color:var(--color-logo-ink);clip-path:inset(0 100% 0 0);animation:cenitLoop 18.3s steps(5,end) infinite">cénit</span><span style="display:inline-block;font-size:8px;letter-spacing:5px;text-transform:lowercase;color:var(--color-logo-sub);margin-top:3px;clip-path:inset(0 100% 0 0);animation:digitalLoop 18.3s steps(7,end) infinite">digital</span></span>
+      </a>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+        <a href="#servicios" style="font-size:14.5px;font-weight:500;color:var(--color-text-soft)">Servicios</a>
+        <a href="#servicios" style="font-size:14.5px;font-weight:500;color:var(--color-text-soft)">Sectores</a>
+        <a href="#paquetes" style="font-size:14.5px;font-weight:500;color:var(--color-text-soft)">Paquetes</a>
+        <a href="#contacto" style="font-size:14.5px;font-weight:500;color:var(--color-text-soft)">Contacto</a>
+        <button onClick="{{ toggleTheme }}" aria-label="Cambiar tema" style="width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--color-band-border);background:transparent;border-radius:10px;cursor:pointer;color:var(--color-text)" style-hover="background:var(--color-surface-2)">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"></line><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"></line><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"></line></svg>
+        </button>
+        <a href="#contacto" style="display:inline-flex;align-items:center;font-family:var(--font-sans);font-weight:600;font-size:14px;padding:10px 21px;border-radius:var(--radius-pill);border:1.5px solid var(--color-primary);background:var(--color-primary);color:var(--color-on-primary)" style-hover="filter:brightness(0.94)">Hablamos</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="top" style="position:relative;overflow:hidden">
+    <div style="position:absolute;right:-120px;top:-80px;width:540px;height:540px;pointer-events:none;animation:heroCycleOpacity 18.3s ease-in-out infinite" aria-hidden="true">
+      <svg viewBox="0 0 80 80" width="100%" height="100%" fill="none"><circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-accent)" stroke-width="1" stroke-opacity=".5" stroke-dasharray="300" style="stroke-dashoffset:300;animation:ringLoop 18.3s cubic-bezier(.25,.46,.45,.94) infinite"></circle><path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="var(--color-accent)" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="300" style="stroke-dashoffset:300;animation:waveLoop 18.3s cubic-bezier(.4,0,.2,1) infinite"></path><circle cx="40" cy="20" r="3" fill="none" stroke="var(--color-accent)" stroke-width="1.3" stroke-dasharray="30" style="stroke-dashoffset:30;stroke-opacity:1;animation:dotOutlineLoop 18.3s cubic-bezier(.4,0,.2,1) infinite"></circle><circle cx="40" cy="20" r="3" fill="var(--color-accent)" style="fill-opacity:0;transform-box:fill-box;transform-origin:center;animation:dotFillLoop 18.3s cubic-bezier(.4,0,.2,1) infinite"></circle></svg>
+    </div>
+    <div style="max-width:var(--maxw);margin:0 auto;padding:92px var(--gutter) 80px;position:relative;z-index:2">
+      <div style="font-size:var(--text-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-accent);font-weight:600;margin-bottom:16px">Soluciones digitales para pymes</div>
+      <h1 style="font-family:var(--font-display);font-size:var(--text-h1);line-height:1.04;letter-spacing:-.015em;font-weight:600;max-width:17ch;margin:0 0 22px">Llevamos tu negocio al punto más alto de su presencia digital.</h1>
+      <p style="font-size:var(--text-lead);color:var(--color-text-soft);max-width:54ch;margin:0 0 32px;line-height:1.7">Web, automatización con IA, marketing y sistemas de citas — todo bajo una cuota mensual, sin entrada.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <a href="#paquetes" style="display:inline-flex;align-items:center;font-family:var(--font-sans);font-weight:600;font-size:15px;padding:14px 28px;border-radius:var(--radius-pill);border:1.5px solid var(--color-primary);background:var(--color-primary);color:var(--color-on-primary)" style-hover="filter:brightness(0.94)">Ver paquetes</a>
+        <a href="#contacto" style="display:inline-flex;align-items:center;font-family:var(--font-sans);font-weight:600;font-size:15px;padding:14px 28px;border-radius:var(--radius-pill);border:1.5px solid var(--color-border);background:transparent;color:var(--color-text)" style-hover="background:var(--color-surface-2)">Hablar con nosotros</a>
+      </div>
+      <sc-if value="{{ showStats }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;gap:46px;flex-wrap:wrap;margin-top:54px;padding-top:32px;border-top:1px solid var(--color-border)">
+          <div><div style="font-family:var(--font-display);font-size:38px;font-weight:600;color:var(--color-primary);line-height:1">24h</div><div style="font-size:13.5px;color:var(--color-text-soft);margin-top:6px">tiempo de respuesta</div></div>
+          <div><div style="font-family:var(--font-display);font-size:38px;font-weight:600;color:var(--color-primary);line-height:1">+30</div><div style="font-size:13.5px;color:var(--color-text-soft);margin-top:6px">pymes confían</div></div>
+          <div><div style="font-family:var(--font-display);font-size:38px;font-weight:600;color:var(--color-primary);line-height:1">100%</div><div style="font-size:13.5px;color:var(--color-text-soft);margin-top:6px">diseño a medida</div></div>
+          <div><div style="font-family:var(--font-display);font-size:38px;font-weight:600;color:var(--color-primary);line-height:1">5★</div><div style="font-size:13.5px;color:var(--color-text-soft);margin-top:6px">valoración media</div></div>
+        </div>
+      </sc-if>
+    </div>
+  </header>
+
+  <!-- SERVICIOS (zigzag) -->
+  <section id="servicios" style="max-width:var(--maxw);margin:0 auto;padding:var(--section-y) var(--gutter)">
+    <div style="max-width:34ch;margin-bottom:52px">
+      <div style="font-size:var(--text-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-accent);font-weight:600;margin-bottom:14px">Qué hacemos</div>
+      <h2 style="font-family:var(--font-display);font-size:var(--text-h2);line-height:1.1;letter-spacing:-.01em;font-weight:600;margin:0">Servicios que trabajan por tu negocio, no al revés.</h2>
+    </div>
+
+    <!-- Row 1: texto · mockup -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px;align-items:center;margin-bottom:64px">
+      <div>
+        <span style="display:inline-block;font-size:var(--text-tag);font-weight:600;letter-spacing:var(--tracking-tag);text-transform:uppercase;color:var(--color-tag-ink);background:var(--color-tag-bg);padding:6px 12px;border-radius:var(--radius-pill);margin-bottom:18px">Desarrollo web</span>
+        <h3 style="font-family:var(--font-display);font-size:var(--text-h3);line-height:1.12;font-weight:600;margin:0 0 14px">Webs que convierten visitas en clientes</h3>
+        <p style="font-size:var(--text-body);line-height:1.7;color:var(--color-text-soft);margin:0 0 20px">Diseño a medida, rápido y optimizado para buscadores. Tú te centras en tu negocio; nosotros en que te encuentren.</p>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px">
+          <li style="display:flex;align-items:flex-start;gap:11px;font-size:var(--text-body);color:var(--color-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Diseño responsive y accesible</li>
+          <li style="display:flex;align-items:flex-start;gap:11px;font-size:var(--text-body);color:var(--color-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>SEO técnico desde el primer día</li>
+          <li style="display:flex;align-items:flex-start;gap:11px;font-size:var(--text-body);color:var(--color-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Mantenimiento incluido</li>
+        </ul>
+      </div>
+      <div style="background:var(--color-card-bg);border:1px solid var(--color-border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px">
+        <div style="display:flex;gap:6px;margin-bottom:14px"><span style="width:10px;height:10px;border-radius:50%;background:var(--color-border)"></span><span style="width:10px;height:10px;border-radius:50%;background:var(--color-border)"></span><span style="width:10px;height:10px;border-radius:50%;background:var(--color-border)"></span></div>
+        <div style="height:150px;border-radius:var(--radius-md);background:linear-gradient(135deg,var(--color-surface-2),transparent);display:flex;align-items:center;justify-content:center">
+          <svg width="60" height="60" viewBox="0 0 80 80" fill="none" style="opacity:.55"><circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-accent)" stroke-width="1.4" stroke-opacity=".6"></circle><path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round"></path><circle cx="40" cy="20" r="3.4" fill="var(--color-accent)"></circle></svg>
+        </div>
+        <div style="height:11px;width:70%;border-radius:6px;background:var(--color-surface-2);margin-top:16px"></div>
+        <div style="height:11px;width:45%;border-radius:6px;background:var(--color-surface-2);margin-top:10px"></div>
+      </div>
+    </div>
+
+    <!-- Row 2: mockup · texto -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px;align-items:center">
+      <div style="background:var(--color-card-bg);border:1px solid var(--color-border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;order:2">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="align-self:flex-start;max-width:78%;background:var(--color-surface-2);border-radius:14px 14px 14px 4px;padding:12px 15px;font-size:13.5px;color:var(--color-text)">Hola 👋 ¿En qué puedo ayudarte hoy?</div>
+          <div style="align-self:flex-end;max-width:78%;background:var(--color-primary);color:var(--color-on-primary);border-radius:14px 14px 4px 14px;padding:12px 15px;font-size:13.5px">Quiero reservar una cita para el viernes.</div>
+          <div style="align-self:flex-start;max-width:78%;background:var(--color-surface-2);border-radius:14px 14px 14px 4px;padding:12px 15px;font-size:13.5px;color:var(--color-text)">Hecho ✅ Te he reservado el viernes a las 10:00 y enviado la confirmación.</div>
+        </div>
+      </div>
+      <div style="order:1">
+        <span style="display:inline-block;font-size:var(--text-tag);font-weight:600;letter-spacing:var(--tracking-tag);text-transform:uppercase;color:var(--color-tag-ink);background:var(--color-tag-bg);padding:6px 12px;border-radius:var(--radius-pill);margin-bottom:18px">Automatización IA</span>
+        <h3 style="font-family:var(--font-display);font-size:var(--text-h3);line-height:1.12;font-weight:600;margin:0 0 14px">Menos tareas repetitivas, más tiempo para vender</h3>
+        <p style="font-size:var(--text-body);line-height:1.7;color:var(--color-text-soft);margin:0 0 20px">Chatbots, reservas y respuestas automáticas que atienden a tus clientes 24/7 y te avisan solo cuando importa.</p>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px">
+          <li style="display:flex;align-items:flex-start;gap:11px;font-size:var(--text-body);color:var(--color-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Atención automática 24/7</li>
+          <li style="display:flex;align-items:flex-start;gap:11px;font-size:var(--text-body);color:var(--color-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Reservas y recordatorios</li>
+          <li style="display:flex;align-items:flex-start;gap:11px;font-size:var(--text-body);color:var(--color-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Integrado con tu web</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAQUETES -->
+  <section id="paquetes" style="background:var(--color-bg-2)">
+    <div style="max-width:var(--maxw);margin:0 auto;padding:var(--section-y) var(--gutter)">
+      <div style="text-align:center;max-width:42ch;margin:0 auto 52px">
+        <div style="font-size:var(--text-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-accent);font-weight:600;margin-bottom:14px">Paquetes</div>
+        <h2 style="font-family:var(--font-display);font-size:var(--text-h2);line-height:1.1;letter-spacing:-.01em;font-weight:600;margin:0">Una cuota mensual. Sin entrada. Sin sorpresas.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px;align-items:stretch">
+
+        <div style="display:flex;flex-direction:column;background:var(--color-card-bg);border:1px solid var(--color-border);border-radius:var(--radius);padding:32px">
+          <div style="font-family:var(--font-display);font-size:19px;font-weight:600;margin-bottom:6px">Presencia</div>
+          <p style="font-size:13.5px;color:var(--color-text-soft);margin:0 0 20px;line-height:1.6">Para empezar a existir online con fuerza.</p>
+          <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:24px"><span style="font-family:var(--font-display);font-size:44px;font-weight:600;line-height:1">99€</span><span style="font-size:14px;color:var(--color-text-soft)">/mes</span></div>
+          <ul style="list-style:none;margin:0 0 26px;padding:0;display:flex;flex-direction:column;gap:12px;flex:1">
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--color-text)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Web de hasta 5 páginas</li>
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--color-text)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Dominio y hosting</li>
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--color-text)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Soporte por email</li>
+          </ul>
+          <a href="#contacto" style="display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-weight:600;font-size:14.5px;padding:13px 24px;border-radius:var(--radius-pill);border:1.5px solid var(--color-border);background:transparent;color:var(--color-text)" style-hover="background:var(--color-surface-2)">Empezar</a>
+        </div>
+
+        <div style="display:flex;flex-direction:column;background:var(--color-card-bg);border:2px solid var(--color-primary);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow);position:relative">
+          <span style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);font-size:var(--text-tag);font-weight:600;letter-spacing:var(--tracking-tag);text-transform:uppercase;color:var(--color-on-primary);background:var(--color-primary);padding:6px 14px;border-radius:var(--radius-pill)">Más popular</span>
+          <div style="font-family:var(--font-display);font-size:19px;font-weight:600;margin-bottom:6px">Crecimiento</div>
+          <p style="font-size:13.5px;color:var(--color-text-soft);margin:0 0 20px;line-height:1.6">Web + automatización para vender más.</p>
+          <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:24px"><span style="font-family:var(--font-display);font-size:44px;font-weight:600;line-height:1;color:var(--color-primary)">199€</span><span style="font-size:14px;color:var(--color-text-soft)">/mes</span></div>
+          <ul style="list-style:none;margin:0 0 26px;padding:0;display:flex;flex-direction:column;gap:12px;flex:1">
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--color-text)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Todo lo de Presencia</li>
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--color-text)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Chatbot y reservas con IA</li>
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--color-text)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>SEO y campañas básicas</li>
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--color-text)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Soporte prioritario</li>
+          </ul>
+          <a href="#contacto" style="display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-weight:600;font-size:14.5px;padding:13px 24px;border-radius:var(--radius-pill);border:1.5px solid var(--color-primary);background:var(--color-primary);color:var(--color-on-primary)" style-hover="filter:brightness(0.94)">Empezar</a>
+        </div>
+
+        <div style="display:flex;flex-direction:column;background:var(--color-card-bg);border:1px solid var(--color-border);border-radius:var(--radius);padding:32px">
+          <div style="font-family:var(--font-display);font-size:19px;font-weight:600;margin-bottom:6px">A medida</div>
+          <p style="font-size:13.5px;color:var(--color-text-soft);margin:0 0 20px;line-height:1.6">Proyectos con necesidades específicas.</p>
+          <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:24px"><span style="font-family:var(--font-display);font-size:44px;font-weight:600;line-height:1">A medida</span></div>
+          <ul style="list-style:none;margin:0 0 26px;padding:0;display:flex;flex-direction:column;gap:12px;flex:1">
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--color-text)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Integraciones a medida</li>
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--color-text)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Consultoría estratégica</li>
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--color-text)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><polyline points="20 6 9 17 4 12"></polyline></svg>Gestor de cuenta dedicado</li>
+          </ul>
+          <a href="#contacto" style="display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-weight:600;font-size:14.5px;padding:13px 24px;border-radius:var(--radius-pill);border:1.5px solid var(--color-border);background:transparent;color:var(--color-text)" style-hover="background:var(--color-surface-2)">Hablar con ventas</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" style="max-width:var(--maxw);margin:0 auto;padding:var(--section-y) var(--gutter)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:start">
+      <div>
+        <div style="font-size:var(--text-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-accent);font-weight:600;margin-bottom:14px">Contacto</div>
+        <h2 style="font-family:var(--font-display);font-size:var(--text-h2);line-height:1.1;letter-spacing:-.01em;font-weight:600;margin:0 0 18px">¿Hablamos de tu proyecto?</h2>
+        <p style="font-size:var(--text-lead);color:var(--color-text-soft);line-height:1.7;margin:0 0 28px">Cuéntanos qué necesitas y te respondemos en menos de 24 horas. Sin compromiso.</p>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <a href="mailto:hola@cenitdigital.es" style="display:inline-flex;align-items:center;gap:12px;font-size:15px;color:var(--color-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 5L2 7"></path></svg>hola@cenitdigital.es</a>
+          <div style="display:inline-flex;align-items:center;gap:12px;font-size:15px;color:var(--color-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>Madrid, España — en remoto</div>
+        </div>
+      </div>
+
+      <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submit }}" style="background:var(--color-card-bg);border:1px solid var(--color-border);border-radius:var(--radius);box-shadow:var(--shadow);padding:30px;display:flex;flex-direction:column;gap:18px">
+          <label style="display:flex;flex-direction:column;gap:8px"><span style="font-size:var(--text-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-text-soft);font-weight:600">Nombre</span><input type="text" placeholder="Tu nombre" style="font-family:var(--font-sans);font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:12px 14px;outline:none" style-focus="border-color:var(--color-primary)"></label>
+          <label style="display:flex;flex-direction:column;gap:8px"><span style="font-size:var(--text-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-text-soft);font-weight:600">Email</span><input type="email" placeholder="tu@email.com" style="font-family:var(--font-sans);font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:12px 14px;outline:none" style-focus="border-color:var(--color-primary)"></label>
+          <label style="display:flex;flex-direction:column;gap:8px"><span style="font-size:var(--text-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-text-soft);font-weight:600">Mensaje</span><textarea rows="4" placeholder="Cuéntanos sobre tu proyecto…" style="font-family:var(--font-sans);font-size:15px;color:var(--color-text);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:12px 14px;outline:none;resize:vertical" style-focus="border-color:var(--color-primary)"></textarea></label>
+          <button type="submit" style="display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-weight:600;font-size:15px;padding:14px 28px;border-radius:var(--radius-pill);border:1.5px solid var(--color-primary);background:var(--color-primary);color:var(--color-on-primary);cursor:pointer" style-hover="filter:brightness(0.94)">Enviar mensaje</button>
+        </form>
+      </sc-if>
+      <sc-if value="{{ sent }}">
+        <div style="background:var(--color-card-bg);border:1px solid var(--color-border);border-radius:var(--radius);box-shadow:var(--shadow);padding:40px;display:flex;flex-direction:column;align-items:flex-start;gap:14px">
+          <div style="width:52px;height:52px;border-radius:50%;background:var(--color-tag-bg);display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+          <h3 style="font-family:var(--font-display);font-size:24px;font-weight:600;margin:0">¡Gracias!</h3>
+          <p style="font-size:var(--text-body);color:var(--color-text-soft);line-height:1.7;margin:0">Hemos recibido tu mensaje. Te responderemos en menos de 24 horas.</p>
+        </div>
+      </sc-if>
+      <sc-if value="{{ ctaOnly }}">
+        <div style="background:var(--color-card-bg);border:1px solid var(--color-border);border-radius:var(--radius);box-shadow:var(--shadow);padding:40px;display:flex;flex-direction:column;align-items:flex-start;gap:18px">
+          <h3 style="font-family:var(--font-display);font-size:26px;font-weight:600;line-height:1.15;margin:0">Escríbenos y damos el primer paso juntos.</h3>
+          <a href="mailto:hola@cenitdigital.es" style="display:inline-flex;align-items:center;font-family:var(--font-sans);font-weight:600;font-size:15px;padding:14px 28px;border-radius:var(--radius-pill);border:1.5px solid var(--color-primary);background:var(--color-primary);color:var(--color-on-primary)" style-hover="filter:brightness(0.94)">Escribir un email</a>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:var(--color-band);border-top:1px solid var(--color-band-border)">
+    <div style="max-width:var(--maxw);margin:0 auto;padding:56px var(--gutter) 40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px">
+      <div>
+        <a href="#top" style="display:inline-flex;align-items:center;gap:11px;margin-bottom:14px">
+          <svg width="36" height="36" viewBox="0 0 80 80" fill="none" aria-hidden="true"><defs><linearGradient id="footOrbit" x1="12" y1="40" x2="68" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="var(--color-primary)"></stop><stop offset="100%" stop-color="var(--color-secondary)"></stop></linearGradient></defs><circle cx="40" cy="40" r="30" fill="none" stroke="var(--color-ring)" stroke-width="1.8" stroke-opacity=".5"></circle><path d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41" fill="none" stroke="url(#footOrbit)" stroke-width="3.2" stroke-linecap="round"></path><circle cx="40" cy="20" r="3.8" fill="var(--color-zenith)"></circle></svg>
+          <span style="display:flex;flex-direction:column;line-height:1"><span style="font-family:var(--font-display);font-weight:600;font-size:21px;letter-spacing:1.5px;color:var(--color-logo-ink)">cénit</span><span style="font-size:7.5px;letter-spacing:5px;text-transform:lowercase;color:var(--color-logo-sub);margin-top:3px">digital</span></span>
+        </a>
+        <p style="font-size:13.5px;color:var(--color-text-soft);line-height:1.7;max-width:30ch;margin:0">Soluciones digitales para pymes que quieren llegar más alto.</p>
+      </div>
+      <div>
+        <div style="font-size:var(--text-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-text-faint);font-weight:600;margin-bottom:16px">Servicios</div>
+        <div style="display:flex;flex-direction:column;gap:10px"><a href="#servicios" style="font-size:14px;color:var(--color-text-soft)">Desarrollo web</a><a href="#servicios" style="font-size:14px;color:var(--color-text-soft)">Automatización IA</a><a href="#servicios" style="font-size:14px;color:var(--color-text-soft)">Marketing</a></div>
+      </div>
+      <div>
+        <div style="font-size:var(--text-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-text-faint);font-weight:600;margin-bottom:16px">Empresa</div>
+        <div style="display:flex;flex-direction:column;gap:10px"><a href="#paquetes" style="font-size:14px;color:var(--color-text-soft)">Paquetes</a><a href="#contacto" style="font-size:14px;color:var(--color-text-soft)">Contacto</a><a href="#top" style="font-size:14px;color:var(--color-text-soft)">Sobre nosotros</a></div>
+      </div>
+      <div>
+        <div style="font-size:var(--text-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-text-faint);font-weight:600;margin-bottom:16px">Legal</div>
+        <div style="display:flex;flex-direction:column;gap:10px"><a href="#top" style="font-size:14px;color:var(--color-text-soft)">Privacidad</a><a href="#top" style="font-size:14px;color:var(--color-text-soft)">Cookies</a><a href="#top" style="font-size:14px;color:var(--color-text-soft)">Aviso legal</a></div>
+      </div>
+    </div>
+    <div style="max-width:var(--maxw);margin:0 auto;padding:20px var(--gutter);border-top:1px solid var(--color-band-border);font-size:13px;color:var(--color-text-faint)">© 2026 Cénit Digital. Todos los derechos reservados.</div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 900 },
+  &quot;dark&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Tema&quot; },
+  &quot;showStats&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Secciones&quot; },
+  &quot;showContactForm&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Secciones&quot; }
+}">
+class Component extends DCLogic {
+  state = { sent: false };
+
+  applyTheme() {
+    document.documentElement.dataset.theme = (this.props.dark ?? false) ? 'dark' : 'light';
+  }
+  componentDidMount() { this.applyTheme(); }
+  componentDidUpdate() { this.applyTheme(); }
+
+  renderVals() {
+    const wantForm = this.props.showContactForm ?? true;
+    return {
+      showStats: this.props.showStats ?? true,
+      showForm: wantForm && !this.state.sent,
+      sent: this.state.sent,
+      ctaOnly: !wantForm,
+      toggleTheme: () => {
+        const el = document.documentElement;
+        el.dataset.theme = el.dataset.theme === 'dark' ? 'light' : 'dark';
+      },
+      submit: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        this.setState({ sent: true });
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -8,7 +8,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.inner}>
         <Link to="/" className={styles.brand} aria-label="Cénit Digital — inicio">
-          <Logo />
+          <Logo animated />
         </Link>
         <HeaderNav />
       </div>

@@ -20,6 +20,7 @@ export default function Hero() {
             stroke="var(--color-accent)"
             strokeWidth="1"
             strokeOpacity=".5"
+            data-orbit-ring=""
           />
           <path
             d="M15 46 C25 26 33 26 41 44 C48 59 57 59 65 41"
@@ -27,8 +28,19 @@ export default function Hero() {
             stroke="var(--color-accent)"
             strokeWidth="1.4"
             strokeLinecap="round"
+            data-orbit-wave=""
           />
-          <circle cx="40" cy="20" r="3" fill="var(--color-accent)" />
+          {/* Punto cénit: contorno (A) que se traza + relleno (B) que hace "pop". */}
+          <circle
+            cx="40"
+            cy="20"
+            r="3"
+            fill="none"
+            stroke="var(--color-accent)"
+            strokeWidth="1.3"
+            data-orbit-dot-outline=""
+          />
+          <circle cx="40" cy="20" r="3" fill="var(--color-accent)" data-orbit-dot-fill="" />
         </svg>
       </div>
       <div className={styles.inner}>

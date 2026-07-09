@@ -151,3 +151,40 @@ enlace (navega a `#servicios`); drawer por encima de la cabecera (`elementFromPo
 sobre ✕ devuelve el botón "Cerrar"). Mutación acotada a los 2 componentes
 adyacentes como confirmación (no se tocó ningún `.tsx` de la lista `mutate`; el
 cambio es CSS). Sin cambio en `feature_list.json` (#2 ya `done`).
+
+## 2026-07-09 · #14 logo_draw_animation — Animación de dibujado del logo Órbita (nav + hero)
+
+Pipeline SDD completo desde el handoff `design/logo-draw-animation/` (README +
+`CenitLanding.dc.html`, keyframes verbatim). Conversación/spec (`spec_partner` →
+`project-spec.md` #14) con 4 decisiones a puerta humana; contrato
+(`gherkin_author` → `features/logo_draw_animation.feature`, 18 escenarios).
+**Puerta humana:** Pablo APROBÓ el contrato y eligió D2 = **preservar la
+atenuación del arco a `.1` en móvil ≤820px** ("adáptalo responsive"); D1 sí
+`prefers-reduced-motion`, D3 parcial global, D4 prop `Logo animated` por defecto.
+
+Implementación (`tdd_craftsman`, TDD; una corrida se cortó por watchdog del
+stream y se completó con una continuación determinista): parcial global
+`src/styles/_logo-draw.scss` (8 `@keyframes` verbatim + `heroCycleOpacityMobile`
++ reglas por `data-attributes` + `prefers-reduced-motion`), `@use` en
+`main.scss`; `Logo.tsx` gana prop `animated` (data-attributes + punto en DOS
+círculos: contorno A que se traza + relleno B con `transform-box:fill-box` para
+el "pop"); `Header` monta `<Logo animated />`; `Hero.tsx` añade el círculo A al
+arco (siempre animado); `Hero.module.scss` `.arc` reposo .45→.42. **R1**: estado
+BASE = DIBUJADO (el oculto vive solo en el 0% de cada keyframe) → reduced-motion
+y prerender SSG muestran el logo completo. Sin JS ni estado; sin tokens nuevos;
+Footer estático (sin `animated`).
+
+Review: `judge` **APROBADO** (keyframes fieles al handoff salvo normalización
+Prettier sin cambio de valor; R1, reduced-motion, Footer estático, sin tokens
+nuevos, 18 `@s` no tautológicos con ambas ramas de `animated`). Mutación
+(`mutation_tester`, Stryker acotado a `Logo.tsx`+`Hero.tsx`): **100%** (15/15,
+0 supervivientes). Verificación EN VIVO (Chrome, dev + build): animaciones
+corriendo con nombres/duración (18.3s)/easings correctos; dibujado visual
+(t=3s icono parcial → t=8s icono+wordmark completos); temas claro (verde/limón)
+y oscuro (oro/violeta) por tokens; reduced-motion/base R1 → logo completo
+(dashoffset 0, punto relleno, wordmark visible); responsive del arco
+(`heroCycleOpacityMobile` .1 a 298px / `heroCycleOpacity` .42 a 900px); 0
+overflow horizontal; SSG: HTML prerenderizado con `data-logo-anim` (solo nav,
+Footer sin hooks) + arco, CSS construido con keyframes + reduced-motion +
+`transform-box:fill-box`. Verificación final **0/0/0**: typecheck · lint 0
+warnings · **180 tests** · build SSG (2 páginas). Estado: `done`.

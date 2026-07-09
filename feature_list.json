@@ -168,6 +168,19 @@
       ],
       "sdd": true,
       "status": "done"
+    },
+    {
+      "id": 14,
+      "name": "logo_draw_animation",
+      "title": "Animación de dibujado del logo Órbita (nav + hero)",
+      "description": "Animación CSS pura de \"self-drawing\" del icono Órbita (anillo + onda + punto cénit) en dos sitios: cabecera (icono 40px + wordmark con efecto máquina de escribir) y hero (icono 540px decorativo, opacidad de reposo .42, color único --color-accent, sin wordmark). Ciclo único de 18.3s en bucle infinito con pausa larga (~9.5s), variante \"simultánea a distinto ritmo\" (anillo lento de fondo; onda/punto/texto más rápidos). Sin JS ni estado de React; todos los colores desde tokens existentes (sin crear tokens); funciona en claro/oscuro. Footer permanece estático (fuera de alcance). Respeta prefers-reduced-motion (logo estático ya dibujado). Fuente de verdad: design/logo-draw-animation/ (README + CenitLanding.dc.html).",
+      "acceptance": [
+        "Todos los escenarios de features/logo_draw_animation.feature pasan (mapa @s → test en progress/tdd_logo_draw_animation.md)",
+        "Fidelidad alta: keyframes/timing/colores exactos del handoff; verify 0/0/0 (typecheck · lint 0 warnings · test) + mutación 100% sobre los ficheros tocados de la lista mutate (Logo.tsx, Hero.tsx)",
+        "prefers-reduced-motion: logo estático completamente dibujado; el logo del Footer permanece estático (no animado)"
+      ],
+      "sdd": true,
+      "status": "done"
     }
   ]
 }

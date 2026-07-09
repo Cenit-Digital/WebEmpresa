@@ -22,8 +22,9 @@ describe('Hero', () => {
     const arc = container.querySelector('[data-hero-arc]')
     const svg = arc?.querySelector('svg')
     expect(svg).not.toBeNull()
-    // Anillo de contorno + punto = dos <circle>; la onda es un <path>.
-    expect(svg?.querySelectorAll('circle')).toHaveLength(2)
+    // Actualizado por #14: el punto se desdobla en contorno + relleno para el
+    // trazo animado, así que el arco tiene 3 <circle> (anillo + contorno + relleno).
+    expect(svg?.querySelectorAll('circle')).toHaveLength(3)
     expect(svg?.querySelectorAll('path')).toHaveLength(1)
     // El color sale del token de acento, no de un hex fijo.
     expect(svg?.querySelector('path')).toHaveAttribute('stroke', 'var(--color-accent)')
@@ -84,5 +85,44 @@ describe('Hero', () => {
       // El valor y su etiqueta viven en la misma tarjeta de estadística.
       expect(valueNode.parentElement).toBe(labelNode.parentElement)
     }
+  })
+})
+
+// Feature #14 · el arco decorativo del hero va SIEMPRE animado (sin prop): lleva
+// los mismos hooks de dibujo que el Logo, en un único color --color-accent.
+describe('Hero — arco animado (#14)', () => {
+  it('@s6 el arco del hero está siempre animado y conserva su accesibilidad', () => {
+    const { container } = render(<Hero />)
+
+    const arc = container.querySelector('[data-hero-arc]')
+    expect(arc).not.toBeNull()
+    expect(arc).toHaveAttribute('aria-hidden', 'true')
+    // Un <div> no es enfocable por defecto (tabIndex -1): fuera del orden de tabulación.
+    expect((arc as HTMLElement).tabIndex).toBe(-1)
+
+    const svg = arc?.querySelector('svg')
+    expect(svg?.querySelector('circle[data-orbit-ring]')).not.toBeNull()
+    expect(svg?.querySelector('path[data-orbit-wave]')).not.toBeNull()
+    expect(svg?.querySelector('circle[data-orbit-dot-outline]')).not.toBeNull()
+    expect(svg?.querySelector('circle[data-orbit-dot-fill]')).not.toBeNull()
+  })
+
+  it('@s7 el arco del hero usa un único color --color-accent, sin gradiente', () => {
+    const { container } = render(<Hero />)
+    const svg = container.querySelector('[data-hero-arc] svg')
+
+    expect(svg?.querySelector('[data-orbit-ring]')).toHaveAttribute('stroke', 'var(--color-accent)')
+    expect(svg?.querySelector('[data-orbit-wave]')).toHaveAttribute('stroke', 'var(--color-accent)')
+    expect(svg?.querySelector('[data-orbit-dot-outline]')).toHaveAttribute(
+      'stroke',
+      'var(--color-accent)',
+    )
+    expect(svg?.querySelector('[data-orbit-dot-fill]')).toHaveAttribute(
+      'fill',
+      'var(--color-accent)',
+    )
+
+    // Color único: nada de <linearGradient> dentro del arco (a diferencia del nav).
+    expect(svg?.querySelector('linearGradient')).toBeNull()
   })
 })

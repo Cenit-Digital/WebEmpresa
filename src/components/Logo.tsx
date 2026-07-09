@@ -6,6 +6,13 @@ type LogoProps = {
   withWordmark?: boolean
   /** Tamaño del icono en px (alto = ancho). Nav = 40, footer = 38. */
   size?: number
+  /**
+   * Activa la animación de "dibujado" (feature #14). Añade los data-attributes
+   * que consumen los @keyframes del parcial global `src/styles/_logo-draw.scss`
+   * y desdobla el punto cénit en contorno + relleno. Con `false` (por defecto,
+   * p. ej. el Footer) el SVG queda estático e intacto.
+   */
+  animated?: boolean
 }
 
 /**
@@ -14,7 +21,7 @@ type LogoProps = {
  * de tema (var(--color-…)), así que el logo se adapta solo a claro/oscuro.
  * Fuente de verdad: "Cenit Digital - Web (final)" (Claude Design).
  */
-export default function Logo({ withWordmark = true, size = 40 }: LogoProps) {
+export default function Logo({ withWordmark = true, size = 40, animated = false }: LogoProps) {
   // id único por instancia para el degradado (evita colisiones nav/footer).
   // React 19 useId() no incluye ':'; este replace es un no-op defensivo (para
   // ids estilo React 18). Mutar su reemplazo es equivalente (no observable).
@@ -23,7 +30,7 @@ export default function Logo({ withWordmark = true, size = 40 }: LogoProps) {
   const gradId = `cenit-wave-${cleanId}`
 
   return (
-    <span className={styles.logo}>
+    <span className={styles.logo} data-logo-anim={animated ? '' : undefined}>
       <svg
         className={styles.mark}
         width={size}
@@ -55,6 +62,7 @@ export default function Logo({ withWordmark = true, size = 40 }: LogoProps) {
           stroke="var(--color-ring)"
           strokeWidth="1.8"
           strokeOpacity="0.5"
+          data-orbit-ring={animated ? '' : undefined}
         />
         {/* Onda (trayectoria) con degradado marca */}
         <path
@@ -63,15 +71,36 @@ export default function Logo({ withWordmark = true, size = 40 }: LogoProps) {
           stroke={`url(#${gradId})`}
           strokeWidth="3.2"
           strokeLinecap="round"
+          data-orbit-wave={animated ? '' : undefined}
         />
-        {/* Punto cénit */}
-        <circle cx="40" cy="20" r="3.8" fill="var(--color-zenith)" />
+        {/* Punto cénit — animado: contorno (A) que se traza + relleno (B) que
+            hace "pop"; estático: un único círculo relleno. */}
+        {animated ? (
+          <>
+            <circle
+              cx="40"
+              cy="20"
+              r="3.8"
+              fill="none"
+              stroke="var(--color-zenith)"
+              strokeWidth="1.6"
+              data-orbit-dot-outline=""
+            />
+            <circle cx="40" cy="20" r="3.8" fill="var(--color-zenith)" data-orbit-dot-fill="" />
+          </>
+        ) : (
+          <circle cx="40" cy="20" r="3.8" fill="var(--color-zenith)" />
+        )}
       </svg>
 
       {withWordmark && (
         <span className={styles.wordmark}>
-          <span className={styles.name}>cénit</span>
-          <span className={styles.sub}>digital</span>
+          <span className={styles.name} data-orbit-cenit={animated ? '' : undefined}>
+            cénit
+          </span>
+          <span className={styles.sub} data-orbit-digital={animated ? '' : undefined}>
+            digital
+          </span>
         </span>
       )}
     </span>
