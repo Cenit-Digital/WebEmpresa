@@ -14,6 +14,7 @@
     "src/lib/nav.ts",
     "src/lib/theme.ts",
     "src/lib/useIsMobile.ts",
+    "src/lib/useReveal.ts",
     "src/components/HeaderNav.tsx",
     "src/components/MobileMenu.tsx",
     "src/components/Logo.tsx",

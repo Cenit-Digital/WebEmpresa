@@ -1,3 +1,4 @@
+import { useReveal } from '../lib/useReveal'
 import CheckIcon from './CheckIcon'
 import ServiceMockup from './ServiceMockup'
 import styles from './Servicios.module.scss'
@@ -62,6 +63,10 @@ const SERVICES: readonly Service[] = [
 ]
 
 export default function Servicios() {
+  // Revelado en scroll (#15): arma data-reveal en .rows y conmuta data-in-view
+  // por fila. SSR-safe: sin IntersectionObserver el contenido queda visible.
+  const rows = useReveal<HTMLDivElement>()
+
   return (
     <section id="servicios" className={styles.services}>
       <div className={styles.inner}>
@@ -74,7 +79,7 @@ export default function Servicios() {
           visual de cómo queda en uso, y una nota con un ejemplo real.
         </p>
 
-        <div className={styles.rows}>
+        <div className={styles.rows} ref={rows}>
           {SERVICES.map((service, index) => (
             <article key={service.title} className={styles.row}>
               <div className={styles.card}>
@@ -92,7 +97,9 @@ export default function Servicios() {
               </div>
 
               <div className={styles.aside}>
-                <ServiceMockup index={index} />
+                <div className={styles.mockup}>
+                  <ServiceMockup index={index} />
+                </div>
                 <div className={styles.example}>
                   <span className={styles.exampleLabel}>Ejemplo</span>
                   <p className={styles.exampleText}>{service.example}</p>

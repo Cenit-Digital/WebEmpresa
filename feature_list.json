@@ -181,6 +181,20 @@
       ],
       "sdd": true,
       "status": "done"
+    },
+    {
+      "id": 15,
+      "name": "servicios_scroll_reveal",
+      "title": "Animación de revelado en scroll de la sección Servicios (WEB-5)",
+      "description": "Al hacer scroll por #servicios, cada fila de servicio revela sus 3 elementos (texto .card, imagen ServiceMockup, nota .example) con una animación escalonada perceptible (>1s), disparada cuando la fila queda CENTRADA en el viewport, re-animándose en AMBOS sentidos (no triggerOnce). Coreografía 'convergencia zig-zag': cada elemento entra desde su lado exterior aprovechando el layout alterno que ya existe (.row:nth-child(even)); la nota sube desde abajo. Solo opacity+transform (60fps, sin reflow). SSG-safe (estado base = estado final visible, patrón R1 de la feature #14) y respeta prefers-reduced-motion (sin animación, contenido visible). Disparo por hook IntersectionObserver mínimo y reutilizable (useReveal), armado en cliente (useEffect) para no romper el prerender SSG. Solo se aplica a Servicios ahora; el hook queda disponible para futuras secciones. Fuente de verdad: decisiones fijadas en project-spec.md (convergencia zig-zag · disparo centrado · bidireccional).",
+      "acceptance": [
+        "Todos los escenarios de features/servicios_scroll_reveal.feature pasan (mapa @s -> test en progress/tdd_servicios_scroll_reveal.md)",
+        "verify 0/0/0 (typecheck . lint 0 warnings . test) + mutacion 100% sobre los ficheros tocados (useReveal + Servicios.tsx)",
+        "Responsive verificado en navegador a todos los tamanos; 0 errores/warnings de consola",
+        "prefers-reduced-motion: contenido completamente visible sin animacion; SSG prerender sin salto de layout"
+      ],
+      "sdd": true,
+      "status": "done"
     }
   ]
 }
