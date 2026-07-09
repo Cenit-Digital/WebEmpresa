@@ -160,7 +160,7 @@ describe('Servicios.module.scss — #15 (contenido de la animación de revelado)
     }
   })
 
-  it('@s10 stagger: los delays crecen en el orden .card -> mockup -> .example', () => {
+  it('@s10 stagger + timing: duración 2.8s y delays escalonados 0s/0.4s/0.8s', () => {
     const gated = block(read(SCSS), NO_PREFERENCE)
     const delayOf = (piece: string): number => {
       const m = gated.match(
@@ -170,6 +170,20 @@ describe('Servicios.module.scss — #15 (contenido de la animación de revelado)
       return Number(m[1])
     }
 
+    // Duración pineada: 2.8s para opacity y transform, y ya no la vieja 1.2s.
+    const transitionMatch = gated.match(/transition:\s*([^;]+);/)
+    if (!transitionMatch) throw new Error('transition de las piezas no encontrada')
+    const transition = transitionMatch[1]
+    expect(transition).toMatch(/opacity\s+2\.8s/)
+    expect(transition).toMatch(/transform\s+2\.8s/)
+    expect(transition).not.toMatch(/1\.2s/)
+
+    // Stagger pineado: card 0s -> mockup 0.4s -> example 0.8s.
+    expect(delayOf('card')).toBe(0)
+    expect(delayOf('mockup')).toBe(0.4)
+    expect(delayOf('example')).toBe(0.8)
+
+    // Y el escalonado crece en el orden .card -> mockup -> .example.
     expect(delayOf('card')).toBeLessThan(delayOf('mockup'))
     expect(delayOf('mockup')).toBeLessThan(delayOf('example'))
   })

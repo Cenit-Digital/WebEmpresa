@@ -103,3 +103,19 @@ typecheck y lint 0/0, mutación **100 %** sobre `useReveal.ts` y `Servicios.tsx`
 - `ref={rows}` y wrapper `.mockup` en `Servicios.tsx` → @s14 (puntos 2 y 4).
 - `if (!root) return`: defensivo no observable → `// Stryker disable next-line all`
   (mismo recurso que `Logo.tsx`).
+
+## Refinamiento de temporización (2026-07-09, sobre PR #6)
+
+Pablo pidió "más tiempo" en la animación y eligió el objetivo **cinematográfico**.
+Cambio SOLO de valores en `Servicios.module.scss` (contrato @s1..@s14 intacto):
+
+- Duración de la transición **1.2s → 2.8s** (opacity + transform; mismo easing
+  `cubic-bezier(0.22, 1, 0.36, 1)`).
+- Stagger **0.18s/0.36s → 0.4s/0.8s** (`.card` 0s → mockup 0.4s → `.example` 0.8s);
+  revelado total de la fila ~3.6s.
+
+Se **reforzó @s10** (Rojo con los valores viejos → Verde tras el cambio): ahora
+PINEA la duración `2.8s` (opacity y transform, y `not 1.2s`) y los delays exactos
+`0.4s`/`0.8s`, además de mantener el orden creciente. Así la duración queda como
+contrato testeado (antes no lo estaba). Mutación **N/A** (solo SCSS + test de
+contenido; no se toca ningún `.tsx`/`.ts` de la lista `mutate` de Stryker).

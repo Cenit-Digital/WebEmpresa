@@ -235,3 +235,14 @@ banco: `window.scrollTo` es no-op en este contexto de automatización; el scroll
 físico —el del usuario— dispara el observer correctamente.) Verificación final
 **0/0/0**: typecheck · lint 0 warnings · **194 tests** (+14) · `pnpm verify` OK.
 Estado: `done`.
+
+**Refinamiento (mismo día, sobre PR #6):** Pablo pidió más tiempo de animación y
+eligió el objetivo **cinematográfico** → duración de la transición **1,2 s → 2,8 s**
+y stagger **0,18 s → 0,40 s** (delays 0/0,40/0,80; revelado total ~3,6 s). Solo
+valores de `Servicios.module.scss`; contrato @s1..@s14 intacto; **@s10 reforzado**
+pineando la duración (`2.8s`, `not 1.2s`) y los delays (`0.4s`/`0.8s`) — antes la
+duración no estaba testeada. Verificación **0/0/0** (194 tests) y en navegador
+(`transition-duration` computada = 2,8 s; delays 0,4/0,8). Mutación N/A (solo SCSS
++ test de contenido; ningún fichero de la lista `mutate`). El `tdd_craftsman` cayó
+por un error transitorio de API tras dejar el test @s10 escrito; el lead completó
+el cambio de SCSS (refinamiento directo, con precedente en esta bitácora).

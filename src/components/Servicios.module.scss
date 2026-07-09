@@ -177,27 +177,28 @@
    solo aplica cuando el hook arma `data-reveal` en cliente Y el usuario no pidió
    menos movimiento. Sin JS / SSG / reduced-motion → contenido completo. */
 @media (prefers-reduced-motion: no-preference) {
-  /* Solo opacity + transform (compositables, 60fps, sin reflow). ~1,2 s por
-     pieza (>1 s: que dé tiempo a percibir la entrada) con easing suave. */
+  /* Solo opacity + transform (compositables, 60fps, sin reflow). ~2,8 s por
+     pieza (efecto cinematográfico: da tiempo de sobra a percibir la entrada)
+     con easing suave. */
   .row .card,
   .row .mockup,
   .row .example {
     transition:
-      opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity 2.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 2.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* Stagger ~0,18 s: la entrada escalona .card -> mockup -> .example. */
+  /* Stagger ~0,40 s: la entrada escalona .card -> mockup -> .example. */
   .row .card {
     transition-delay: 0s;
   }
 
   .row .mockup {
-    transition-delay: 0.18s;
+    transition-delay: 0.4s;
   }
 
   .row .example {
-    transition-delay: 0.36s;
+    transition-delay: 0.8s;
   }
 
   /* Estado OCULTO: contenedor armado + fila fuera de la banda central.
