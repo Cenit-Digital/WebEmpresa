@@ -23,6 +23,7 @@
 | `feature_list.json`        | Tareas con estado (`pending`/`spec_ready`/`in_progress`/`done`/`blocked`) | Siempre                           |
 | `progress/current.md`      | Estado de la sesión actual                                                | Siempre                           |
 | `progress/history.md`      | Bitácora append-only                                                      | Si necesitas contexto             |
+| `scripts/sync-memoria.sh`  | Memoria organizacional: patrones validados de la org en `.memoria-cache/` | Al arrancar sesión (paso 2bis)    |
 | `project-spec.md`          | Spec conversada por feature                                               | Antes de Gherkin o de implementar |
 | `features/<name>.feature`  | Escenarios Gherkin (contrato aprobado por el humano)                      | Antes del ciclo TDD               |
 | `docs/workflow.md`         | El pipeline completo                                                      | Antes de coordinar                |

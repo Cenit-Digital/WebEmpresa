@@ -32,5 +32,8 @@ Thumbs.db
 # vite-react-ssg
 .vite-react-ssg-temp/
 
+# Memoria organizacional (caché local; se regenera con scripts/sync-memoria.sh)
+.memoria-cache/
+
 # Paquetes de entrega (design handoff, etc.)
 *.zip

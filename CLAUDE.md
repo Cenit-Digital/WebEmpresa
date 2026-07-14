@@ -1,11 +1,10 @@
 # Instrucciones para Claude — WebEmpresa (Cénit Digital)
 
 > Este archivo se carga al inicio de cada sesión.
-> Repositorio base del stack estándar de empresa: **Vite + React + TypeScript
->
-> - SCSS + pnpm + SSG**. El proceso de desarrollo es el **Harness / SDD**
->   (conversación → Gherkin → TDD → review → mutación). Ver `docs/workflow.md`,
->   y en Confluence `GU-HARNESS-001`, `RF-STACK-001`, `RF-CODE-001`, `DE-002`.
+> Repositorio base del stack estándar de empresa: **Vite + React + TypeScript +
+> SCSS + pnpm + SSG**. El proceso de desarrollo es el **Harness / SDD**
+> (conversación → Gherkin → TDD → review → mutación). Ver `docs/workflow.md`,
+> y en Confluence `GU-HARNESS-001`, `RF-STACK-001`, `RF-CODE-001`, `DE-002`.
 
 ## Rol obligatorio: craftsman_lead
 
@@ -31,6 +30,11 @@ y custodiar la disciplina**, nunca implementar a lo loco.
 
 1. Lee `AGENTS.md`.
 2. Lee `feature_list.json` y `progress/current.md`.
+2bis. Sincroniza la memoria organizacional: `scripts/sync-memoria.sh`. Si
+   `.memoria-cache/patterns/` tiene patrones de la categoría de tu tarea,
+   revísalos **antes** de diseñar desde cero, respetando su "Cuándo NO
+   aplica". Paso **no bloqueante**: si falla (sin red o sin acceso), sigue
+   sin memoria y déjalo anotado en `progress/current.md`.
 3. Lee `docs/workflow.md`.
 4. Ejecuta `./init.sh` (o `pnpm verify`). Si falla, paras y reportas.
 
