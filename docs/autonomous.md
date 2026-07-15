@@ -69,22 +69,41 @@ y un bump puede romper producción de formas que la CI no ve.
 
 ## Puesta en marcha (checklist del dueño)
 
-- [ ] **Proteger `main`.** Esto es lo que convierte "solo abre PR" de promesa en
-      garantía. Este repo es **público**, así que la protección de rama está
-      disponible en el plan Free. En *Settings → Branches* (o *Settings → Rules →
-      Rulesets*) sobre `main`:
-    - ✅ *Require a pull request before merging*.
-    - ✅ *Require status checks to pass before merging* → añade el check
+- [ ] **Proteger `main`** — *Settings → Branches → Add classic branch protection
+      rule*, patrón `main`. **Es lo único que falta para que "solo abre PR" deje
+      de ser una promesa de prompt.** Este repo es **público**, así que aquí sí
+      se aplica (en los privados de la organización, con plan Free, GitHub avisa
+      de que *"your rules won't be enforced… until you upgrade this organization
+      to GitHub Team or Enterprise"*; por eso `SistemaDeMemoriaUncleBob` y
+      `NailsLashStudioWeb` no pueden tenerla).
+
+      **Copia la configuración que ya tiene `TemplateSSDUncleBob`** — está
+      probada en la organización y no te bloquea:
+
+    - ✅ *Require a pull request before merging* — esto es lo que impide al bot
+      empujar a `main` directamente.
+    - ✅ *Require approvals: 1* — impide además que el bot **fusione** su propio
+      PR: la doc oficial dice literalmente *"Pull request authors cannot approve
+      their own pull requests"*, y el bot no tiene a nadie que le apruebe.
+    - ✅ *Require review from Code Owners* — activa el `CODEOWNERS` de este repo.
+    - ✅ *Require status checks to pass before merging* → busca y añade
       **`Calidad (init.sh + build SSG)`**.
-    - ✅ *Block force pushes*.
-    - ✅ *Require review from Code Owners* (activa `CODEOWNERS`).
-    - ✅ *Do not allow bypassing the above settings* — o, si quieres poder actuar
-      en una urgencia, limita el bypass a administradores, pero **nunca**
-      incluyas la GitHub App de Claude en esa lista.
-    - ℹ️ *Si eres el único mantenedor:* "Require approvals: 1" no deja
-      auto-aprobar tus propios PRs y podrías bloquearte a ti mismo. Lo
-      imprescindible contra el bot es más simple: **exigir PR y bloquear el push
-      directo a `main`**, con la App de Claude fuera de cualquier bypass.
+    - ☐ *Do not allow bypassing the above settings* — **déjalo SIN marcar**, como
+      en la plantilla. Por defecto *"the restrictions of a branch protection rule
+      don't apply to people with admin permissions to the repository"*: tú sigues
+      pudiendo actuar directo en una urgencia (y merges tus propios PRs sin
+      necesitar que nadie te apruebe), mientras que el bot —que no es admin— sí
+      queda sujeto a la regla. Si algún día marcas esta casilla, siendo el único
+      mantenedor te bloquearías a ti mismo: no podrías aprobar tus propios PRs ni
+      saltarte el requisito.
+    - ☐ *Allow force pushes* y ☐ *Allow deletions* — **sin marcar** (es lo que los
+      bloquea). Ojo: estas dos aplican a todo el mundo, admins incluidos.
+
+    > ⚠️ El check requerido se identifica **por su nombre literal**: la API lo
+    > llama `context`, *"The name of the required check"*. Si algún día renombras
+    > el job `Calidad (init.sh + build SSG)` en `ci.yml`, el check requerido deja
+    > de casar y los PRs se quedan esperando un check que nunca llega. Renombra
+    > los dos a la vez o no renombres ninguno.
 - [ ] Probar sin esperar al lunes: *Actions → «Mantenimiento autónomo» → Run
       workflow*; marca **`forzar`** para saltarte la guarda de PR abierto. Es
       **esperable que no proponga nada**: es el límite 7 haciendo su trabajo.
