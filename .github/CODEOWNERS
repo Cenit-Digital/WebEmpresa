@@ -1,0 +1,29 @@
+# CODEOWNERS — revisión obligatoria del dueño sobre las rutas sensibles.
+#
+# Efectivo cuando la protección de rama de `main` tenga activado "Require review
+# from Code Owners" (ver docs/autonomous.md → checklist del dueño). Sin esa
+# opción, CODEOWNERS es solo informativo. Basta la aprobación de UN code owner.
+#
+# Este repo es PÚBLICO, así que la protección de rama y CODEOWNERS sí están
+# disponibles en el plan Free (a diferencia de SistemaDeMemoriaUncleBob, que es
+# privado y no puede imponerlos mecánicamente).
+#
+# Cubre lo que gobierna al bot autónomo, su correa y su cadena de verificación,
+# más el contrato de producto que el bot tiene prohibido tocar.
+
+/.github/      @PabloHurtadoGonzalo86 @PhurtadoCenitDigital
+/init.sh       @PabloHurtadoGonzalo86 @PhurtadoCenitDigital
+/CLAUDE.md     @PabloHurtadoGonzalo86 @PhurtadoCenitDigital
+/AGENTS.md     @PabloHurtadoGonzalo86 @PhurtadoCenitDigital
+
+# La cadena de verificación real: los scripts que corre la CI, el lint y el
+# umbral de mutación. El mandato se los concede al bot (§ Alcance), así que
+# aquí es donde se controla que no se afloje su propio verificador.
+/package.json        @PabloHurtadoGonzalo86 @PhurtadoCenitDigital
+/eslint.config.js    @PabloHurtadoGonzalo86 @PhurtadoCenitDigital
+/stryker.config.json @PabloHurtadoGonzalo86 @PhurtadoCenitDigital
+
+# El contrato del pipeline SDD: lo aprueba un humano, siempre (AGENTS.md §4).
+/features/           @PabloHurtadoGonzalo86 @PhurtadoCenitDigital
+/project-spec.md     @PabloHurtadoGonzalo86 @PhurtadoCenitDigital
+/feature_list.json   @PabloHurtadoGonzalo86 @PhurtadoCenitDigital

@@ -1,0 +1,76 @@
+name: CI
+
+# Puerta de calidad del repo. Hasta ahora WebEmpresa no tenía NINGUNA CI: la
+# verificación existía (docs/verification.md, init.sh) pero solo corría si un
+# humano se acordaba de ejecutarla en su portátil. Esto la hace mecánica.
+#
+# NO duplica la lista de comandos: ejecuta `./init.sh`, que ES el contrato de
+# verificación del arnés en este repo (entorno + archivos base + feature_list +
+# typecheck + lint + test). Si mañana cambias init.sh, la CI cambia con él y no
+# hay dos verdades que mantener sincronizadas. `pnpm build` va aparte porque el
+# build SSG no forma parte de init.sh y aquí sí queremos que un enlace roto o un
+# fallo de prerenderizado tumbe el PR.
+#
+# `pnpm mutation` NO está aquí a propósito: docs/verification.md la define sobre
+# "los archivos tocados" por una feature, que es algo que solo se sabe por
+# feature — no hay un comando de repo entero que signifique lo mismo. Sigue
+# siendo obligatoria antes de declarar `done`, como dice CHECKPOINTS.md.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # Un PR que recibe varios pushes seguidos solo necesita verificar el último.
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NO_COLOR: "1"
+
+jobs:
+  calidad:
+    name: Calidad (init.sh + build SSG)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      # pnpm ANTES que setup-node: es el orden que exige la doc oficial de pnpm
+      # para que `cache: pnpm` de setup-node encuentre el binario.
+      #
+      # Sin `version:`: la acción lee `packageManager` de package.json
+      # ("pnpm@11.9.0"), que ya es la fuente de verdad del repo — una versión
+      # aquí sería una segunda que se desincronizaría sola.
+      #
+      # Fijada por SHA (v6.0.9, 2026-06-15) y no por tag: la guía oficial de
+      # endurecimiento de GitHub pide clavar acciones de terceros a un SHA
+      # completo, que es la única referencia inmutable. Al subirla de versión,
+      # actualiza SHA y comentario a la vez.
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+
+      - name: Node
+        uses: actions/setup-node@v5
+        with:
+          # Desde .nvmrc, que ya declara la versión del proyecto (engines pide
+          # >= 22.12.0). Una constante aquí sería otra verdad que mantener.
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+
+      - name: Instalar dependencias
+        # --frozen-lockfile: en CI el lockfile manda; si package.json y
+        # pnpm-lock.yaml no cuadran, queremos fallar, no "arreglarlo" en silencio.
+        run: pnpm install --frozen-lockfile
+
+      - name: Verificación del arnés (./init.sh)
+        run: bash ./init.sh
+
+      - name: Build SSG (prerenderiza cada ruta a HTML)
+        run: pnpm build

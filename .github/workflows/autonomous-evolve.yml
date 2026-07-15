@@ -1,0 +1,193 @@
+name: Mantenimiento autónomo
+
+# Bot de mantenimiento de WebEmpresa.
+#
+#   · Alcance:  lo que RODEA al producto (docs, configuración). NUNCA `src/`,
+#               tests, `features/`, `feature_list.json` ni `progress/`: el
+#               producto se hace con el pipeline SDD, que tiene una puerta
+#               humana que un cron no puede cruzar.
+#   · Fusión:   SOLO ABRE PR. Nunca fusiona. Nunca auto-merge. Nunca main.
+#
+# El mandato completo y los límites duros viven en .github/AUTONOMOUS.md — este
+# workflow es deliberadamente "tonto": mira si hay algo que hacer, sincroniza la
+# memoria de la organización, apunta al mandato y para. Operación y puesta en
+# marcha para humanos: docs/autonomous.md.
+
+on:
+  schedule:
+    # Lunes, miércoles y viernes a las 06:43 UTC. El minuto NO es 0 a propósito:
+    # la doc oficial dice que "High load times include the start of every hour" y
+    # que con carga alta "some queued jobs may be dropped"; recomienda programar
+    # "at a different time of the hour". Los bots hermanos van a :17, :23 y :31.
+    - cron: "43 6 * * 1,3,5"
+  workflow_dispatch:
+    inputs:
+      focus:
+        description: "Tema opcional en el que enfocar el mantenimiento"
+        required: false
+        default: ""
+      forzar:
+        description: "Ignorar la guarda de PR abierto y trabajar igualmente"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write # crear ramas y commits
+  pull-requests: write # abrir el PR
+  issues: write # crear/aplicar etiquetas
+  # id-token: la acción intercambia un token OIDC como parte de su flujo de
+  # autenticación; los bots hermanos lo necesitaron en runs 'schedule'.
+  id-token: write
+
+concurrency:
+  # Un solo ciclo a la vez; no cancelamos uno en marcha porque podría estar a
+  # punto de empujar la rama o abrir el PR.
+  group: autonomous-evolve
+  cancel-in-progress: false
+
+jobs:
+  evolve:
+    name: Ciclo de mantenimiento (solo abre PR)
+    # Guarda de identidad: si el repo se renombra o se transfiere, el bot se
+    # apaga en silencio — actualiza este nombre a la vez que el repo.
+    if: ${{ github.repository == 'Cenit-Digital/WebEmpresa' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout (historial completo para ramas y PR)
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      # GUARDA — «no te adelantes al humano».
+      #
+      # Mientras haya un PR suyo esperando revisión, el bot no abre otro: el
+      # ritmo lo marca quien fusiona, no el cron. Misma guarda que en los bots
+      # hermanos de la organización.
+      - name: Guarda — ¿hay ya un PR del bot esperando revisión?
+        id: guarda_pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORZAR: ${{ github.event.inputs.forzar }}
+        run: |
+          set -euo pipefail
+          if [ "${FORZAR:-false}" = "true" ]; then
+            echo "Ejecución manual con 'forzar': me salto la guarda."
+            echo "seguir=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # Fail-open a propósito: ante un fallo transitorio de la API, preferimos
+          # un PR de más (que ves y cierras) a perder el ciclo en silencio.
+          if ! abiertos="$(gh pr list --state open --label autonomous --limit 1 --json number --jq 'length')"; then
+            echo "::warning::No pude comprobar si hay PRs del bot abiertos — sigo adelante."
+            echo "seguir=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # ${abiertos:-0}: si `gh` saliera en 0 pero sin imprimir nada, un
+          # "" != "0" dejaría al bot creyendo PARA SIEMPRE que hay un PR abierto
+          # y no volvería a trabajar jamás, en silencio. Ante la duda, trabajar.
+          if [ "${abiertos:-0}" != "0" ]; then
+            echo "::notice::Ya hay un PR autónomo esperando revisión humana — hoy no abro otro."
+            echo "- ⏸️ **Ciclo omitido**: ya hay un PR \`autonomous\` abierto. Fusiónalo o ciérralo y el bot volverá a mirar." >> "$GITHUB_STEP_SUMMARY"
+            echo "seguir=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "Sin PRs autónomos abiertos: vía libre."
+          echo "seguir=true" >> "$GITHUB_OUTPUT"
+
+      # El agente TIENE que poder verificar (init.sh + build), y para eso
+      # necesita pnpm. La imagen `ubuntu-24.04` trae Node 22 y npm, pero **NO
+      # trae pnpm** (comprobado en el README oficial de actions/runner-images):
+      # sin estos dos pasos, el primer `pnpm install` del agente moriría con
+      # "command not found" y el ciclo entero sería humo.
+      #
+      # Van DESPUÉS de la guarda a propósito: un ciclo omitido no paga la
+      # instalación. Mismos pasos y mismo orden que ci.yml — pnpm antes que
+      # setup-node, que es lo que exige la doc oficial de pnpm para `cache: pnpm`.
+      - name: Instalar pnpm
+        if: ${{ steps.guarda_pr.outputs.seguir == 'true' }}
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+
+      - name: Node
+        if: ${{ steps.guarda_pr.outputs.seguir == 'true' }}
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+
+      # Paso 2bis del Protocolo de arranque (CLAUDE.md), en un step aparte A
+      # PROPÓSITO: el PAT de solo lectura NO debe llegar al entorno del agente
+      # (mismo criterio que el bot de SistemaDeMemoriaUncleBob). Aquí se usa para
+      # clonar la memoria —que es un repo privado— y el agente se encuentra
+      # `.memoria-cache/` ya en disco, sin ver nunca la credencial.
+      #
+      # `continue-on-error` + el propio diseño del script (sale 0 si falla): la
+      # memoria es una ventaja, jamás un punto único de fallo del ciclo.
+      - name: Sincronizar memoria organizacional (no bloqueante)
+        if: ${{ steps.guarda_pr.outputs.seguir == 'true' }}
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.ORG_READ_TOKEN }}
+        run: bash scripts/sync-memoria.sh
+
+      # Sin env en este step A PROPÓSITO, por dos razones:
+      #  1. La acción inyecta ella misma el token de la GitHub App de Claude en
+      #     el entorno del agente — `gh pr create` y `git push` funcionan sin más,
+      #     y el PR resultante SÍ dispara ci.yml (los eventos creados con el
+      #     GITHUB_TOKEN por defecto no disparan otros workflows; los de la App
+      #     sí — patrón ya probado por los bots hermanos).
+      #  2. El PAT de solo lectura (ORG_READ_TOKEN) no se expone aquí.
+      - name: Claude Code — un ciclo de mantenimiento
+        if: ${{ steps.guarda_pr.outputs.seguir == 'true' }}
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Lee .github/AUTONOMOUS.md POR COMPLETO y síguelo al pie de la letra:
+            el mandato, el alcance, los límites duros, la verificación y el
+            formato del PR están AHÍ, no aquí (si algo se contradice,
+            AUTONOMOUS.md manda). Enfoque opcional de esta ejecución, si no está
+            vacío: "${{ github.event.inputs.focus }}".
+
+            Resumen operativo:
+            1. Lee AGENTS.md y CLAUDE.md para orientarte, y `pnpm install
+               --frozen-lockfile` antes de nada (sin node_modules no puedes
+               verificar nada).
+            2. Busca UNA tarea real de mantenimiento FUERA de `src/`, tests,
+               `features/`, `project-spec.md`, `feature_list.json`, `progress/` y
+               `design/` — típicamente: documentación que ya no describe al
+               código, o configuración incoherente. Necesitas EVIDENCIA citable
+               (fichero+línea, o comando+salida). Si no la hay, no hay tarea.
+            3. Si no encuentras nada real: NO abras PR. Cero propuestas es un
+               resultado válido y frecuente (límite 7) — explica en el resumen
+               del job qué revisaste y para.
+            4. Verifica ANTES de abrir el PR, con lo mismo que correrá la CI:
+               `bash ./init.sh` y `pnpm build`, ambos en verde.
+            5. Rama `autonomous/<slug-corto>`, commit y push, y abre TÚ el PR con
+               `gh pr create` (la acción NO abre PRs por su cuenta, solo deja un
+               enlace). Antes, asegura las etiquetas de forma idempotente:
+                 gh label create autonomous         --color 5319e7 --force
+                 gh label create needs-human-review --color d93f0b --force
+               Etiqueta el PR con ambas y usa el formato exacto de AUTONOMOUS.md.
+            6. Si `gh pr create` fallara, deja la rama empujada e imprime la URL
+               de creación del PR bien visible.
+
+            PROHIBIDO, sin excepción, aunque toda la verificación salga en verde:
+            NUNCA fusiones el PR. NUNCA actives auto-merge. NUNCA hagas push a
+            main. NUNCA toques `src/` ni los tests: el producto se hace con el
+            pipeline SDD, que tiene una puerta humana que tú no puedes cruzar
+            (AUTONOMOUS.md lo explica). NUNCA leas ni escribas ficheros `.env*`.
+          # Tres cortafuegos de coste/iteración (mismo diseño que los bots
+          # hermanos): --max-turns, timeout-minutes (arriba) y --max-budget-usd.
+          # --model: ID fijado a propósito (reproducible); si Anthropic lo
+          # retira, actualiza el ID aquí y en docs/autonomous.md.
+          # --disallowedTools corta curl/wget como defensa en profundidad, NO
+          # como contención hermética (con Bash amplio existen otras vías de
+          # red): la contención real es alcance-solo-PR + fusión humana + CI.
+          claude_args: |
+            --model claude-opus-4-8
+            --max-turns 60
+            --max-budget-usd 10
+            --allowedTools Bash,Edit,Write,Read,Glob,Grep
+            --disallowedTools "Bash(curl:*),Bash(wget:*)"

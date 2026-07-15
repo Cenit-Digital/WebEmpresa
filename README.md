@@ -90,6 +90,9 @@ pnpm preview          # sirve el build para comprobarlo en local
 ├── feature_list.json · project-spec.md      # backlog y spec del SDD
 ├── features/ · progress/                    # contratos Gherkin y bitácoras
 ├── docs/                     # workflow, tdd, gherkin, mutation, architecture…
+├── .github/workflows/        # ci.yml (init.sh + build) · autonomous-evolve.yml
+│                             #   (bot de mantenimiento, solo PR) · guardián
+├── .github/AUTONOMOUS.md     # mandato del bot (ver docs/autonomous.md)
 └── .claude/agents/           # craftsman_lead, spec_partner, gherkin_author,
                               #   tdd_craftsman, judge, mutation_tester
 ```
@@ -164,7 +167,16 @@ pending → spec (project-spec.md) → escenarios (features/<name>.feature)
 ```
 
 Detalle en `docs/workflow.md` y en `GU-HARNESS-001` (Confluence). El arnés se
-auto-verifica con `./init.sh`.
+auto-verifica con `./init.sh`, y la **CI** (`.github/workflows/ci.yml`) ejecuta
+ese mismo `init.sh` más el build SSG en cada PR y en cada push a `main`.
+
+## Mantenimiento autónomo
+
+Lunes, miércoles y viernes, un bot busca **una** tarea real de mantenimiento
+**fuera** de `src/` y los tests —documentación desfasada, configuración
+incoherente— y abre un PR. Nunca fusiona, nunca toca producto: el pipeline SDD
+tiene una puerta humana que un cron no puede cruzar. Lo normal es que la mayoría
+de los días no proponga nada. Ver `docs/autonomous.md` y `.github/AUTONOMOUS.md`.
 
 ## Git
 

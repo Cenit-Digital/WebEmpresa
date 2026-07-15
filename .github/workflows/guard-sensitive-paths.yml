@@ -1,0 +1,68 @@
+name: Guardián de rutas sensibles
+
+# En cada PR, si se tocan rutas que gobiernan al bot de mantenimiento, su correa
+# o la cadena de verificación, etiqueta el PR con `permissions-change` y deja un
+# aviso prominente para que la revisión humana no lo pase por alto.
+#
+# Mismo diseño (ya probado) que los guardianes de TemplateSSDUncleBob y
+# SistemaDeMemoriaUncleBob: NO bloquea (no falla el check). Usa
+# `pull_request_target` A PROPÓSITO: corre la versión de este guardián que está
+# en `main` (un PR no puede neutralizarlo desde su propia rama) y tiene permiso
+# para etiquetar. SEGURIDAD: este job NO hace checkout ni ejecuta código del PR
+# — solo lista nombres de ficheros por API y aplica una etiqueta.
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write # crear/aplicar etiquetas
+
+concurrency:
+  group: guard-sensitive-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  flag:
+    name: Marcar cambios en rutas sensibles
+    runs-on: ubuntu-latest
+    steps:
+      - name: Detectar rutas sensibles y etiquetar
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          # Incluye previous_filename: un RENAME de una ruta sensible reporta
+          # solo la ruta nueva en .filename — sin esto, mover el mandato o el
+          # verificador escaparía al guardián.
+          files="$(gh api --paginate "repos/$REPO/pulls/$PR/files" --jq '.[] | .filename, (.previous_filename // empty)')"
+          # Incluye la configuración que ES la cadena de verificación
+          # (package.json = los scripts que corre la CI, eslint.config.js = el
+          # lint, stryker.config.json = el umbral de mutación). El mandato SÍ se
+          # las concede al bot, así que si no estuvieran aquí podría vaciar su
+          # propio verificador y presentar el PR "en verde" sin que nada lo marque.
+          sensitive="$(printf '%s\n' "$files" | grep -E '^(\.github/workflows/|\.github/AUTONOMOUS\.md$|\.github/CODEOWNERS$|init\.sh$|CLAUDE\.md$|AGENTS\.md$|package\.json$|eslint\.config\.js$|stryker\.config\.json$)' || true)"
+          if [ -z "$sensitive" ]; then
+            echo "Sin rutas sensibles tocadas en este PR."
+            echo "- Sin rutas sensibles en este PR." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          echo "::warning title=Cambio en rutas sensibles::Este PR toca el workflow del bot, su mandato o la cadena de verificación. Requiere revisión reforzada (límite 1 de .github/AUTONOMOUS.md)."
+          {
+            echo "## ⚠️ Rutas sensibles modificadas"
+            echo ""
+            echo "Este PR toca ficheros que gobiernan al bot de mantenimiento, su correa o la cadena de verificación. Revísalo con especial atención (límite 1 de \`.github/AUTONOMOUS.md\`):"
+            echo ""
+            printf '%s\n' "$sensitive" | while IFS= read -r f; do echo "- $f"; done
+          } >> "$GITHUB_STEP_SUMMARY"
+          # Etiquetar vía la API REST: `gh api` NO necesita contexto git local
+          # (en pull_request_target no hay checkout). No bloqueante por diseño.
+          gh label create permissions-change --repo "$REPO" --color b60205 \
+            --description "El PR toca workflow/permisos/cadena de verificación: requiere revisión reforzada" --force || true
+          gh api -X POST "repos/$REPO/issues/$PR/labels" -f "labels[]=permissions-change" >/dev/null \
+            || echo "::warning::No se pudo aplicar la etiqueta permissions-change; revísalo manualmente."
+          exit 0
