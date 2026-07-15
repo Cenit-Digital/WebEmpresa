@@ -51,7 +51,6 @@ y mutarla sin renderizar.
 ## Design tokens
 
 Los colores y la tipografía salen de `RF-MARCA-001` (Confluence) y viven en
-`src/styles/_tokens.scss` como **CSS custom properties**: modo claro (Teal
-Profundo) en `:root`, modo oscuro (Océano y Coral) en `:root[data-theme='dark']`,
-y la marca (Azul Noche y Menta) común. Los componentes consumen `var(--color-…)`,
-nunca hex sueltos.
+`src/styles/_tokens.scss` como **CSS custom properties**: modo claro (Bosque &
+Limón) en `:root`, modo oscuro (Noche & Oro) en `:root[data-theme='dark']`. Los
+componentes consumen `var(--color-…)`, nunca hex sueltos.
