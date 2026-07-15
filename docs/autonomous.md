@@ -8,6 +8,10 @@
 > cara humana: qué es, qué NO es, cómo se pone en marcha, qué cuesta y por qué es
 > seguro.
 
+> Decisiones de arquitectura en Confluence (espacio DDS): **`DE-003`** (cadencia y
+> guardas) y **`DE-004`** (qué puede hacer un bot en un repo de proyecto: la puerta
+> humana del SDD). Proceso: **`GU-HARNESS-001`**.
+
 ## Qué es
 
 Un workflow programado (`.github/workflows/autonomous-evolve.yml`) que, lunes,
