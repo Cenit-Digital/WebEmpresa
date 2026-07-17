@@ -78,7 +78,7 @@ pnpm preview          # sirve el build para comprobarlo en local
 │   ├── components/           # UI reutilizable (1 componente por archivo)
 │   ├── lib/                  # lógica pura y testeable (sin JSX)
 │   └── styles/               # _tokens.scss, _reset.scss, _base.scss, main.scss
-├── public/                   # estáticos (favicon.svg)
+├── public/                   # estáticos (favicon.svg, robots.txt, sitemap.xml)
 ├── vite.config.ts            # Vite + plugin React (SWC) + ssgOptions
 ├── vitest.config.ts          # Vitest (jsdom) + setup
 ├── stryker.config.json       # prueba de mutación
