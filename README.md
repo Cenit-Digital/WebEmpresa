@@ -93,8 +93,10 @@ pnpm preview          # sirve el build para comprobarlo en local
 ├── .github/workflows/        # ci.yml (init.sh + build) · autonomous-evolve.yml
 │                             #   (bot de mantenimiento, solo PR) · guardián
 ├── .github/AUTONOMOUS.md     # mandato del bot (ver docs/autonomous.md)
-└── .claude/agents/           # craftsman_lead, spec_partner, gherkin_author,
-                              #   tdd_craftsman, judge, mutation_tester
+└── .claude/agents/           # 6 del pipeline (craftsman_lead, spec_partner,
+                              #   gherkin_author, tdd_craftsman, judge, mutation_tester)
+                              #   + 3 de apoyo, solo lectura (security_reviewer,
+                              #   a11y_seo_auditor, mentor)
 ```
 
 ## Design tokens (identidad de marca)
