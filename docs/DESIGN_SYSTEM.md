@@ -92,6 +92,8 @@ Todos definidos en `:root` (claro) y `:root[data-theme='dark']` (oscuro).
 | `--color-logo-sub`    | `#1E7A4F`                     | `#7C5CBF`                    | "digital"                      |
 | `--color-ring`        | `#1E7A4F`                     | `#C9A84C`                    | Anillo del logo                |
 | `--color-zenith`      | `#E3D34A`                     | `#C9A84C`                    | Punto cénit del logo           |
+| `--color-danger`      | `#B3261E`                     | `#F2B8B5`                    | Error de campo / envío fallido |
+| `--color-success`     | `#1E7A4F`                     | `#8FD0A3`                    | Envío correcto                 |
 | `--shadow`            | `0 18px 45px rgba(0,0,0,.12)` | `0 22px 55px rgba(0,0,0,.5)` | Elevación de tarjetas          |
 
 Degradado de marca (logo, mockups, cabeceras de sector):
