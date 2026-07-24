@@ -77,7 +77,7 @@ pnpm preview          # sirve el build para comprobarlo en local
 │   ├── pages/                # una página por ruta; SEO con <Head>
 │   ├── components/           # UI reutilizable (1 componente por archivo)
 │   ├── lib/                  # lógica pura y testeable (sin JSX)
-│   └── styles/               # _tokens.scss, _reset.scss, _base.scss, main.scss
+│   └── styles/               # _tokens.scss, _reset.scss, _base.scss, _logo-draw.scss, main.scss
 ├── public/                   # estáticos (favicon.svg, robots.txt, sitemap.xml)
 ├── vite.config.ts            # Vite + plugin React (SWC) + ssgOptions
 ├── vitest.config.ts          # Vitest (jsdom) + setup
