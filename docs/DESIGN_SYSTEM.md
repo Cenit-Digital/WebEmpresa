@@ -28,7 +28,12 @@ Icono **"Órbita"**: un anillo (la órbita), una **onda** con degradado
 **`digital`** (DM Sans, 8px, `letter-spacing:5px`, minúsculas).
 
 - Componente: [`src/components/Logo.tsx`](../src/components/Logo.tsx)
-  (`<Logo />`, prop `withWordmark` y `size`).
+  (`<Logo />`, props `withWordmark`, `size` y `animated`).
+- **Animación de "dibujado"** (`animated`, por defecto `false`): activa el
+  trazado progresivo del icono. Añade los `data-attributes` que consumen los
+  `@keyframes` del parcial global `src/styles/_logo-draw.scss` y desdobla el
+  punto cénit en contorno + relleno. La cabecera la usa (`<Logo animated />`);
+  el footer no (SVG estático).
 - **Todos los colores del logo salen de tokens** (`--color-primary`,
   `--color-secondary`, `--color-ring`, `--color-zenith`, `--color-logo-ink`,
   `--color-logo-sub`), así que se adapta solo a claro/oscuro:
