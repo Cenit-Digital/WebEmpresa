@@ -141,15 +141,15 @@ Escala (fiel al diseño; `clamp()` para fluidez):
 
 ## 5 · Layout y espaciado
 
-| Token           | Valor    | Uso                                                |
-| --------------- | -------- | -------------------------------------------------- |
-| `--maxw`        | `1180px` | Ancho máximo del contenido centrado                |
-| `--gutter`      | `26px`   | Padding horizontal de página                       |
-| `--section-y`   | `84px`   | Padding vertical de sección                        |
-| `--radius`      | `20px`   | Tarjetas grandes (servicios, paquetes, formulario) |
-| `--radius-md`   | `16px`   | Mockups / media                                    |
-| `--radius-sm`   | `12px`   | Superficies pequeñas, notas, inputs (11–12px)      |
-| `--radius-pill` | `999px`  | Botones y etiquetas                                |
+| Token           | Valor                    | Uso                                                |
+| --------------- | ------------------------ | -------------------------------------------------- |
+| `--maxw`        | `1180px`                 | Ancho máximo del contenido centrado                |
+| `--gutter`      | `clamp(18px, 5vw, 26px)` | Padding horizontal de página (26px en escritorio)  |
+| `--section-y`   | `clamp(56px, 9vw, 84px)` | Padding vertical de sección (84px en escritorio)   |
+| `--radius`      | `20px`                   | Tarjetas grandes (servicios, paquetes, formulario) |
+| `--radius-md`   | `16px`                   | Mockups / media                                    |
+| `--radius-sm`   | `12px`                   | Superficies pequeñas, notas, inputs (11–12px)      |
+| `--radius-pill` | `999px`                  | Botones y etiquetas                                |
 
 Patrón de contenedor de sección:
 `max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter);`
