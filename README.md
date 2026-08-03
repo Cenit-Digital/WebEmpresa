@@ -25,7 +25,7 @@ para la web propia y, sobre la misma base, para los proyectos de cliente.
 
 ## Requisitos
 
-- **Node.js >= 22** (ver `.nvmrc`).
+- **Node.js >= 22.12** (`engines` en `package.json`; ver `.nvmrc`).
 - **pnpm** (recomendado vía Corepack):
 
 ```bash
