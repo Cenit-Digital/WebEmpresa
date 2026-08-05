@@ -208,8 +208,9 @@ Breakpoints del diseño (mobile-first al implementar, pero estos son los cortes)
 
 - **≤ 880px** — todas las rejillas de 2/3 columnas colapsan a 1 columna
   (filas de servicio, sectores, paquetes, contacto y filas de formulario).
-- **≤ 820px** — se ocultan los enlaces de escritorio y aparece la hamburguesa;
-  el arco decorativo del hero baja su opacidad y se reposiciona.
+- **≤ 820px** — el arco decorativo del hero baja su opacidad y se reposiciona.
+- **≤ 767px** — se ocultan los enlaces de escritorio y aparece la hamburguesa
+  (`MOBILE_QUERY` en `src/lib/useIsMobile.ts`, replicado en `HeaderNav.module.scss`).
 
 Objetivos: hit-targets ≥ 44px, foco visible (`:focus-visible` con
 `outline:2px solid var(--color-primary)`), sin scroll horizontal.
