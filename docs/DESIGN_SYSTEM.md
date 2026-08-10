@@ -206,11 +206,15 @@ existan esas páginas — ver `features/footer.feature`.)
 
 Breakpoints del diseño (mobile-first al implementar, pero estos son los cortes):
 
-- **≤ 880px** — todas las rejillas de 2/3 columnas colapsan a 1 columna
-  (filas de servicio, sectores, paquetes, contacto y filas de formulario).
+- **≤ 880px** — las rejillas de 2/3 columnas colapsan a 1 columna: filas de
+  servicio (`Servicios .row`), sectores y paquetes (`.grid`) y el layout de la
+  sección de contacto (`Contacto .inner`, la intro junto al formulario).
 - **≤ 820px** — el arco decorativo del hero baja su opacidad y se reposiciona.
 - **≤ 767px** — se ocultan los enlaces de escritorio y aparece la hamburguesa
   (`MOBILE_QUERY` en `src/lib/useIsMobile.ts`, replicado en `HeaderNav.module.scss`).
+- **≤ 560px** — ajustes de teléfono: las **filas del formulario** (`Contacto
+  .form`, 2 columnas) colapsan a 1 columna, la retícula de estadísticas del hero
+  pasa a 2×2 y se reduce el padding de tarjetas (servicios, paquetes, contacto).
 
 Objetivos: hit-targets ≥ 44px, foco visible (`:focus-visible` con
 `outline:2px solid var(--color-primary)`), sin scroll horizontal.
@@ -225,4 +229,4 @@ Objetivos: hit-targets ≥ 44px, foco visible (`:focus-visible` con
 - [ ] Outfit en titulares, DM Sans en texto; pesos 600/700 cargados.
 - [ ] Ancho 1180px, radios 20/16/12, sombras por tema.
 - [ ] 6 servicios, 4 sectores, 3 paquetes, formulario de 5 campos.
-- [ ] Responsive en 880/820; foco visible; contraste AA (validado en RF-MARCA-001).
+- [ ] Responsive en 880/820/767/560; foco visible; contraste AA (validado en RF-MARCA-001).
