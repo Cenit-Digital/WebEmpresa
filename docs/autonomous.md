@@ -24,7 +24,7 @@ fusiona, nunca empuja a `main`.
 ## Qué NO es (lo importante)
 
 **No construye producto.** No toca `src/`, ni los tests, ni `features/`, ni
-`feature_list.json`, ni `progress/`.
+`project-spec.md`, ni `feature_list.json`, ni `progress/`, ni `design/`.
 
 No es una limitación técnica: es el diseño del arnés. El pipeline SDD de este
 repo (`AGENTS.md` §4) tiene una **puerta humana** en el medio —tú apruebas cada
