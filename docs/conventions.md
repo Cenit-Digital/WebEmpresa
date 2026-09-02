@@ -14,8 +14,10 @@ entienda y mantenga el código sin sorpresas.
 - **Estilos:** **SCSS Modules** (`*.module.scss`) por componente; tokens y
   base globales en `src/styles/` con `@use` (nunca `@import`). Consumir colores
   vía `var(--color-…)`. Evitar CSS global suelto fuera de `styles/`.
-- **Formato y linting:** Prettier + ESLint; se ejecutan antes de cada commit
-  (`pnpm lint`, `pnpm format`).
+- **Formato y linting:** Prettier (`pnpm format`) + ESLint (`pnpm lint`). El
+  lint forma parte de la verificación del arnés (`init.sh`) y, por tanto, de la
+  CI; el formato se aplica a mano (no hay hook de pre-commit). Ejecútalos antes
+  de subir cambios.
 - **Accesibilidad y SEO:** HTML semántico, `alt` en imágenes, `<title>` y
   `description` por página, foco visible, primitivas accesibles (Radix).
 
