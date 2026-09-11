@@ -4,8 +4,9 @@ coverage
 reports
 .stryker-tmp
 
-# Código de terceros vendorizado (ponytail) — idéntico a upstream v4.8.4.
-# Ver .claude/ponytail/NOTICE.md. NO reformatear: debe coincidir con upstream.
+# Código de terceros vendorizado (ponytail) v4.8.4, con dos adaptaciones
+# mínimas documentadas en .claude/ponytail/NOTICE.md. NO reformatear: su
+# formato debe seguir coincidiendo con upstream.
 .claude/ponytail/
 .claude/skills/
 
